@@ -38,6 +38,8 @@ int main(void)
 	HD44780_Puts(0,1,"String 2");
 	HD44780_Puts(0,2,"String 3");
 	HD44780_Puts(0,3,"String 4");
+
+	ADS1120_init();
 //	Keyboard_Init();
 //	buzzer_init();
 //	Menu_Init();

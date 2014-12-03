@@ -69,11 +69,11 @@ void	SPI2_config(void)//
 
 	    SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	    SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
-	    SPI_InitStructure.SPI_DataSize = SPI_DataSize_16b;
+	    SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
 	    SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
-	    SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
+	    SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;
 	    SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-	    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
+	    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_64;
 	    SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
 	    //SPI_InitStructure.SPI_CRCPolynomial = 7;
 	    SPI_Init(SPI2, &SPI_InitStructure);
@@ -115,7 +115,7 @@ enum
 static void ADS1120_task(void *pvParameters)//
 {
 	SPI2_GPIO_CS->BSRRH|=SPI2_CS1;// pin down SPI1_CS1
-	spi_send (ADS_RESET);
+	SPI2_send (ADS_RESET);
 	vTaskDelay(10);
 	SPI2_send (ADS_WREG|(ADS_REG_0<<2)|(0x0));//1 reg 0x0
 	SPI2_send (ADC_REG_CONFIG_00);
