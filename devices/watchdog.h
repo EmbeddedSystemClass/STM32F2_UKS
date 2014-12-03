@@ -7,7 +7,7 @@
 enum
 {
 	PROTO_TASK=0,
-	DOL_TASK=1,
+	BUZZER_TASK=1,
 };
 
 enum

@@ -3,7 +3,7 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_tim.h"
 #include "stm32f4xx_spi.h"
-#include "stm32f4xx_dma.h"
+
 #include <misc.h>
 
 #include "keyboard.h"

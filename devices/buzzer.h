@@ -36,17 +36,17 @@ enum
 	BUZZER_EFFECT_NONE
 };
 
-#define BUZZER_PIN	GPIO_Pin_6
-#define BUZZER_PORT GPIOC
+#define BUZZER_PIN	GPIO_Pin_10
+#define BUZZER_PORT GPIOB
 
 struct buzzer{
 	uint8_t buzzer_enable;//
 	uint8_t buzzer_effect;//
 };
 
-void buzzer_init(void);
-void buzzer_task(void *pvParameters );
-void buzzer_set_buzz(uint8_t effect, uint8_t enable);
+void Buzzer_Init(void);
+void Buzzer_Task(void *pvParameters );
+void Buzzer_Set_Buzz(uint8_t effect, uint8_t enable);
 
 
 #endif

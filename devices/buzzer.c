@@ -3,9 +3,7 @@
 #include "stm32f4xx.h"
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
-#include "stm32f4xx_tim.h"
-#include "stm32f4xx_spi.h"
-#include "stm32f4xx_dma.h"
+
 #include <misc.h>
 
 #include "FreeRTOS.h"
@@ -13,14 +11,14 @@
 #include "queue.h"
 #include "semphr.h"
 
-#include "tablo.h"
 #include "watchdog.h"
+#include "uks.h"
 
-extern struct tablo tab;//
+struct buzzer buzz;
 extern struct task_watch task_watches[];
 xTaskHandle xBuzzer_Handle;
 
-void buzzer_init(void)
+void Buzzer_Init(void)
 {
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -38,17 +36,16 @@ void buzzer_init(void)
 
     GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
 
-    xTaskCreate(buzzer_task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
-    vTaskSuspend (xBuzzer_Handle);
-    task_watches[BUZZER_TASK].task_status=TASK_IDLE;
+//    xTaskCreate(buzzer_task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
+//    task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 }
-void buzzer_task(void *pvParameters )
+void Buzzer_Task(void *pvParameters )
 {
 	while(1)
 	{
-		if(tab.buz.buzzer_enable==BUZZER_ON)
+		if(buzz.buzzer_enable==BUZZER_ON)
 		{
-			switch(tab.buz.buzzer_effect)
+			switch(buzz.buzzer_effect)
 			{
 				case BUZZER_EFFECT_0:
 				{
@@ -133,26 +130,26 @@ void buzzer_task(void *pvParameters )
 }
 
 
-void buzzer_set_buzz(uint8_t effect, uint8_t enable)
+void Buzzer_Set_Buzz(uint8_t effect, uint8_t enable)
 {
 	if(enable&0x1)
 	{
-		if(tab.buz.buzzer_enable==BUZZER_OFF)
+		if(buzz.buzzer_enable==BUZZER_OFF)
 		{
 			vTaskResume(xBuzzer_Handle);
-			tab.buz.buzzer_enable=BUZZER_ON;
+			buzz.buzzer_enable=BUZZER_ON;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_ACTIVE;
 	}
 	else
 	{
-		if(tab.buz.buzzer_enable==BUZZER_ON)
+		if(buzz.buzzer_enable==BUZZER_ON)
 		{
 			vTaskSuspend (xBuzzer_Handle);
-			tab.buz.buzzer_enable=BUZZER_OFF;
+			buzz.buzzer_enable=BUZZER_OFF;
 		}
 		task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 		GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
 	}
-	tab.buz.buzzer_effect=effect&0x7;
+	buzz.buzzer_effect=effect&0x7;
 }

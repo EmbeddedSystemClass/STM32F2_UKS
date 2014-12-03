@@ -3,15 +3,13 @@
 #include <stm32f4xx_rcc.h>
 #include <stm32f4xx_gpio.h>
 #include <stm32f4xx_adc.h>
-#include <stdio.h>
+
 
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
 
-#include "tablo.h"
-#include "tablo_parser.h"
 
 extern struct tablo tab;//
 
@@ -53,7 +51,7 @@ void ADC_Channel_Init(void)
 	   ADC_InitStructure.ADC_NbrOfConversion=1;
 	   ADC_Init(ADC1, &ADC_InitStructure);
 
-	   ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_3Cycles);
+	   ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_480Cycles);
 
 
 	   /* Âêëþ÷àåì ÀÖÏ1 */
@@ -100,8 +98,7 @@ static void ADC_Task(void *pvParameters)
 			  }
 			  bubblesort(adc_buf,NUM_CONV);
 			  ADC_result=((adc_buf[(NUM_CONV>>1)-1]+adc_buf[NUM_CONV>>1])>>1);
-			  sprintf(str_buf,"%4u",ADC_result);
-			  str_to_ind(&tab.indicators[0],str_buf);
+			 // str_to_ind(&tab.indicators[0],str_buf);
 			  vTaskDelay(400);
 		}
 }

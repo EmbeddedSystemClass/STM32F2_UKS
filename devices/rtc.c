@@ -8,11 +8,6 @@
 #include "queue.h"
 #include "semphr.h"
 
-#include "tablo.h"
-#include "tablo_parser.h"
-
-extern struct tablo tab;//
-
 static void RTC_Task(void *pvParameters);
 
 uint32_t AsynchPrediv = 0, SynchPrediv = 0;

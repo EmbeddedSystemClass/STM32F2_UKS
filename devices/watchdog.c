@@ -56,13 +56,13 @@ static void Watchdog_Task(void *pvParameters)
 	while(1)
 	{
 		if(((task_watches[PROTO_TASK].counter>0)||(task_watches[PROTO_TASK].task_status==TASK_IDLE))&&
-		   ((task_watches[DOL_TASK].counter>0)	||(task_watches[DOL_TASK].task_status==TASK_IDLE)))
+		   ((task_watches[BUZZER_TASK].counter>0)	||(task_watches[BUZZER_TASK].task_status==TASK_IDLE)))
 		{//проверка счетчиков
 			IWDG_ReloadCounter();
 		}
 
 		task_watches[PROTO_TASK].counter=0;
-		task_watches[DOL_TASK].counter=0;
+		task_watches[BUZZER_TASK].counter=0;
 		vTaskDelay(500);
 	}
 }
