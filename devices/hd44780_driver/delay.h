@@ -136,6 +136,9 @@ static inline void Delay(uint32_t micros) {
 		/* Increase timer */
 		timer =  DELAY_TIM->CNT;
 
+//		volatile uint32_t counter=10;
+//		while(counter) counter--;
+
 		/* Decrease microseconds */
 	} while (--micros);
 #else

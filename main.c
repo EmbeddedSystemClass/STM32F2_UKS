@@ -24,6 +24,7 @@
 #include "phaze_detector.h"
 #include "backup_sram.h"
 #include "hd44780.h"
+#include "rtc.h"
 
 
 int main(void)
@@ -40,9 +41,8 @@ int main(void)
 	HD44780_Puts(0,3,"String 4");
 
 	ADS1120_init();
-//	Keyboard_Init();
-//	buzzer_init();
-//	Menu_Init();
+	ADC_Channel_Init();
+	RTC_Clock_Init();
 //	Watchdog_Init();
 
 

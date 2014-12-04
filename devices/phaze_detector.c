@@ -76,7 +76,7 @@ void EXTI0_IRQHandler(void)
         EXTI_ClearITPendingBit(EXTI_Line0);
         //GPIOB->ODR ^= GPIO_Pin_2;
 
-        if(counter<30)
+        if(counter<2)
         {
         	GPIOB->BSRRL|=GPIO_Pin_2;
         }

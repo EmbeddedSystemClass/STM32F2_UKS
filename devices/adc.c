@@ -10,8 +10,10 @@
 #include "queue.h"
 #include "semphr.h"
 
+#include "stdio.h"
+#include "hd44780.h"
 
-extern struct tablo tab;//
+struct adc_lm35_channels adc_lm35_chnl;
 
 static void ADC_Task(void *pvParameters);
 
@@ -20,8 +22,8 @@ void ADC_Channel_Init(void)
 	   ADC_InitTypeDef ADC_InitStructure;
 	   ADC_StructInit(&ADC_InitStructure);
 
-	   ADC_CommonInitTypeDef adc_init;
-	   ADC_CommonStructInit(&adc_init);
+	   ADC_CommonInitTypeDef ADC_CommonInitStructure;
+	   ADC_CommonStructInit(&ADC_CommonInitStructure);
 
 	   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 
@@ -35,13 +37,12 @@ void ADC_Channel_Init(void)
 	   RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 	   /* сбрасываем настройки АЦП */
 	   ADC_DeInit();
-
-	   /* АЦП1 и АЦП2 работают независимо */
-	   adc_init.ADC_Mode = ADC_Mode_Independent;
-	   adc_init.ADC_Prescaler = ADC_Prescaler_Div2;
-
-	   /* инициализация */
-	   ADC_CommonInit(&adc_init);
+//
+		ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+		ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div8;
+		ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+		ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+		ADC_CommonInit(&ADC_CommonInitStructure);
 
 
 	   ADC_InitStructure.ADC_ScanConvMode = DISABLE;
@@ -79,26 +80,33 @@ void bubblesort(uint16_t *a, uint16_t n)
 #define NUM_CONV	16
 static void ADC_Task(void *pvParameters)
 {
-		uint32_t ADC_result=0;
-		uint8_t i=0;
-		uint8_t str_buf[8];
-		uint16_t adc_buf[NUM_CONV];
+		uint8_t i=0,j=0;
+		uint8_t str_buf[32];
 		while(1)
 		{
-			  ADC_result=0;
-			  for(i=0;i<NUM_CONV;i++)
+			  for(i=0;i<ADC_FILTER_BUFFER_LEN;i++)
 			  {
-				  ADC1->CR2 |= (uint32_t)ADC_CR2_SWSTART;//ADC_SoftwareStartConv(ADC1);
-				   while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET)
+				   for(j=0;j<ADC_LM35_CHANNELS_NUM;j++)
 				   {
-					   taskYIELD ();
+					   ADC_RegularChannelConfig(ADC1, j, 1, ADC_SampleTime_480Cycles);
+					   ADC1->CR2 |= (uint32_t)ADC_CR2_SWSTART;
+					   while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET)
+					   {
+						   taskYIELD ();
+					   }
+					   adc_lm35_chnl.filter_buffer[j][i]=ADC1->DR;
+					   bubblesort(adc_lm35_chnl.filter_buffer[j],ADC_FILTER_BUFFER_LEN);
+					   adc_lm35_chnl.channel[j]=((adc_lm35_chnl.filter_buffer[j][(ADC_FILTER_BUFFER_LEN>>1)-1]+adc_lm35_chnl.filter_buffer[j][ADC_FILTER_BUFFER_LEN>>1])>>1);
 				   }
-
-				   adc_buf[i]=ADC1->DR;/*ADC_GetConversionValue(ADC1)*/;
 			  }
-			  bubblesort(adc_buf,NUM_CONV);
-			  ADC_result=((adc_buf[(NUM_CONV>>1)-1]+adc_buf[NUM_CONV>>1])>>1);
-			 // str_to_ind(&tab.indicators[0],str_buf);
-			  vTaskDelay(400);
+			  sprintf(str_buf,"C0=%04d  C4=%04d",adc_lm35_chnl.channel[0],adc_lm35_chnl.channel[4]);
+			  HD44780_Puts(0,0,str_buf);
+			  sprintf(str_buf,"C1=%04d  C5=%04d",adc_lm35_chnl.channel[1],adc_lm35_chnl.channel[5]);
+			  HD44780_Puts(0,1,str_buf);
+			  sprintf(str_buf,"C2=%04d  C6=%04d",adc_lm35_chnl.channel[2],adc_lm35_chnl.channel[6]);
+			  HD44780_Puts(0,2,str_buf);
+			  sprintf(str_buf,"C3=%04d  C7=%04d",adc_lm35_chnl.channel[3],adc_lm35_chnl.channel[7]);
+			  HD44780_Puts(0,3,str_buf);
+			  vTaskDelay(200);
 		}
 }

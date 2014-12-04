@@ -31,10 +31,10 @@ void DELAY_Init(void) {
 	}
 	
 	/* Enable External HSE clock */
-	RCC_HSEConfig(RCC_HSE_ON);
-	
-	/* Wait for stable clock */
-	while (!RCC_WaitForHSEStartUp());
+//	RCC_HSEConfig(RCC_HSE_ON);
+//
+//	/* Wait for stable clock */
+//	while (!RCC_WaitForHSEStartUp());
 	
 #if defined(DELAY_TIM)
 	DELAY_INT_InitTIM();
@@ -103,7 +103,7 @@ void DELAY_INT_InitTIM(void) {
 	TIM_TimeBaseStruct.TIM_ClockDivision = 0;
 	TIM_TimeBaseStruct.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseStruct.TIM_Period = 999; /* 1 millisecond */
-	TIM_TimeBaseStruct.TIM_Prescaler = SystemCoreClock / (1000000 * (SystemCoreClock / TIM_Data.TimerFrequency)) - 1; /* With prescaler for 1 microsecond tick */
+	TIM_TimeBaseStruct.TIM_Prescaler = 0;//SystemCoreClock / (1000000 * (SystemCoreClock / TIM_Data.TimerFrequency)) - 1; /* With prescaler for 1 microsecond tick */
 	TIM_TimeBaseStruct.TIM_RepetitionCounter = 0;
 	
 	/* Initialize timer */
@@ -115,7 +115,7 @@ void DELAY_INT_InitTIM(void) {
 	/* Set NVIC parameters */
 	NVIC_InitStruct.NVIC_IRQChannel = DELAY_TIM_IRQ;
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 14;
 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
 	/* Add to NVIC */
 	NVIC_Init(&NVIC_InitStruct);
