@@ -68,7 +68,7 @@ void Phaze_Detector_Init(void)
 	NVIC_EnableIRQ(EXTI1_IRQn);
 }
 
-uint8_t counter=0;
+static uint8_t counter=0;
 void EXTI0_IRQHandler(void)
 {
     if(EXTI_GetITStatus(EXTI_Line0) != RESET)
