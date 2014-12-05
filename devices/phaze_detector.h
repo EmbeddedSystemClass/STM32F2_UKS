@@ -3,6 +3,7 @@
 #include "stm32f4xx.h"
 
 void Phaze_Detector_Init(void);
+void Set_Heater_Power(uint8_t power);
 
 #define ZERO_CROSS_PORT    			GPIOB
 #define ZERO_CROSS_PORT_RCC 		RCC_AHB1Periph_GPIOB
@@ -14,5 +15,19 @@ void Phaze_Detector_Init(void);
 #define ZERO_CROSS_PinSource 		GPIO_PinSource0
 #define CONTR_SP_PinSource	 		GPIO_PinSource1
 
+#define RELAY_PORT					GPIOB
+#define RELAY_PORT_RCC 				RCC_AHB1Periph_GPIOB
+#define RELAY_PORT_EXTI 			EXTI_PortSourceGPIOB
+
+#define RELAY_PIN					GPIO_Pin_2
+
+#define MAX_POWER_VALUE		60
+
+struct phaze_detector
+{
+	uint16_t zero_cross_counter;
+	uint16_t contr_sp_counter;
+	uint8_t  power_value;//0..60
+};
 
 #endif

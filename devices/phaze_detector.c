@@ -14,6 +14,8 @@
 #include "queue.h"
 #include "semphr.h"
 
+struct phaze_detector phaze_detect;
+
 void Phaze_Detector_Init(void)
 {
 	RCC_AHB1PeriphClockCmd(ZERO_CROSS_PORT_RCC, ENABLE);//тактируем портј
@@ -26,10 +28,10 @@ void Phaze_Detector_Init(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(ZERO_CROSS_PORT, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+	GPIO_InitStructure.GPIO_Pin = RELAY_PIN;
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_Init(RELAY_PORT, &GPIO_InitStructure);
 
 	EXTI_InitTypeDef EXTI_InitStructure;
 
@@ -66,29 +68,41 @@ void Phaze_Detector_Init(void)
 
 	NVIC_EnableIRQ(EXTI0_IRQn);
 	NVIC_EnableIRQ(EXTI1_IRQn);
+
+	Set_Heater_Power(30);
 }
 
-static uint8_t counter=0;
+void Set_Heater_Power(uint8_t power)
+{
+	if(power<=MAX_POWER_VALUE)
+	{
+		EXTI->IMR &= ~EXTI_Line0;
+		phaze_detect.power_value=power;
+	}	EXTI->IMR |=  EXTI_Line0;
+}
+
+static volatile uint8_t cross_counter=0;
+
 void EXTI0_IRQHandler(void)
 {
     if(EXTI_GetITStatus(EXTI_Line0) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line0);
-        //GPIOB->ODR ^= GPIO_Pin_2;
+        phaze_detect.zero_cross_counter++;
 
-        if(counter<2)
+        if(cross_counter<phaze_detect.power_value)
         {
-        	GPIOB->BSRRL|=GPIO_Pin_2;
+        	RELAY_PORT->BSRRL|=RELAY_PIN;//pin up
         }
         else
         {
-        	GPIOB->BSRRH|=GPIO_Pin_2;
-        	if(counter>=60)
+        	RELAY_PORT->BSRRH|=RELAY_PIN;//pin down
+        	if(cross_counter>=MAX_POWER_VALUE)
         	{
-        		counter=0;
+        		cross_counter=0;
         	}
         }
-        counter++;
+        cross_counter++;
     }
 }
 
@@ -97,5 +111,6 @@ void EXTI1_IRQHandler(void)
     if(EXTI_GetITStatus(EXTI_Line1) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line1);
+        phaze_detect.contr_sp_counter++;
     }
 }

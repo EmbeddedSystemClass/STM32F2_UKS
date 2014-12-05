@@ -42,10 +42,10 @@ int main(void)
 ////	Backup_SRAM_Init();
 	Phaze_Detector_Init();
 	HD44780_Init(20,4);
-	HD44780_Puts(0,0,"Hello, world!");
-	HD44780_Puts(0,1,"String 2");
-	HD44780_Puts(0,2,"String 3");
-	HD44780_Puts(0,3,"String 4");
+//	HD44780_Puts(0,0,"Hello, world!");
+//	HD44780_Puts(0,1,"String 2");
+//	HD44780_Puts(0,2,"String 3");
+//	HD44780_Puts(0,3,"String 4");
 
 	ADS1120_init();
 	ADC_Channel_Init();

@@ -60,10 +60,10 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a0fc14194">
+      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a19781989">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\devices\phaze_detector.c" lastModified="14a1559ee59">
+      <source file="..\..\..\devices\phaze_detector.c" lastModified="14a19786e9e">
          <include file="..\..\..\devices\phaze_detector.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
@@ -76,7 +76,7 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
       </source>
-      <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
+      <source file="..\..\..\devices\power_detector.h" lastModified="14a19783a11">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
@@ -172,6 +172,9 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\croutine.h" lastModified="13e3b1eb8f0">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h"/>
+      </source>
+      <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="14a190cfb4b">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\timers.h" lastModified="13e3b1eb900">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\portable.h"/>
@@ -332,7 +335,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\adc.c" lastModified="14a152fdf52">
+      <source file="..\..\..\devices\adc.c" lastModified="14a195c41ca">
          <include file="..\..\..\devices\adc.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -343,6 +346,11 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
          <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
+         <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
+         <include file="..\..\..\usblib\usbd_cdc_core.h"/>
+         <include file="..\..\..\usblib\usbd_usr.h"/>
+         <include file="..\..\..\usblib\usbd_desc.h"/>
+         <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_desc.h" lastModified="131607566a0">
          <include file="..\..\..\usblib\usbd_def.h"/>
@@ -389,7 +397,7 @@
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h" lastModified="14a0a912388">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\FreeRTOSConfig.h" lastModified="14a157a540d">
+      <source file="..\..\..\FreeRTOSConfig.h" lastModified="14a197a5158">
       </source>
       <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="14a0a90f89f">
       </source>
@@ -420,7 +428,7 @@
       <source file="..\..\..\usblib\usb_regs.h" lastModified="13349a79f90">
          <include file="..\..\..\usblib\usb_conf.h"/>
       </source>
-      <source file="..\..\..\main.c" lastModified="14a1577e5cc">
+      <source file="..\..\..\main.c" lastModified="14a195c8c40">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -532,24 +540,6 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14a0a91b950">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a0fc14194">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\devices\phaze_detector.c" lastModified="14a1559ee59">
-         <include file="..\..\..\devices\phaze_detector.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-      </source>
-      <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
@@ -800,11 +790,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a0fc14194">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
-      </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
@@ -1037,8 +1022,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
-      </source>
       <source file="..\..\..\lcd_menu\menu.h" lastModified="1369be1fd7e">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
@@ -1226,11 +1209,6 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14a0a91b950">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a0fc14194">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
@@ -1473,11 +1451,6 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="14a0a91b950">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a0fc14194">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\devices\power_detector.h" lastModified="142a2da7b4e">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>

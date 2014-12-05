@@ -11,7 +11,16 @@
 #include "semphr.h"
 
 #include "stdio.h"
+#include "string.h"
 #include "hd44780.h"
+
+#include "usbd_cdc_vcp.h" // подключаем USB CDC
+#include "usbd_cdc_core.h"
+#include "usbd_usr.h"
+#include "usbd_desc.h"
+#include "usb_dcd_int.h"
+
+__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
 struct adc_lm35_channels adc_lm35_chnl;
 
@@ -30,7 +39,7 @@ void ADC_Channel_Init(void)
 	   GPIO_InitTypeDef gpio;
 	   GPIO_StructInit(&gpio);
 	   gpio.GPIO_Mode = GPIO_Mode_AN;
-	   gpio.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_2;
+	   gpio.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
 	   GPIO_Init(GPIOA, &gpio);
 
 	   /* разрешаем тактирование AЦП1 */
@@ -99,14 +108,17 @@ static void ADC_Task(void *pvParameters)
 					   adc_lm35_chnl.channel[j]=((adc_lm35_chnl.filter_buffer[j][(ADC_FILTER_BUFFER_LEN>>1)-1]+adc_lm35_chnl.filter_buffer[j][ADC_FILTER_BUFFER_LEN>>1])>>1);
 				   }
 			  }
-			  sprintf(str_buf,"C0=%04d  C4=%04d",adc_lm35_chnl.channel[0],adc_lm35_chnl.channel[4]);
+			  sprintf(str_buf,"C0=%04d  C4=%04d\n",adc_lm35_chnl.channel[0],adc_lm35_chnl.channel[4]);
 			  HD44780_Puts(0,0,str_buf);
+			  VCP_DataTx( (uint8_t *) str_buf, strlen(str_buf) );
 			  sprintf(str_buf,"C1=%04d  C5=%04d",adc_lm35_chnl.channel[1],adc_lm35_chnl.channel[5]);
 			  HD44780_Puts(0,1,str_buf);
 			  sprintf(str_buf,"C2=%04d  C6=%04d",adc_lm35_chnl.channel[2],adc_lm35_chnl.channel[6]);
 			  HD44780_Puts(0,2,str_buf);
 			  sprintf(str_buf,"C3=%04d  C7=%04d",adc_lm35_chnl.channel[3],adc_lm35_chnl.channel[7]);
 			  HD44780_Puts(0,3,str_buf);
-			  vTaskDelay(200);
+
+
+			  vTaskDelay(100);
 		}
 }
