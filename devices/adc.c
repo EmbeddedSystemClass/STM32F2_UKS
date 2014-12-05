@@ -119,6 +119,6 @@ static void ADC_Task(void *pvParameters)
 			  HD44780_Puts(0,3,str_buf);
 
 
-			  vTaskDelay(100);
+			  vTaskDelay(300);
 		}
 }
