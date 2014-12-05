@@ -69,7 +69,7 @@ void Phaze_Detector_Init(void)
 	NVIC_EnableIRQ(EXTI0_IRQn);
 	NVIC_EnableIRQ(EXTI1_IRQn);
 
-	Set_Heater_Power(30);
+	Set_Heater_Power(5);
 }
 
 void Set_Heater_Power(uint8_t power)

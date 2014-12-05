@@ -108,15 +108,15 @@ static void ADC_Task(void *pvParameters)
 					   adc_lm35_chnl.channel[j]=((adc_lm35_chnl.filter_buffer[j][(ADC_FILTER_BUFFER_LEN>>1)-1]+adc_lm35_chnl.filter_buffer[j][ADC_FILTER_BUFFER_LEN>>1])>>1);
 				   }
 			  }
-			  sprintf(str_buf,"C0=%04d  C4=%04d\n",adc_lm35_chnl.channel[0],adc_lm35_chnl.channel[4]);
-			  HD44780_Puts(0,0,str_buf);
-			  VCP_DataTx( (uint8_t *) str_buf, strlen(str_buf) );
-			  sprintf(str_buf,"C1=%04d  C5=%04d",adc_lm35_chnl.channel[1],adc_lm35_chnl.channel[5]);
-			  HD44780_Puts(0,1,str_buf);
-			  sprintf(str_buf,"C2=%04d  C6=%04d",adc_lm35_chnl.channel[2],adc_lm35_chnl.channel[6]);
-			  HD44780_Puts(0,2,str_buf);
-			  sprintf(str_buf,"C3=%04d  C7=%04d",adc_lm35_chnl.channel[3],adc_lm35_chnl.channel[7]);
-			  HD44780_Puts(0,3,str_buf);
+//			  sprintf(str_buf,"C0=%04d  C4=%04d\n",adc_lm35_chnl.channel[0],adc_lm35_chnl.channel[4]);
+//			  HD44780_Puts(0,0,str_buf);
+//			  VCP_DataTx( (uint8_t *) str_buf, strlen(str_buf) );
+//			  sprintf(str_buf,"C1=%04d  C5=%04d",adc_lm35_chnl.channel[1],adc_lm35_chnl.channel[5]);
+//			  HD44780_Puts(0,1,str_buf);
+//			  sprintf(str_buf,"C2=%04d  C6=%04d",adc_lm35_chnl.channel[2],adc_lm35_chnl.channel[6]);
+//			  HD44780_Puts(0,2,str_buf);
+//			  sprintf(str_buf,"C3=%04d  C7=%04d",adc_lm35_chnl.channel[3],adc_lm35_chnl.channel[7]);
+//			  HD44780_Puts(0,3,str_buf);
 
 
 			  vTaskDelay(300);

@@ -13,6 +13,18 @@
 
 #include "watchdog.h"
 
+#include "stdio.h"
+#include "string.h"
+#include "hd44780.h"
+
+#include "usbd_cdc_vcp.h" // подключаем USB CDC
+#include "usbd_cdc_core.h"
+#include "usbd_usr.h"
+#include "usbd_desc.h"
+#include "usb_dcd_int.h"
+
+__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+
 
 extern struct task_watch task_watches[];
 
@@ -114,6 +126,8 @@ enum
 //----------------------------------------------------------------
 static void ADS1120_task(void *pvParameters)//
 {
+	uint8_t str_buf[32];
+
 	SPI2_GPIO_CS->BSRRH|=SPI2_CS1;// pin down SPI1_CS1
 	SPI2_send (ADS_RESET);
 	vTaskDelay(10);
@@ -157,6 +171,13 @@ static void ADS1120_task(void *pvParameters)//
 		{
 			ADC_result=(int32_t)ADC_result_temp;
 		}
+
+		sprintf(str_buf,"VAL=%09d",ADC_result);
+		HD44780_Puts(0,0,str_buf);
+
+		int32_t temp=(ADC_result/1568)-264;
+		sprintf(str_buf,"TEMP=%03d",temp);
+		HD44780_Puts(0,1,str_buf);
 
 		vTaskDelay(100);
 	}

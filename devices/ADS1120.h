@@ -28,10 +28,10 @@
 #define ADS_WREG		0x40
 
 //reg config
-#define ADC_REG_CONFIG_00	0x06//0x36//0xE1/*0xD1*///0x81
-#define ADC_REG_CONFIG_02	0x66//0xA6//0x21//1000uA current source//0x20
-#define ADC_REG_CONFIG_03	0x22//0x62//0xC2//idac1 ->refn0//0x02
-
+#define ADC_REG_CONFIG_00	0x00
+#define ADC_REG_CONFIG_01	0x00
+#define ADC_REG_CONFIG_02	0x56
+#define ADC_REG_CONFIG_03	0x62
 uint8_t ADS1120_init(void);
 
 #endif
