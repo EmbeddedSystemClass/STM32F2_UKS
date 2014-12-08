@@ -28,9 +28,9 @@ static void PID_Regulator_Task(void *pvParameters);
  */
 void PID_Heater_Init(void)
 {
-	pid_Init(1280,1,0,&pid_heater);
+	pid_Init(0.9,0.010,0.0,&pid_heater);
 }
-void pid_Init(int16_t p_factor, int16_t i_factor, int16_t d_factor, struct PID_DATA *pid)
+void pid_Init(/*int16_t*/float p_factor, /*int16_t*/float i_factor, /*int16_t*/float d_factor, struct PID_DATA *pid)
 // Set up PID controller parameters
 {
   // Start values for PID controller
@@ -71,7 +71,7 @@ int16_t pid_Controller(int16_t setPoint, int16_t processValue, struct PID_DATA *
     p_term = -MAX_INT;
   }
   else{
-    p_term = pid_st->P_Factor * error;
+    p_term =(int16_t)(pid_st->P_Factor * error);
   }
 
   // Calculate Iterm and limit integral runaway
@@ -86,15 +86,15 @@ int16_t pid_Controller(int16_t setPoint, int16_t processValue, struct PID_DATA *
   }
   else{
     pid_st->sumError = temp;
-    i_term = pid_st->I_Factor * pid_st->sumError;
+    i_term =(int32_t)(pid_st->I_Factor * pid_st->sumError);
   }
 
   // Calculate Dterm
-  d_term = pid_st->D_Factor * (pid_st->lastProcessValue - processValue);
+  d_term =(int16_t)(pid_st->D_Factor * (pid_st->lastProcessValue - processValue));
 
   pid_st->lastProcessValue = processValue;
 
-  ret = (p_term + i_term + d_term) / SCALING_FACTOR;
+  ret = (p_term + i_term + d_term)/* / SCALING_FACTOR*/;
   if(ret > MAX_INT){
     ret = MAX_INT;
   }
@@ -120,7 +120,7 @@ static void PID_Regulator_Task(void *pvParameters)
 	{
 		if( xSemaphoreTake( xPhazeSemaphore, ( portTickType ) portMAX_DELAY ) == pdTRUE )
 		{
-			Set_Heater_Power((uint8_t)pid_Controller(500,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
+			Set_Heater_Power((uint8_t)pid_Controller(700,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
 		}
 	}
 }

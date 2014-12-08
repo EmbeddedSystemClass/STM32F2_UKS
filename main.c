@@ -39,7 +39,7 @@ int main(void)
 	SystemInit();
 	USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
 	Buzzer_Init();
-////	Power_Detector_Init();
+	Power_Detector_Init();
 ////	Backup_SRAM_Init();
 	Phaze_Detector_Init();
 	HD44780_Init(20,4);

@@ -37,7 +37,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a0af1689c">
+      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a298ff715">
          <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis\core_cm4.h" lastModified="14a0a90fd24">
@@ -197,13 +197,13 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\portable.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h"/>
       </source>
+      <source file="..\..\..\usblib\usb_defines.h" lastModified="13349a79f90">
+         <include file="..\..\..\usblib\usb_conf.h"/>
+      </source>
       <source file="..\..\..\usblib\usbd_cdc_vcp.h" lastModified="14035fe1a20">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\usblib\usbd_cdc_core.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
-      </source>
-      <source file="..\..\..\usblib\usb_defines.h" lastModified="13349a79f90">
-         <include file="..\..\..\usblib\usb_conf.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_conf.h" lastModified="13ced9d7990">
       </source>
@@ -429,11 +429,11 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="14a0a917810">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_iwdg.h"/>
       </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14a2954a134">
+      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14a295bf5e9">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">
       </source>
-      <source file="..\..\..\main.c" lastModified="14a2942b9b5">
+      <source file="..\..\..\main.c" lastModified="14a29b1daae">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -542,9 +542,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a0af1689c">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14a0a912388">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
@@ -674,13 +671,13 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\portable.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h"/>
       </source>
+      <source file="..\..\..\usblib\usb_defines.h" lastModified="13349a79f90">
+         <include file="..\..\..\usblib\usb_conf.h"/>
+      </source>
       <source file="..\..\..\usblib\usbd_cdc_vcp.h" lastModified="14035fe1a20">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\usblib\usbd_cdc_core.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
-      </source>
-      <source file="..\..\..\usblib\usb_defines.h" lastModified="13349a79f90">
-         <include file="..\..\..\usblib\usb_conf.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_conf.h" lastModified="13ced9d7990">
       </source>
@@ -890,9 +887,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a0af1689c">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14a0a912388">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
@@ -1124,9 +1118,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a0af1689c">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
-      </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14a0a912388">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -1340,9 +1331,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a0af1689c">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
-      </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14a0a912388">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -1524,9 +1512,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a0af1689c">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14a0a912388">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
@@ -1750,9 +1735,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a0af1689c">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14a0a912388">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
