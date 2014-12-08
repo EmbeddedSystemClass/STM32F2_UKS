@@ -28,10 +28,21 @@
 #define ADS_WREG		0x40
 
 //reg config
-#define ADC_REG_CONFIG_00	0x00
+#define ADC_REG_CONFIG_00	0x06//gain =8
 #define ADC_REG_CONFIG_01	0x00
 #define ADC_REG_CONFIG_02	0x56
 #define ADC_REG_CONFIG_03	0x62
+
+#define ADC_FILTER_BUFFER_LEN	8
+
+struct ADS1120_result
+{
+	int32_t  result;
+	int32_t filter_buffer[ADC_FILTER_BUFFER_LEN];
+	uint8_t  filter_counter;
+};
+
 uint8_t ADS1120_init(void);
+int16_t PT100_Code_To_Temperature(int32_t adc_code);
 
 #endif

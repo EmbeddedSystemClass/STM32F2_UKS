@@ -116,6 +116,8 @@ uint32_t ADC_result_temp;
 int32_t ADC_result;
 uint8_t adc_reg;
 
+struct ADS1120_result ADS1120_res;
+
 enum
 {
 	ADS_REG_0=0x0,
@@ -123,10 +125,27 @@ enum
 	ADS_REG_2,
 	ADS_REG_3,
 };
+
+#define SWAP(A, B) { int32_t t = A; A = B; B = t; }
+
+void bubblesort_int32(int32_t *a, uint16_t n)
+{
+  uint16_t i, j;
+
+  for (i = n - 1; i > 0; i--)
+  {
+    for (j = 0; j < i; j++)
+    {
+      if (a[j] > a[j + 1])
+        SWAP( a[j], a[j + 1] );
+    }
+  }
+}
 //----------------------------------------------------------------
 static void ADS1120_task(void *pvParameters)//
 {
 	uint8_t str_buf[32];
+	ADS1120_res.filter_counter=0;
 
 	SPI2_GPIO_CS->BSRRH|=SPI2_CS1;// pin down SPI1_CS1
 	SPI2_send (ADS_RESET);
@@ -172,14 +191,49 @@ static void ADS1120_task(void *pvParameters)//
 			ADC_result=(int32_t)ADC_result_temp;
 		}
 
-		sprintf(str_buf,"VAL=%09d",ADC_result);
-		HD44780_Puts(0,0,str_buf);
+//		ADS1120_res.filter_buffer[ADS1120_res.filter_counter]=ADC_result;
+//		ADS1120_res.filter_counter++;
+//		ADS1120_res.filter_counter&=(ADC_FILTER_BUFFER_LEN-1);
+//
+//		   bubblesort_int32(ADS1120_res.filter_buffer,ADC_FILTER_BUFFER_LEN);
+//		   ADS1120_res.result=ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1];//((ADS1120_res.filter_buffer[(ADC_FILTER_BUFFER_LEN>>1)-1]+ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1])>>1);
+		ADS1120_res.result=ADC_result;
 
-		int32_t temp=(ADC_result/1568)-264;
-		sprintf(str_buf,"TEMP=%03d",temp);
+		sprintf(str_buf,"VAL=%09d",ADS1120_res.result);
+		HD44780_Puts(0,0,str_buf);
+//
+		int16_t temp=PT100_Code_To_Temperature(ADS1120_res.result);//(((ADC_result/8)/1568)-268);//-271
+		if(temp>=0)
+		{
+			sprintf(str_buf,"TEMP= %04d",(uint16_t)temp);
+		}
+		else
+		{
+			sprintf(str_buf,"TEMP=-%04d",(uint16_t)(-temp));
+		}
 		HD44780_Puts(0,1,str_buf);
 
 		vTaskDelay(100);
 	}
 }
 
+#define CURRENT_SOURCE  0.001014
+#define VOLTAGE_REF		2.0289
+#define	TEMP_0_RES		100.0
+#define TEMP_0			0
+#define TEMP_200_RES	175.86
+#define TEMP_200		2000
+#define ADC_MAX			0x7FFFFF
+#define ADC_GAIN		8
+
+int16_t PT100_Code_To_Temperature(int32_t adc_code)
+{
+	int32_t code_temp_0, code_temp_200;
+	int16_t result_temp=0;
+
+	code_temp_0  =(int32_t)(((float)(ADC_MAX)/VOLTAGE_REF)*CURRENT_SOURCE*TEMP_0_RES*ADC_GAIN);
+	code_temp_200=(int32_t)(((float)(ADC_MAX)/VOLTAGE_REF)*CURRENT_SOURCE*TEMP_200_RES*ADC_GAIN);
+
+	result_temp=(int16_t)(((float)(adc_code-code_temp_0))*(TEMP_200-TEMP_0)/(code_temp_200-code_temp_0)+TEMP_0);
+	return result_temp;
+}

@@ -7,6 +7,13 @@
 #include "queue.h"
 #include "semphr.h"
 
+#include "phaze_detector.h"
+#include "ADS1120.h"
+
+extern xSemaphoreHandle xPhazeSemaphore;
+extern struct ADS1120_result ADS1120_res;
+
+struct PID_DATA pid_heater;
 
 static void PID_Regulator_Task(void *pvParameters);
 
@@ -19,6 +26,10 @@ static void PID_Regulator_Task(void *pvParameters);
  *  \param d_factor  Derivate term.
  *  \param pid  Struct with PID status.
  */
+void PID_Heater_Init(void)
+{
+	pid_Init(1280,1,0,&pid_heater);
+}
 void pid_Init(int16_t p_factor, int16_t i_factor, int16_t d_factor, struct PID_DATA *pid)
 // Set up PID controller parameters
 {
@@ -107,6 +118,9 @@ static void PID_Regulator_Task(void *pvParameters)
 {
 	while(1)
 	{
-
+		if( xSemaphoreTake( xPhazeSemaphore, ( portTickType ) portMAX_DELAY ) == pdTRUE )
+		{
+			Set_Heater_Power((uint8_t)pid_Controller(500,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
+		}
 	}
 }

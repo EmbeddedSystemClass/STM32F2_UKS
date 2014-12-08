@@ -25,6 +25,7 @@
 #include "backup_sram.h"
 #include "hd44780.h"
 #include "rtc.h"
+#include "pid_regulator.h"
 
 #include "usbd_cdc_vcp.h" // подключаем USB CDC
 #include "usbd_cdc_core.h"
@@ -49,6 +50,7 @@ int main(void)
 
 	ADS1120_init();
 	ADC_Channel_Init();
+	PID_Heater_Init();
 //	RTC_Clock_Init();
 ////	Watchdog_Init();
 

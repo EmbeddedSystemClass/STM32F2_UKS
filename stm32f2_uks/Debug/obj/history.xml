@@ -10,8 +10,8 @@
       <target file="usbd_usr.o" lastModified="14a19b9e2a9">
          <source file="..\..\..\usblib\usbd_usr.c" lastModified="13ced9e2d40"/>
       </target>
-      <target file="phaze_detector.o" lastModified="14a1a7efa3a">
-         <source file="..\..\..\devices\phaze_detector.c" lastModified="14a1a7eee82"/>
+      <target file="phaze_detector.o" lastModified="14a292f8c96">
+         <source file="..\..\..\devices\phaze_detector.c" lastModified="14a292c528a"/>
       </target>
       <target file="misc.o" lastModified="14a19b9fe40">
          <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="14a0ae0f01f"/>
@@ -130,23 +130,23 @@
       <target file="stm32f4xx_spi.o" lastModified="14a19b9fd17">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14a0a9197dd"/>
       </target>
-      <target file="ADS1120.o" lastModified="14a1a7dd283">
-         <source file="..\..\..\devices\ADS1120.c" lastModified="14a1a7dc94c"/>
+      <target file="ADS1120.o" lastModified="14a292230d9">
+         <source file="..\..\..\devices\ADS1120.c" lastModified="14a29219ce6"/>
       </target>
-      <target file="main.o" lastModified="14a1a2ed9c7">
-         <source file="..\..\..\main.c" lastModified="14a195c8c40"/>
+      <target file="main.o" lastModified="14a29553381">
+         <source file="..\..\..\main.c" lastModified="14a2942b9b5"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="14a19b9f314">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="14a190cfb4b"/>
       </target>
-      <target file="pid_regulator.o" lastModified="14a19f4f6bf">
-         <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a19f4dd99"/>
-      </target>
-      <target file="heap_1.o" lastModified="14a19b9ff69">
-         <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c" lastModified="13e3b1eb900"/>
+      <target file="pid_regulator.o" lastModified="14a29566e72">
+         <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a295664bd"/>
       </target>
       <target file="usb_dcd_int.o" lastModified="14a19b9fa19">
          <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff"/>
+      </target>
+      <target file="heap_1.o" lastModified="14a19b9ff69">
+         <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c" lastModified="13e3b1eb900"/>
       </target>
    </processor>
    <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F405RG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\devices -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis_boot -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source\portable -ID:\PROJECTS\GIT_REPOSITORY -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis_lib\include -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\devices\hd44780_driver -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source -ID:\PROJECTS\GIT_REPOSITORY\STM32 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis_lib -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source\portable\ARM_CM3 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source\include">

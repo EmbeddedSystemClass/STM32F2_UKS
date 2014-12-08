@@ -16,6 +16,8 @@
 
 struct phaze_detector phaze_detect;
 
+xSemaphoreHandle xPhazeSemaphore;
+
 void Phaze_Detector_Init(void)
 {
 	RCC_AHB1PeriphClockCmd(ZERO_CROSS_PORT_RCC, ENABLE);//тактируем портј
@@ -69,7 +71,9 @@ void Phaze_Detector_Init(void)
 	NVIC_EnableIRQ(EXTI0_IRQn);
 	NVIC_EnableIRQ(EXTI1_IRQn);
 
+	vSemaphoreCreateBinary( xPhazeSemaphore );
 	Set_Heater_Power(5);
+
 }
 
 void Set_Heater_Power(uint8_t power)
@@ -85,6 +89,9 @@ static volatile uint8_t cross_counter=0;
 
 void EXTI0_IRQHandler(void)
 {
+ 	static portBASE_TYPE xHigherPriorityTaskWoken;
+ 	xHigherPriorityTaskWoken = pdFALSE;
+
     if(EXTI_GetITStatus(EXTI_Line0) != RESET)
     {
         EXTI_ClearITPendingBit(EXTI_Line0);
@@ -100,6 +107,12 @@ void EXTI0_IRQHandler(void)
         	if(cross_counter>=MAX_POWER_VALUE)
         	{
         		cross_counter=0;
+				xSemaphoreGiveFromISR( xPhazeSemaphore, &xHigherPriorityTaskWoken );
+
+				 if( xHigherPriorityTaskWoken != pdFALSE )
+				 {
+					portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+				 }
         	}
         }
         cross_counter++;
