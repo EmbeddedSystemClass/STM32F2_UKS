@@ -198,7 +198,7 @@ static void ADS1120_task(void *pvParameters)//
 //		   bubblesort_int32(ADS1120_res.filter_buffer,ADC_FILTER_BUFFER_LEN);
 //		   ADS1120_res.result=ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1];//((ADS1120_res.filter_buffer[(ADC_FILTER_BUFFER_LEN>>1)-1]+ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1])>>1);
 		ADS1120_res.result=ADC_result;
-
+		//HD44780_Init(20,4);
 		sprintf(str_buf,"VAL=%09d",ADS1120_res.result);
 		HD44780_Puts(0,0,str_buf);
 //

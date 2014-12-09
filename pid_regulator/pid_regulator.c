@@ -28,7 +28,7 @@ static void PID_Regulator_Task(void *pvParameters);
  */
 void PID_Heater_Init(void)
 {
-	pid_Init(0.9,0.010,0.0,&pid_heater);
+	pid_Init(10.0,0.002,0.001,&pid_heater);
 }
 void pid_Init(/*int16_t*/float p_factor, /*int16_t*/float i_factor, /*int16_t*/float d_factor, struct PID_DATA *pid)
 // Set up PID controller parameters

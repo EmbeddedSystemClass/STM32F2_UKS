@@ -73,13 +73,13 @@ void HD44780_Init(uint8_t cols, uint8_t rows) {
 
 void HD44780_InitPins(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
-	RCC_AHB1PeriphClockCmd(HD44780_RS_RCC | HD44780_E_RCC | HD44780_D4_RCC | HD44780_D5_RCC | HD44780_D6_RCC | HD44780_D7_RCC, ENABLE);
+	RCC_AHB1PeriphClockCmd(HD44780_RS_RCC | HD44780_E_RCC | HD44780_D4_RCC | HD44780_D5_RCC | HD44780_D6_RCC | HD44780_D7_RCC | HD44780_LIGHT_RCC, ENABLE);
 	
 	//Common settings
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_2MHz;
 	
 	//RS
 	GPIO_InitStruct.GPIO_Pin = HD44780_RS_PIN;
@@ -110,6 +110,10 @@ void HD44780_InitPins(void) {
 	GPIO_InitStruct.GPIO_Pin = HD44780_D7_PIN;
 	GPIO_Init(HD44780_D7_PORT, &GPIO_InitStruct);
 	GPIO_WriteBit(HD44780_D7_PORT, HD44780_D7_PIN, Bit_RESET);
+	//LIGHT
+	GPIO_InitStruct.GPIO_Pin = HD44780_LIGHT_PIN;
+	GPIO_Init(HD44780_LIGHT_PORT, &GPIO_InitStruct);
+	GPIO_WriteBit(HD44780_LIGHT_PORT, HD44780_LIGHT_PIN, Bit_SET);
 }
 
 void HD44780_Clear(void) {
