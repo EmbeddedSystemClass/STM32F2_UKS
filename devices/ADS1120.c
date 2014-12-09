@@ -202,14 +202,14 @@ static void ADS1120_task(void *pvParameters)//
 		sprintf(str_buf,"VAL=%09d",ADS1120_res.result);
 		HD44780_Puts(0,0,str_buf);
 //
-		int16_t temp=PT100_Code_To_Temperature(ADS1120_res.result);//(((ADC_result/8)/1568)-268);//-271
+		float temp=PT100_Code_To_Temperature(ADS1120_res.result);//(((ADC_result/8)/1568)-268);//-271
 		if(temp>=0)
 		{
-			sprintf(str_buf,"TEMP= %04d",(uint16_t)temp);
+			sprintf(str_buf,"TEMP= %03d.%01d",(uint16_t)temp,(uint16_t)(temp*10)%10);
 		}
 		else
 		{
-			sprintf(str_buf,"TEMP=-%04d",(uint16_t)(-temp));
+			sprintf(str_buf,"TEMP=-%03d.%01d",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
 		}
 		HD44780_Puts(0,1,str_buf);
 
@@ -220,20 +220,20 @@ static void ADS1120_task(void *pvParameters)//
 #define CURRENT_SOURCE  0.001014
 #define VOLTAGE_REF		2.0289
 #define	TEMP_0_RES		100.0
-#define TEMP_0			0
+#define TEMP_0			0.0
 #define TEMP_200_RES	175.86
-#define TEMP_200		2000
+#define TEMP_200		200.0
 #define ADC_MAX			0x7FFFFF
 #define ADC_GAIN		8
 
-int16_t PT100_Code_To_Temperature(int32_t adc_code)
+float PT100_Code_To_Temperature(int32_t adc_code)
 {
 	int32_t code_temp_0, code_temp_200;
-	int16_t result_temp=0;
+	float result_temp=0;
 
 	code_temp_0  =(int32_t)(((float)(ADC_MAX)/VOLTAGE_REF)*CURRENT_SOURCE*TEMP_0_RES*ADC_GAIN);
 	code_temp_200=(int32_t)(((float)(ADC_MAX)/VOLTAGE_REF)*CURRENT_SOURCE*TEMP_200_RES*ADC_GAIN);
 
-	result_temp=(int16_t)(((float)(adc_code-code_temp_0))*(TEMP_200-TEMP_0)/(code_temp_200-code_temp_0)+TEMP_0);
+	result_temp=(float)(((float)(adc_code-code_temp_0))*(TEMP_200-TEMP_0)/(code_temp_200-code_temp_0)+TEMP_0);
 	return result_temp;
 }

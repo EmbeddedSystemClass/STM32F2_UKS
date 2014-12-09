@@ -10,10 +10,22 @@
 #include "phaze_detector.h"
 #include "ADS1120.h"
 
+#include "stm32f4xx.h"
+#include "stm32f4xx_rcc.h"
+#include "stm32f4xx_gpio.h"
+
 extern xSemaphoreHandle xPhazeSemaphore;
 extern struct ADS1120_result ADS1120_res;
 
 struct PID_DATA pid_heater;
+
+enum
+{
+	TUMBLR_TEMP_1=0,
+	TUMBLR_TEMP_2=1
+};
+
+static volatile tumblr_state=TUMBLR_TEMP_1;
 
 static void PID_Regulator_Task(void *pvParameters);
 
@@ -28,9 +40,9 @@ static void PID_Regulator_Task(void *pvParameters);
  */
 void PID_Heater_Init(void)
 {
-	pid_Init(10.0,0.002,0.001,&pid_heater);
+	pid_Init(200.0,1.0,0.0,&pid_heater);
 }
-void pid_Init(/*int16_t*/float p_factor, /*int16_t*/float i_factor, /*int16_t*/float d_factor, struct PID_DATA *pid)
+void pid_Init(float p_factor, float i_factor, float d_factor, struct PID_DATA *pid)
 // Set up PID controller parameters
 {
   // Start values for PID controller
@@ -44,6 +56,20 @@ void pid_Init(/*int16_t*/float p_factor, /*int16_t*/float i_factor, /*int16_t*/f
   pid->maxError = MAX_INT / (pid->P_Factor + 1);
   pid->maxSumError = MAX_I_TERM / (pid->I_Factor + 1);
 
+    GPIO_InitTypeDef GPIO_InitStruct;
+  	RCC_AHB1PeriphClockCmd(TEMP_TUMBLR_RCC, ENABLE);
+
+  	//Common settings
+  	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+  	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+  	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+  	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_2MHz;
+
+  	//RS
+  	GPIO_InitStruct.GPIO_Pin = TEMP_TUMBLR_TEMP_1_PIN|TEMP_TUMBLR_TEMP_2_PIN;
+  	GPIO_Init(TEMP_TUMBLR_PORT, &GPIO_InitStruct);
+  	//GPIO_WriteBit(TEMP_TUMBLR_PORT, HD44780_RS_PIN, Bit_RESET);
+
   xTaskCreate(PID_Regulator_Task,(signed char*)"PID",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
@@ -56,10 +82,10 @@ void pid_Init(/*int16_t*/float p_factor, /*int16_t*/float i_factor, /*int16_t*/f
  *  \param processValue  Measured value.
  *  \param pid_st  PID status struct.
  */
-int16_t pid_Controller(int16_t setPoint, int16_t processValue, struct PID_DATA *pid_st)
+int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_st)
 {
-  int16_t error, p_term, d_term;
-  int32_t i_term, ret, temp;
+  float error, p_term, d_term;
+  float i_term, ret, temp;
 
   error = setPoint - processValue;
 
@@ -76,33 +102,37 @@ int16_t pid_Controller(int16_t setPoint, int16_t processValue, struct PID_DATA *
 
   // Calculate Iterm and limit integral runaway
   temp = pid_st->sumError + error;
-  if(temp > pid_st->maxSumError){
-    i_term = MAX_I_TERM;
-    pid_st->sumError = pid_st->maxSumError;
+  if(temp > pid_st->maxSumError)
+  {
+	  i_term = MAX_I_TERM;
+	  pid_st->sumError = pid_st->maxSumError;
   }
-  else if(temp < -pid_st->maxSumError){
-    i_term = -MAX_I_TERM;
-    pid_st->sumError = -pid_st->maxSumError;
+  else if(temp < -pid_st->maxSumError)
+  {
+	  i_term = -MAX_I_TERM;
+	  pid_st->sumError = -pid_st->maxSumError;
   }
-  else{
+  else
+  {
     pid_st->sumError = temp;
-    i_term =(int32_t)(pid_st->I_Factor * pid_st->sumError);
+    i_term =(float)(pid_st->I_Factor * pid_st->sumError);
   }
 
   // Calculate Dterm
-  d_term =(int16_t)(pid_st->D_Factor * (pid_st->lastProcessValue - processValue));
+  d_term =(float)(pid_st->D_Factor * (pid_st->lastProcessValue - processValue));
 
   pid_st->lastProcessValue = processValue;
 
   ret = (p_term + i_term + d_term)/* / SCALING_FACTOR*/;
-  if(ret > MAX_INT){
-    ret = MAX_INT;
+  if(ret > MAX_INT)
+  {
+	  ret = MAX_INT;
   }
   else if(ret < /*-MAX_INT*/0){
     ret = /*-MAX_INT*/0;
   }
 
-  return((int16_t)ret);
+  return((float)ret);
 }
 
 /*! \brief Resets the integrator.
@@ -120,7 +150,30 @@ static void PID_Regulator_Task(void *pvParameters)
 	{
 		if( xSemaphoreTake( xPhazeSemaphore, ( portTickType ) portMAX_DELAY ) == pdTRUE )
 		{
-			Set_Heater_Power((uint8_t)pid_Controller(700,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
+			if(GPIO_ReadInputDataBit(TEMP_TUMBLR_PORT,TEMP_TUMBLR_TEMP_1_PIN)==Bit_RESET)
+			{
+				if(tumblr_state!=TUMBLR_TEMP_1)
+				{
+					tumblr_state=TUMBLR_TEMP_1;
+					pid_heater.sumError = 0;
+					pid_heater.lastProcessValue = 0;
+					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
+					pid_heater.maxSumError = MAX_I_TERM / (pid_heater.I_Factor + 1);
+				}
+				Set_Heater_Power((uint8_t)pid_Controller(70.0,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
+			}
+			else
+			{
+				if(tumblr_state!=TUMBLR_TEMP_2)
+				{
+					tumblr_state=TUMBLR_TEMP_2;
+					pid_heater.sumError = 0;
+					pid_heater.lastProcessValue = 0;
+					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
+					pid_heater.maxSumError = MAX_I_TERM / (pid_heater.I_Factor + 1);
+				}
+				Set_Heater_Power((uint8_t)pid_Controller(50.0,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
+			}
 		}
 	}
 }

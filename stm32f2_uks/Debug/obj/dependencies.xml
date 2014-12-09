@@ -1428,6 +1428,9 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
+      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a2de0adb9">
+         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
+      </source>
       <source file="..\..\..\cmsis\core_cm4.h" lastModified="14a0a90fd24">
          <include file="..\..\..\cmsis\core_cmInstr.h"/>
          <include file="..\..\..\cmsis\core_cmFunc.h"/>
@@ -1708,7 +1711,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\ADS1120.h" lastModified="14a26c462ab">
+      <source file="..\..\..\devices\ADS1120.h" lastModified="14a2e07df1c">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\devices\adc.h" lastModified="14a150f06df">
@@ -1740,7 +1743,7 @@
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
-      <source file="..\..\..\devices\ADS1120.c" lastModified="14a2a112815">
+      <source file="..\..\..\devices\ADS1120.c" lastModified="14a2e14f729">
          <include file="..\..\..\devices\ADS1120.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
@@ -1817,7 +1820,7 @@
       <source file="..\..\..\devices\hd44780_driver\delay.c" lastModified="14a190cc73b">
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14a295bf5e9">
+      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14a2e83a8de">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">
       </source>
@@ -1850,15 +1853,6 @@
          <include file="..\..\..\usblib\usbd_usr.h"/>
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
-      </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a29e28f10">
-         <include file="..\..\..\pid_regulator\pid_regulator.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\phaze_detector.h"/>
-         <include file="..\..\..\devices\ADS1120.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_adc.c" lastModified="14a0a91de2d">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_adc.h"/>

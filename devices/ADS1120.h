@@ -43,6 +43,6 @@ struct ADS1120_result
 };
 
 uint8_t ADS1120_init(void);
-int16_t PT100_Code_To_Temperature(int32_t adc_code);
+float PT100_Code_To_Temperature(int32_t adc_code);
 
 #endif
