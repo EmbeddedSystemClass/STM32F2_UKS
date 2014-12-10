@@ -4,6 +4,7 @@
 void HD44780_InitPins(void);
 void HD44780_Cmd(uint8_t cmd);
 void HD44780_Cmd4bit(uint8_t cmd);
+void HD44780_Cmd8bit(uint8_t cmd);
 void HD44780_Data(uint8_t data);
 void HD44780_CursorSet(uint8_t col, uint8_t row);
 
@@ -19,6 +20,8 @@ typedef struct {
 
 HD44780_Options_t HD44780_Opts;
 
+#define HD44780_SET_8BITMODE
+
 void HD44780_Init(uint8_t cols, uint8_t rows) {
 	DELAY_Init();
 	
@@ -33,7 +36,14 @@ void HD44780_Init(uint8_t cols, uint8_t rows) {
 	HD44780_Opts.currentX = 0;
 	HD44780_Opts.currentY = 0;
 	
+
+
+#ifdef HD44780_SET_8BITMODE
+	HD44780_Opts.DisplayFunction = HD44780_8BITMODE | HD44780_5x8DOTS | HD44780_1LINE;
+#else
 	HD44780_Opts.DisplayFunction = HD44780_4BITMODE | HD44780_5x8DOTS | HD44780_1LINE;
+#endif
+
 	if (rows > 1) {
 		HD44780_Opts.DisplayFunction |= HD44780_2LINE;
 	}
@@ -49,10 +59,12 @@ void HD44780_Init(uint8_t cols, uint8_t rows) {
 	//Third goo!
 	HD44780_Cmd4bit(0x03);
 	HD44780_Delay(4500);
-	
+
+#ifndef HD44780_SET_8BITMODE
 	//Set 4-bit interface
 	HD44780_Cmd4bit(0x02);
 	HD44780_Delay(100);
+#endif
 	
 	//set # lines, font size, etc.
 	HD44780_Cmd(HD44780_FUNCTIONSET | HD44780_Opts.DisplayFunction);
@@ -73,47 +85,72 @@ void HD44780_Init(uint8_t cols, uint8_t rows) {
 
 void HD44780_InitPins(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
-	RCC_AHB1PeriphClockCmd(HD44780_RS_RCC | HD44780_E_RCC | HD44780_D4_RCC | HD44780_D5_RCC | HD44780_D6_RCC | HD44780_D7_RCC | HD44780_LIGHT_RCC, ENABLE);
+	RCC_AHB1PeriphClockCmd(HD44780_RCC|HD44780_LIGHT_RCC, ENABLE);
 	
 	//Common settings
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_2MHz;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
 	
+	GPIO_InitStruct.GPIO_Pin = HD44780_RS_PIN|HD44780_E_PIN|HD44780_D0_PIN|HD44780_D1_PIN|HD44780_D2_PIN|HD44780_D3_PIN|HD44780_D4_PIN|HD44780_D5_PIN|HD44780_D6_PIN|HD44780_D7_PIN;
+	GPIO_Init(HD44780_PORT, &GPIO_InitStruct);
+	//GPIO_WriteBit(HD44780_RS_PORT, HD44780_RS_PIN, Bit_RESET);
+	HD44780_PORT->BSRRH=HD44780_RS_PIN|HD44780_E_PIN|HD44780_D0_PIN|HD44780_D1_PIN|HD44780_D2_PIN|HD44780_D3_PIN|HD44780_D4_PIN|HD44780_D5_PIN|HD44780_D6_PIN|HD44780_D7_PIN;
 	//RS
-	GPIO_InitStruct.GPIO_Pin = HD44780_RS_PIN;
-	GPIO_Init(HD44780_RS_PORT, &GPIO_InitStruct);
-	GPIO_WriteBit(HD44780_RS_PORT, HD44780_RS_PIN, Bit_RESET);
-	
-	//E
-	GPIO_InitStruct.GPIO_Pin = HD44780_E_PIN;
-	GPIO_Init(HD44780_E_PORT, &GPIO_InitStruct);
-	GPIO_WriteBit(HD44780_E_PORT, HD44780_E_PIN, Bit_RESET);
-	
-	//D4
-	GPIO_InitStruct.GPIO_Pin = HD44780_D4_PIN;
-	GPIO_Init(HD44780_D4_PORT, &GPIO_InitStruct);
-	GPIO_WriteBit(HD44780_D4_PORT, HD44780_D4_PIN, Bit_RESET);
-	
-	//D5
-	GPIO_InitStruct.GPIO_Pin = HD44780_D5_PIN;
-	GPIO_Init(HD44780_D5_PORT, &GPIO_InitStruct);
-	GPIO_WriteBit(HD44780_D5_PORT, HD44780_D5_PIN, Bit_RESET);
-	
-	//D6
-	GPIO_InitStruct.GPIO_Pin = HD44780_D6_PIN;
-	GPIO_Init(HD44780_D6_PORT, &GPIO_InitStruct);
-	GPIO_WriteBit(HD44780_D6_PORT, HD44780_D6_PIN, Bit_RESET);
-	
-	//D7
-	GPIO_InitStruct.GPIO_Pin = HD44780_D7_PIN;
-	GPIO_Init(HD44780_D7_PORT, &GPIO_InitStruct);
-	GPIO_WriteBit(HD44780_D7_PORT, HD44780_D7_PIN, Bit_RESET);
+//	GPIO_InitStruct.GPIO_Pin = HD44780_RS_PIN;
+//	GPIO_Init(HD44780_RS_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_RS_PORT, HD44780_RS_PIN, Bit_RESET);
+//
+//	//E
+//	GPIO_InitStruct.GPIO_Pin = HD44780_E_PIN;
+//	GPIO_Init(HD44780_E_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_E_PORT, HD44780_E_PIN, Bit_RESET);
+//
+//	//D0
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D0_PIN;
+//	GPIO_Init(HD44780_D0_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D0_PORT, HD44780_D0_PIN, Bit_RESET);
+//
+//	//D1
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D1_PIN;
+//	GPIO_Init(HD44780_D1_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D1_PORT, HD44780_D1_PIN, Bit_RESET);
+//
+//	//D2
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D2_PIN;
+//	GPIO_Init(HD44780_D2_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D2_PORT, HD44780_D2_PIN, Bit_RESET);
+//
+//	//D3
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D3_PIN;
+//	GPIO_Init(HD44780_D3_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D3_PORT, HD44780_D3_PIN, Bit_RESET);
+//
+//	//D4
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D4_PIN;
+//	GPIO_Init(HD44780_D4_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D4_PORT, HD44780_D4_PIN, Bit_RESET);
+//
+//	//D5
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D5_PIN;
+//	GPIO_Init(HD44780_D5_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D5_PORT, HD44780_D5_PIN, Bit_RESET);
+//
+//	//D6
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D6_PIN;
+//	GPIO_Init(HD44780_D6_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D6_PORT, HD44780_D6_PIN, Bit_RESET);
+//
+//	//D7
+//	GPIO_InitStruct.GPIO_Pin = HD44780_D7_PIN;
+//	GPIO_Init(HD44780_D7_PORT, &GPIO_InitStruct);
+//	GPIO_WriteBit(HD44780_D7_PORT, HD44780_D7_PIN, Bit_RESET);
 	//LIGHT
 	GPIO_InitStruct.GPIO_Pin = HD44780_LIGHT_PIN;
 	GPIO_Init(HD44780_LIGHT_PORT, &GPIO_InitStruct);
 	GPIO_WriteBit(HD44780_LIGHT_PORT, HD44780_LIGHT_PIN, Bit_SET);
+	//HD44780_LIGHT_PORT->BSRRL=HD44780_LIGHT_PIN;
 }
 
 void HD44780_Clear(void) {
@@ -123,24 +160,72 @@ void HD44780_Clear(void) {
 
 void HD44780_Cmd(uint8_t cmd) {
 	HD44780_RS_LOW;
-	
+#ifdef HD44780_SET_8BITMODE
+	HD44780_Cmd8bit(cmd);
+#else
 	HD44780_Cmd4bit(cmd >> 4);			//High nibble
 	HD44780_Cmd4bit(cmd & 0x0F);			//Low nibble
+#endif
 }
 
 void HD44780_Data(uint8_t data) {
 	HD44780_RS_HIGH;
-	
+#ifdef HD44780_SET_8BITMODE
+	HD44780_Cmd8bit(data);
+#else
 	HD44780_Cmd4bit(data >> 4);			//High nibble
 	HD44780_Cmd4bit(data & 0x0F);		//Low nibble
+#endif
 }
 
+#define HD44780_DATA_BUS_4_BIT_SHIFT 6
+#define HD44780_DATA_BUS_4_BIT_MASK 0xFC3F
+#define HD44780_DATA_BUS_4_BIT_MASK_INV 0x03C0
+
 void HD44780_Cmd4bit(uint8_t cmd) {
-	GPIO_WriteBit(HD44780_D7_PORT, HD44780_D7_PIN, (cmd & 0x08) != 0 ? Bit_SET : Bit_RESET);
-	GPIO_WriteBit(HD44780_D6_PORT, HD44780_D6_PIN, (cmd & 0x04) != 0 ? Bit_SET : Bit_RESET);
-	GPIO_WriteBit(HD44780_D5_PORT, HD44780_D5_PIN, (cmd & 0x02) != 0 ? Bit_SET : Bit_RESET);
-	GPIO_WriteBit(HD44780_D4_PORT, HD44780_D4_PIN, (cmd & 0x01) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D7_PORT, HD44780_D7_PIN, (cmd & 0x08) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D6_PORT, HD44780_D6_PIN, (cmd & 0x04) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D5_PORT, HD44780_D5_PIN, (cmd & 0x02) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D4_PORT, HD44780_D4_PIN, (cmd & 0x01) != 0 ? Bit_SET : Bit_RESET);
+	uint16_t temp=(uint16_t)cmd;
+	temp=(temp<<HD44780_DATA_BUS_4_BIT_SHIFT)&HD44780_DATA_BUS_4_BIT_MASK_INV;
+	HD44780_PORT->ODR&=HD44780_DATA_BUS_4_BIT_MASK;
+	HD44780_PORT->ODR|=temp;
+
 	HD44780_E_BLINK;
+
+	HD44780_PORT->ODR&=HD44780_DATA_BUS_4_BIT_MASK;
+}
+#define HD44780_DATA_BUS_SHIFT 2
+#define HD44780_DATA_BUS_MASK 0xFC03
+#define HD44780_DATA_BUS_MASK_INV 0x03FC
+void HD44780_Cmd8bit(uint8_t cmd)
+{
+//	GPIO_WriteBit(HD44780_D7_PORT, HD44780_D7_PIN, (cmd & 0x80) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D6_PORT, HD44780_D6_PIN, (cmd & 0x40) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D5_PORT, HD44780_D5_PIN, (cmd & 0x20) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D4_PORT, HD44780_D4_PIN, (cmd & 0x10) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D3_PORT, HD44780_D3_PIN, (cmd & 0x08) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D2_PORT, HD44780_D2_PIN, (cmd & 0x04) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D1_PORT, HD44780_D1_PIN, (cmd & 0x02) != 0 ? Bit_SET : Bit_RESET);
+//	GPIO_WriteBit(HD44780_D0_PORT, HD44780_D0_PIN, (cmd & 0x01) != 0 ? Bit_SET : Bit_RESET);
+
+	uint16_t temp=(uint16_t)cmd;
+	temp=(temp<<HD44780_DATA_BUS_SHIFT)&HD44780_DATA_BUS_MASK_INV;
+	HD44780_PORT->ODR&=HD44780_DATA_BUS_MASK;
+	HD44780_PORT->ODR|=temp;
+
+	HD44780_E_BLINK;
+
+//	GPIO_WriteBit(HD44780_D7_PORT, HD44780_D7_PIN,  Bit_RESET);
+//	GPIO_WriteBit(HD44780_D6_PORT, HD44780_D6_PIN,  Bit_RESET);
+//	GPIO_WriteBit(HD44780_D5_PORT, HD44780_D5_PIN,  Bit_RESET);
+//	GPIO_WriteBit(HD44780_D4_PORT, HD44780_D4_PIN,  Bit_RESET);
+//	GPIO_WriteBit(HD44780_D3_PORT, HD44780_D3_PIN,  Bit_RESET);
+//	GPIO_WriteBit(HD44780_D2_PORT, HD44780_D2_PIN,  Bit_RESET);
+//	GPIO_WriteBit(HD44780_D1_PORT, HD44780_D1_PIN,  Bit_RESET);
+//	GPIO_WriteBit(HD44780_D0_PORT, HD44780_D0_PIN,  Bit_RESET);
+	HD44780_PORT->ODR&=HD44780_DATA_BUS_MASK;
 }
 
 void HD44780_CursorSet(uint8_t col, uint8_t row) {

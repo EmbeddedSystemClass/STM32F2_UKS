@@ -148,6 +148,7 @@
     <File name="cmsis_lib/include/stm32f4xx_rtc.h" path="cmsis_lib/include/stm32f4xx_rtc.h" type="1"/>
     <File name="devices/rtc.h" path="devices/rtc.h" type="1"/>
     <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
+    <File name="devices/hd44780_driver/display.c" path="devices/hd44780_driver/display.c" type="1"/>
     <File name="usb_cdc" path="" type="2"/>
     <File name="usb_cdc/usblib/usb_core.c" path="usblib/usb_core.c" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/queue.h" path="FreeRTOSV7.1.0/Source/include/queue.h" type="1"/>
@@ -181,8 +182,8 @@
     <File name="cmsis_lib/include/stm32f4xx_tim.h" path="cmsis_lib/include/stm32f4xx_tim.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_adc.c" path="cmsis_lib/source/stm32f4xx_adc.c" type="1"/>
     <File name="devices/phaze_detector.c" path="devices/phaze_detector.c" type="1"/>
-    <File name="cmsis_lib/source" path="" type="2"/>
     <File name="usb_cdc/usblib/usb_dcd.c" path="usblib/usb_dcd.c" type="1"/>
+    <File name="cmsis_lib/source" path="" type="2"/>
     <File name="usb_cdc/usblib/usb_defines.h" path="usblib/usb_defines.h" type="1"/>
     <File name="cmsis_boot/stm32f4xx_conf.h" path="cmsis_boot/stm32f4xx_conf.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable" path="" type="2"/>
@@ -221,6 +222,7 @@
     <File name="usb_cdc/usblib/usb_regs.h" path="usblib/usb_regs.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source" path="" type="2"/>
     <File name="cmsis_lib/include" path="" type="2"/>
+    <File name="devices/hd44780_driver/display.h" path="devices/hd44780_driver/display.h" type="1"/>
     <File name="FreeRTOSConfig.h" path="FreeRTOSConfig.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/StackMacros.h" path="FreeRTOSV7.1.0/Source/include/StackMacros.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/semphr.h" path="FreeRTOSV7.1.0/Source/include/semphr.h" type="1"/>

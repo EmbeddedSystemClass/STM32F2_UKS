@@ -1422,14 +1422,11 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
       </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.h" lastModified="14a2dc4a67e">
+      <source file="..\..\..\devices\hd44780_driver\hd44780.h" lastModified="14a32ec0680">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a2de0adb9">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis\core_cm4.h" lastModified="14a0a90fd24">
          <include file="..\..\..\cmsis\core_cmInstr.h"/>
@@ -1492,12 +1489,25 @@
          <include file="..\..\..\cmsis_boot\system_stm32f4xx.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
       </source>
+      <source file="..\..\..\devices\hd44780_driver\display.h" lastModified="14a2ef983e3">
+      </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_usart.c" lastModified="14a154fb289">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_usart.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h" lastModified="14a0a930d85">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      </source>
+      <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a2f079cb7">
+         <include file="..\..\..\devices\hd44780_driver\display.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\watchdog.h"/>
+         <include file="..\..\..\devices\uks.h"/>
+         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
+         <include file="..\..\..\devices\ADS1120.h"/>
       </source>
       <source file="..\..\..\devices\keyboard.h" lastModified="1471a1728c3">
       </source>
@@ -1743,7 +1753,7 @@
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
-      <source file="..\..\..\devices\ADS1120.c" lastModified="14a2e14f729">
+      <source file="..\..\..\devices\ADS1120.c" lastModified="14a2efcea30">
          <include file="..\..\..\devices\ADS1120.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
@@ -1827,7 +1837,7 @@
       <source file="..\..\..\usblib\usb_regs.h" lastModified="13349a79f90">
          <include file="..\..\..\usblib\usb_conf.h"/>
       </source>
-      <source file="..\..\..\main.c" lastModified="14a2dbd7771">
+      <source file="..\..\..\main.c" lastModified="14a2efb139b">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -1845,7 +1855,7 @@
          <include file="..\..\..\devices\power_detector.h"/>
          <include file="..\..\..\devices\phaze_detector.h"/>
          <include file="..\..\..\devices\backup_sram.h"/>
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
+         <include file="..\..\..\devices\hd44780_driver\display.h"/>
          <include file="..\..\..\devices\rtc.h"/>
          <include file="..\..\..\pid_regulator\pid_regulator.h"/>
          <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
@@ -1853,6 +1863,18 @@
          <include file="..\..\..\usblib\usbd_usr.h"/>
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
+      </source>
+      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a2e8e17c4">
+         <include file="..\..\..\pid_regulator\pid_regulator.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\phaze_detector.h"/>
+         <include file="..\..\..\devices\ADS1120.h"/>
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_adc.c" lastModified="14a0a91de2d">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_adc.h"/>

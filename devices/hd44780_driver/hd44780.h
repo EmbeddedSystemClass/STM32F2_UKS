@@ -70,8 +70,14 @@
 #include "stm32f4xx_gpio.h"
 #include "delay.h"
 
-/* 4 bit mode */
+
 /* Control pins, can be overwritten */
+
+
+#define  HD44780_RCC			RCC_AHB1Periph_GPIOC
+#define  HD44780_PORT			GPIOC
+
+
 /* RS - Register select pin */
 #ifndef  HD44780_RS_PIN
 #define  HD44780_RS_RCC				RCC_AHB1Periph_GPIOC
@@ -85,6 +91,30 @@
 #define  HD44780_E_PIN				GPIO_Pin_1
 #endif
 /* Data pins */
+/* D0 - Data 4 pin */
+#ifndef  HD44780_D0_PIN
+#define  HD44780_D0_RCC				RCC_AHB1Periph_GPIOC
+#define  HD44780_D0_PORT			GPIOC
+#define  HD44780_D0_PIN				GPIO_Pin_2
+#endif
+/* D1 - Data 4 pin */
+#ifndef  HD44780_D1_PIN
+#define  HD44780_D1_RCC				RCC_AHB1Periph_GPIOC
+#define  HD44780_D1_PORT			GPIOC
+#define  HD44780_D1_PIN				GPIO_Pin_3
+#endif
+/* D2 - Data 4 pin */
+#ifndef  HD44780_D2_PIN
+#define  HD44780_D2_RCC				RCC_AHB1Periph_GPIOC
+#define  HD44780_D2_PORT			GPIOC
+#define  HD44780_D2_PIN				GPIO_Pin_4
+#endif
+/* D3 - Data 4 pin */
+#ifndef  HD44780_D3_PIN
+#define  HD44780_D3_RCC				RCC_AHB1Periph_GPIOC
+#define  HD44780_D3_PORT			GPIOC
+#define  HD44780_D3_PIN				GPIO_Pin_5
+#endif
 /* D4 - Data 4 pin */
 #ifndef  HD44780_D4_PIN
 #define  HD44780_D4_RCC				RCC_AHB1Periph_GPIOC
@@ -116,15 +146,15 @@
 #define  HD44780_LIGHT_PIN				GPIO_Pin_2
 #endif
 
-#define  HD44780_RS_LOW				GPIO_WriteBit( HD44780_RS_PORT,  HD44780_RS_PIN, Bit_RESET)
-#define  HD44780_RS_HIGH			GPIO_WriteBit( HD44780_RS_PORT,  HD44780_RS_PIN, Bit_SET)
-#define  HD44780_E_LOW				GPIO_WriteBit( HD44780_E_PORT,  HD44780_E_PIN, Bit_RESET)
-#define  HD44780_E_HIGH				GPIO_WriteBit( HD44780_E_PORT,  HD44780_E_PIN, Bit_SET)
+#define  HD44780_RS_LOW				HD44780_PORT->BSRRH=HD44780_RS_PIN;//GPIO_WriteBit( HD44780_RS_PORT,  HD44780_RS_PIN, Bit_RESET)
+#define  HD44780_RS_HIGH			HD44780_PORT->BSRRL=HD44780_RS_PIN;//GPIO_WriteBit( HD44780_RS_PORT,  HD44780_RS_PIN, Bit_SET)
+#define  HD44780_E_LOW				HD44780_PORT->BSRRH=HD44780_E_PIN;//GPIO_WriteBit( HD44780_E_PORT,  HD44780_E_PIN, Bit_RESET)
+#define  HD44780_E_HIGH				HD44780_PORT->BSRRL=HD44780_E_PIN;//GPIO_WriteBit( HD44780_E_PORT,  HD44780_E_PIN, Bit_SET)
 
-#define  HD44780_LIGHT_OFF			GPIO_WriteBit( HD44780_LIGHT_PORT,  HD44780_LIGHT_PIN, Bit_RESET)
-#define  HD44780_LIGHT_ON   		GPIO_WriteBit( HD44780_LIGHT_PORT,  HD44780_LIGHT_PIN, Bit_SET)
+#define  HD44780_LIGHT_OFF			HD44780_LIGHT_PORT->BSRRH=HD44780_LIGHT_PIN;//GPIO_WriteBit( HD44780_LIGHT_PORT,  HD44780_LIGHT_PIN, Bit_RESET)
+#define  HD44780_LIGHT_ON   		HD44780_LIGHT_PORT->BSRRL=HD44780_LIGHT_PIN;//GPIO_WriteBit( HD44780_LIGHT_PORT,  HD44780_LIGHT_PIN, Bit_SET)
 
-#define  HD44780_E_BLINK			HD44780_E_HIGH;  HD44780_Delay(20);  HD44780_E_LOW;  HD44780_Delay(20)
+#define  HD44780_E_BLINK			HD44780_Delay(5); HD44780_E_HIGH;  HD44780_Delay(20);  HD44780_E_LOW;  HD44780_Delay(20)
 #define  HD44780_Delay(x)			Delay(x)
 
 //Commands

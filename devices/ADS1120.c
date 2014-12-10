@@ -198,20 +198,20 @@ static void ADS1120_task(void *pvParameters)//
 //		   bubblesort_int32(ADS1120_res.filter_buffer,ADC_FILTER_BUFFER_LEN);
 //		   ADS1120_res.result=ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1];//((ADS1120_res.filter_buffer[(ADC_FILTER_BUFFER_LEN>>1)-1]+ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1])>>1);
 		ADS1120_res.result=ADC_result;
-		//HD44780_Init(20,4);
-		sprintf(str_buf,"VAL=%09d",ADS1120_res.result);
-		HD44780_Puts(0,0,str_buf);
-//
-		float temp=PT100_Code_To_Temperature(ADS1120_res.result);//(((ADC_result/8)/1568)-268);//-271
-		if(temp>=0)
-		{
-			sprintf(str_buf,"TEMP= %03d.%01d",(uint16_t)temp,(uint16_t)(temp*10)%10);
-		}
-		else
-		{
-			sprintf(str_buf,"TEMP=-%03d.%01d",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
-		}
-		HD44780_Puts(0,1,str_buf);
+//		//HD44780_Init(20,4);
+//		sprintf(str_buf,"VAL=%09d",ADS1120_res.result);
+//		HD44780_Puts(0,0,str_buf);
+////
+//		float temp=PT100_Code_To_Temperature(ADS1120_res.result);//(((ADC_result/8)/1568)-268);//-271
+//		if(temp>=0)
+//		{
+//			sprintf(str_buf,"TEMP= %03d.%01d",(uint16_t)temp,(uint16_t)(temp*10)%10);
+//		}
+//		else
+//		{
+//			sprintf(str_buf,"TEMP=-%03d.%01d",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+//		}
+//		HD44780_Puts(0,1,str_buf);
 
 		vTaskDelay(100);
 	}

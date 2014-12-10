@@ -23,7 +23,8 @@
 #include "power_detector.h"
 #include "phaze_detector.h"
 #include "backup_sram.h"
-#include "hd44780.h"
+//#include "hd44780.h"
+#include "display.h"
 #include "rtc.h"
 #include "pid_regulator.h"
 
@@ -42,8 +43,8 @@ int main(void)
 	Power_Detector_Init();
 ////	Backup_SRAM_Init();
 	Phaze_Detector_Init();
-	HD44780_Init(20,4);
-
+	//HD44780_Init(20,4);
+	Display_Init();
 
 	ADS1120_init();
 	ADC_Channel_Init();
