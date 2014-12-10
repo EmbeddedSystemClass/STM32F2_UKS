@@ -1428,6 +1428,9 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
+      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a32f0cf2c">
+         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
+      </source>
       <source file="..\..\..\cmsis\core_cm4.h" lastModified="14a0a90fd24">
          <include file="..\..\..\cmsis\core_cmInstr.h"/>
          <include file="..\..\..\cmsis\core_cmFunc.h"/>
@@ -1497,17 +1500,6 @@
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h" lastModified="14a0a930d85">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a2f079cb7">
-         <include file="..\..\..\devices\hd44780_driver\display.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\watchdog.h"/>
-         <include file="..\..\..\devices\uks.h"/>
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
-         <include file="..\..\..\devices\ADS1120.h"/>
       </source>
       <source file="..\..\..\devices\keyboard.h" lastModified="1471a1728c3">
       </source>
