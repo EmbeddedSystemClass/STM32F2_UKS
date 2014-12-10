@@ -14,13 +14,13 @@
 #include "string.h"
 #include "hd44780.h"
 
-#include "usbd_cdc_vcp.h" // подключаем USB CDC
-#include "usbd_cdc_core.h"
-#include "usbd_usr.h"
-#include "usbd_desc.h"
-#include "usb_dcd_int.h"
-
-__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+//#include "usbd_cdc_vcp.h" // подключаем USB CDC
+//#include "usbd_cdc_core.h"
+//#include "usbd_usr.h"
+//#include "usbd_desc.h"
+//#include "usb_dcd_int.h"
+//
+//__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
 struct adc_lm35_channels adc_lm35_chnl;
 
@@ -87,6 +87,10 @@ void bubblesort(uint16_t *a, uint16_t n)
 }
 
 #define NUM_CONV	16
+#define MAX_ADC_CODE 	4095
+#define MAX_ADC_VOLTAGE	3.3
+#define LM35_V_FOR_C	0.01
+
 static void ADC_Task(void *pvParameters)
 {
 		uint8_t i=0,j=0;
@@ -119,6 +123,6 @@ static void ADC_Task(void *pvParameters)
 //			  HD44780_Puts(0,3,str_buf);
 
 
-			  vTaskDelay(300);
+			  vTaskDelay(1000);
 		}
 }

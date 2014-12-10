@@ -58,8 +58,8 @@
       <target file="usb_bsp.o" lastModified="14a19b9f75a">
          <source file="..\..\..\usblib\usb_bsp.c" lastModified="14a1577374c"/>
       </target>
-      <target file="uks.o" lastModified="14a19b9ea6a">
-         <source file="..\..\..\devices\uks.c" lastModified="14a0f901ed8"/>
+      <target file="uks.o" lastModified="14a34285e44">
+         <source file="..\..\..\devices\uks.c" lastModified="14a34285403"/>
       </target>
       <target file="usbd_core.o" lastModified="14a19b9e950">
          <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0"/>
@@ -94,7 +94,7 @@
       <target file="port.o" lastModified="14a19b9f93e">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12"/>
       </target>
-      <target file="buzzer.o" lastModified="14a19b9e326">
+      <target file="buzzer.o" lastModified="14a34285d69">
          <source file="..\..\..\devices\buzzer.c" lastModified="14a0fba06b0"/>
       </target>
       <target file="usb_dcd.o" lastModified="14a19b9feec">
@@ -124,8 +124,8 @@
       <target file="stm32f4xx_syscfg.o" lastModified="14a19b9e077">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="14a0a930df3"/>
       </target>
-      <target file="adc.o" lastModified="14a32ec193d">
-         <source file="..\..\..\devices\adc.c" lastModified="14a1a129d52"/>
+      <target file="adc.o" lastModified="14a33eda32c">
+         <source file="..\..\..\devices\adc.c" lastModified="14a33ed5e24"/>
       </target>
       <target file="stm32f4xx_spi.o" lastModified="14a19b9fd17">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14a0a9197dd"/>
@@ -148,7 +148,7 @@
       <target file="usb_dcd_int.o" lastModified="14a19b9fa19">
          <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff"/>
       </target>
-      <target file="display.o" lastModified="14a32fd9204">
+      <target file="display.o" lastModified="14a34285fcb">
          <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a32fd8775"/>
       </target>
    </processor>
