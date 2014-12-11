@@ -11,6 +11,7 @@
 #include "stdio.h"
 
 extern struct ADS1120_result ADS1120_res;
+extern struct uks uks_channels;
 
 void Display_Task(void *pvParameters );
 
@@ -41,21 +42,32 @@ void Display_Task(void *pvParameters )
 		}
 
 
-		sprintf(str_buf,"VAL=%09d_______",ADS1120_res.result);
+		sprintf(str_buf,"VAL=%09d       ",ADS1120_res.result);
 		HD44780_Puts(0,0,str_buf);
 //
 		float temp=PT100_Code_To_Temperature(ADS1120_res.result);
 		if(temp>=0)
 		{
-			sprintf(str_buf,"TEMP= %03d.%01d_________",(uint16_t)temp,(uint16_t)(temp*10)%10);
+			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
 		}
 		else
 		{
-			sprintf(str_buf,"TEMP=-%03d.%01d_________",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
 		}
 
 
 		HD44780_Puts(0,1,str_buf);
+
+		temp=uks_channels.drying_channel_list[0].temperature;
+		if(temp>=0)
+		{
+			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+		}
+		else
+		{
+			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+		}
+
 		HD44780_Puts(0,2,str_buf);
 		HD44780_Puts(0,3,str_buf);
 

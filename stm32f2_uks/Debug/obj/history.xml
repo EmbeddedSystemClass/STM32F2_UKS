@@ -58,8 +58,8 @@
       <target file="usb_bsp.o" lastModified="14a19b9f75a">
          <source file="..\..\..\usblib\usb_bsp.c" lastModified="14a1577374c"/>
       </target>
-      <target file="uks.o" lastModified="14a34285e44">
-         <source file="..\..\..\devices\uks.c" lastModified="14a34285403"/>
+      <target file="uks.o" lastModified="14a396359af">
+         <source file="..\..\..\devices\uks.c" lastModified="14a3962d3d6"/>
       </target>
       <target file="usbd_core.o" lastModified="14a19b9e950">
          <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0"/>
@@ -94,7 +94,7 @@
       <target file="port.o" lastModified="14a19b9f93e">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12"/>
       </target>
-      <target file="buzzer.o" lastModified="14a34285d69">
+      <target file="buzzer.o" lastModified="14a3963572f">
          <source file="..\..\..\devices\buzzer.c" lastModified="14a0fba06b0"/>
       </target>
       <target file="usb_dcd.o" lastModified="14a19b9feec">
@@ -124,32 +124,32 @@
       <target file="stm32f4xx_syscfg.o" lastModified="14a19b9e077">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="14a0a930df3"/>
       </target>
-      <target file="adc.o" lastModified="14a38505c78">
-         <source file="..\..\..\devices\adc.c" lastModified="14a34599709"/>
+      <target file="adc.o" lastModified="14a39635d1a">
+         <source file="..\..\..\devices\adc.c" lastModified="14a39634c80"/>
       </target>
       <target file="stm32f4xx_spi.o" lastModified="14a19b9fd17">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14a0a9197dd"/>
       </target>
-      <target file="ADS1120.o" lastModified="14a38505832">
-         <source file="..\..\..\devices\ADS1120.c" lastModified="14a2efce260"/>
+      <target file="ADS1120.o" lastModified="14a3916aeda">
+         <source file="..\..\..\devices\ADS1120.c" lastModified="14a3916a68d"/>
       </target>
-      <target file="main.o" lastModified="14a2efb1c27">
-         <source file="..\..\..\main.c" lastModified="14a2efb139b"/>
+      <target file="main.o" lastModified="14a39635886">
+         <source file="..\..\..\main.c" lastModified="14a392753d7"/>
       </target>
       <target file="system_stm32f4xx.o" lastModified="14a19b9f314">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="14a190cfb4b"/>
       </target>
-      <target file="pid_regulator.o" lastModified="14a2e8e1ec9">
-         <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a2e8e13dc"/>
-      </target>
-      <target file="usb_dcd_int.o" lastModified="14a19b9fa19">
-         <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff"/>
+      <target file="pid_regulator.o" lastModified="14a39733234">
+         <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a39731640"/>
       </target>
       <target file="heap_1.o" lastModified="14a19b9ff69">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c" lastModified="13e3b1eb900"/>
       </target>
-      <target file="display.o" lastModified="14a3855bc81">
-         <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a3855b202"/>
+      <target file="usb_dcd_int.o" lastModified="14a19b9fa19">
+         <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff"/>
+      </target>
+      <target file="display.o" lastModified="14a396564c1">
+         <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a39655715"/>
       </target>
    </processor>
    <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F405RG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\devices -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis_boot -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source\portable -ID:\PROJECTS\GIT_REPOSITORY -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis_lib\include -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\devices\hd44780_driver -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source -ID:\PROJECTS\GIT_REPOSITORY\STM32 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\cmsis_lib -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source\portable\ARM_CM3 -ID:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\FreeRTOSV7.1.0\Source\include">

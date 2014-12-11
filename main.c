@@ -27,6 +27,7 @@
 #include "display.h"
 #include "rtc.h"
 #include "pid_regulator.h"
+#include "uks.h"
 
 #include "usbd_cdc_vcp.h" // подключаем USB CDC
 #include "usbd_cdc_core.h"
@@ -49,6 +50,7 @@ int main(void)
 	ADS1120_init();
 	ADC_Channel_Init();
 	PID_Heater_Init();
+	UKS_Drying_Init();
 	USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
 //	RTC_Clock_Init();
 ////	Watchdog_Init();

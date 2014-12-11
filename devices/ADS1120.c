@@ -17,13 +17,13 @@
 #include "string.h"
 #include "hd44780.h"
 
-#include "usbd_cdc_vcp.h" // подключаем USB CDC
-#include "usbd_cdc_core.h"
-#include "usbd_usr.h"
-#include "usbd_desc.h"
-#include "usb_dcd_int.h"
-
-__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+//#include "usbd_cdc_vcp.h" // подключаем USB CDC
+//#include "usbd_cdc_core.h"
+//#include "usbd_usr.h"
+//#include "usbd_desc.h"
+//#include "usb_dcd_int.h"
+//
+//__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
 
 extern struct task_watch task_watches[];
@@ -126,25 +126,25 @@ enum
 	ADS_REG_3,
 };
 
-#define SWAP(A, B) { int32_t t = A; A = B; B = t; }
-
-void bubblesort_int32(int32_t *a, uint16_t n)
-{
-  uint16_t i, j;
-
-  for (i = n - 1; i > 0; i--)
-  {
-    for (j = 0; j < i; j++)
-    {
-      if (a[j] > a[j + 1])
-        SWAP( a[j], a[j + 1] );
-    }
-  }
-}
+//#define SWAP(A, B) { int32_t t = A; A = B; B = t; }
+//
+//void bubblesort_int32(int32_t *a, uint16_t n)
+//{
+//  uint16_t i, j;
+//
+//  for (i = n - 1; i > 0; i--)
+//  {
+//    for (j = 0; j < i; j++)
+//    {
+//      if (a[j] > a[j + 1])
+//        SWAP( a[j], a[j + 1] );
+//    }
+//  }
+//}
 //----------------------------------------------------------------
 static void ADS1120_task(void *pvParameters)//
 {
-	uint8_t str_buf[32];
+//	uint8_t str_buf[32];
 	ADS1120_res.filter_counter=0;
 
 	SPI2_GPIO_CS->BSRRH|=SPI2_CS1;// pin down SPI1_CS1

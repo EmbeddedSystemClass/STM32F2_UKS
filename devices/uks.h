@@ -22,7 +22,8 @@
 enum
 {
 	DRYING_CONTINUE=0,
-	DRYING_DONE
+	DRYING_DONE,
+	DRYING_WAIT_NEW_OPERATION
 };
 
 struct drying_channel

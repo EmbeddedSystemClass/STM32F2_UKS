@@ -26,6 +26,8 @@
 struct adc_lm35_channels adc_lm35_chnl;
 extern struct uks uks_channels;
 
+xSemaphoreHandle xMeasure_LM35_Semaphore;
+
 static void ADC_Task(void *pvParameters);
 
 void ADC_Channel_Init(void)
@@ -68,7 +70,7 @@ void ADC_Channel_Init(void)
 
 	   /* Âêëþ÷àåì ÀÖÏ1 */
 	   ADC_Cmd(ADC1, ENABLE);
-
+	   vSemaphoreCreateBinary( xMeasure_LM35_Semaphore );
 	   xTaskCreate(ADC_Task,(signed char*)"ADC",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
@@ -113,7 +115,7 @@ static void ADC_Task(void *pvParameters)
 					   bubblesort(adc_lm35_chnl.filter_buffer[j],ADC_FILTER_BUFFER_LEN);
 					   adc_lm35_chnl.channel[j]=((adc_lm35_chnl.filter_buffer[j][(ADC_FILTER_BUFFER_LEN>>1)-1]+adc_lm35_chnl.filter_buffer[j][ADC_FILTER_BUFFER_LEN>>1])>>1);
 
-					   uks_channels.drying_channel_list[j].temperature_queue[uks_channels.drying_channel_list[j].temperature_queue_counter]=(float)adc_lm35_chnl.channel[j]/MAX_ADC_CODE*MAX_ADC_VOLTAGE/LM35_V_FOR_C;
+					   uks_channels.drying_channel_list[j].temperature=uks_channels.drying_channel_list[j].temperature_queue[uks_channels.drying_channel_list[j].temperature_queue_counter]=(float)adc_lm35_chnl.channel[j]/MAX_ADC_CODE*MAX_ADC_VOLTAGE/LM35_V_FOR_C;
 					   uks_channels.drying_channel_list[j].temperature_queue_counter++;
 					   uks_channels.drying_channel_list[j].temperature_queue_counter&=(TEMPERATURE_QUEUE_LEN-1);
 				   }
@@ -127,8 +129,7 @@ static void ADC_Task(void *pvParameters)
 //			  HD44780_Puts(0,2,str_buf);
 //			  sprintf(str_buf,"C3=%04d  C7=%04d",adc_lm35_chnl.channel[3],adc_lm35_chnl.channel[7]);
 //			  HD44780_Puts(0,3,str_buf);
-
-
+			  xSemaphoreGive(xMeasure_LM35_Semaphore);
 			  vTaskDelay(1000);
 		}
 }
