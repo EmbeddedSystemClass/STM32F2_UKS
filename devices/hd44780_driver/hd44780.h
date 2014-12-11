@@ -154,7 +154,7 @@
 #define  HD44780_LIGHT_OFF			HD44780_LIGHT_PORT->BSRRH=HD44780_LIGHT_PIN;//GPIO_WriteBit( HD44780_LIGHT_PORT,  HD44780_LIGHT_PIN, Bit_RESET)
 #define  HD44780_LIGHT_ON   		HD44780_LIGHT_PORT->BSRRL=HD44780_LIGHT_PIN;//GPIO_WriteBit( HD44780_LIGHT_PORT,  HD44780_LIGHT_PIN, Bit_SET)
 
-#define  HD44780_E_BLINK			HD44780_Delay(5); HD44780_E_HIGH;  HD44780_Delay(20);  HD44780_E_LOW;  HD44780_Delay(20)
+#define  HD44780_E_BLINK			HD44780_Delay(20); HD44780_E_HIGH;  HD44780_Delay(50);  HD44780_E_LOW;  HD44780_Delay(50)
 #define  HD44780_Delay(x)			Delay(x)
 
 //Commands
@@ -208,6 +208,15 @@ extern void  HD44780_Init(uint8_t cols, uint8_t rows);
  *
  * No return
  */
+
+extern void  HD44780_Reinit(uint8_t cols, uint8_t rows);
+
+/**
+ * Turn display on
+ *
+ * No return
+ */
+
 extern void  HD44780_DisplayOn(void);
 
 /**

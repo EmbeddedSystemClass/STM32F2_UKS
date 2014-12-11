@@ -13,6 +13,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "hd44780.h"
+#include "uks.h"
 
 //#include "usbd_cdc_vcp.h" // подключаем USB CDC
 //#include "usbd_cdc_core.h"
@@ -23,6 +24,7 @@
 //__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
 struct adc_lm35_channels adc_lm35_chnl;
+extern struct uks uks_channels;
 
 static void ADC_Task(void *pvParameters);
 
@@ -110,6 +112,10 @@ static void ADC_Task(void *pvParameters)
 					   adc_lm35_chnl.filter_buffer[j][i]=ADC1->DR;
 					   bubblesort(adc_lm35_chnl.filter_buffer[j],ADC_FILTER_BUFFER_LEN);
 					   adc_lm35_chnl.channel[j]=((adc_lm35_chnl.filter_buffer[j][(ADC_FILTER_BUFFER_LEN>>1)-1]+adc_lm35_chnl.filter_buffer[j][ADC_FILTER_BUFFER_LEN>>1])>>1);
+
+					   uks_channels.drying_channel_list[j].temperature_queue[uks_channels.drying_channel_list[j].temperature_queue_counter]=(float)adc_lm35_chnl.channel[j]/MAX_ADC_CODE*MAX_ADC_VOLTAGE/LM35_V_FOR_C;
+					   uks_channels.drying_channel_list[j].temperature_queue_counter++;
+					   uks_channels.drying_channel_list[j].temperature_queue_counter&=(TEMPERATURE_QUEUE_LEN-1);
 				   }
 			  }
 //			  sprintf(str_buf,"C0=%04d  C4=%04d\n",adc_lm35_chnl.channel[0],adc_lm35_chnl.channel[4]);

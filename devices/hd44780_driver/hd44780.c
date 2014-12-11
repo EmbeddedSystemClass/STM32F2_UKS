@@ -28,7 +28,7 @@ void HD44780_Init(uint8_t cols, uint8_t rows) {
 	HD44780_InitPins();
 	
 	//At least 40ms
-	HD44780_Delay(45000);
+	HD44780_Delay(40000);
 	
 	HD44780_Opts.Rows = rows;
 	HD44780_Opts.Cols = cols;
@@ -54,16 +54,16 @@ void HD44780_Init(uint8_t cols, uint8_t rows) {
 	
 	//Second try
 	HD44780_Cmd4bit(0x03);
-	HD44780_Delay(4500);
+	HD44780_Delay(150);
 	
 	//Third goo!
 	HD44780_Cmd4bit(0x03);
-	HD44780_Delay(4500);
+	HD44780_Delay(250);
 
 #ifndef HD44780_SET_8BITMODE
 	//Set 4-bit interface
 	HD44780_Cmd4bit(0x02);
-	HD44780_Delay(100);
+	HD44780_Delay(150);
 #endif
 	
 	//set # lines, font size, etc.
@@ -80,7 +80,62 @@ void HD44780_Init(uint8_t cols, uint8_t rows) {
 	HD44780_Opts.DisplayMode = HD44780_ENTRYLEFT | HD44780_ENTRYSHIFTDECREMENT;
 	HD44780_Cmd(HD44780_ENTRYMODESET | HD44780_Opts.DisplayMode);
 
+	HD44780_Delay(150);
+}
+
+void HD44780_Reinit(uint8_t cols, uint8_t rows)
+{
+	HD44780_Opts.Rows = rows;
+	HD44780_Opts.Cols = cols;
+
+	HD44780_Opts.currentX = 0;
+	HD44780_Opts.currentY = 0;
+
+
+
+#ifdef HD44780_SET_8BITMODE
+	HD44780_Opts.DisplayFunction = HD44780_8BITMODE | HD44780_5x8DOTS | HD44780_1LINE;
+#else
+	HD44780_Opts.DisplayFunction = HD44780_4BITMODE | HD44780_5x8DOTS | HD44780_1LINE;
+#endif
+
+	if (rows > 1) {
+		HD44780_Opts.DisplayFunction |= HD44780_2LINE;
+	}
+
+	//Try to set 4bit mode
+	HD44780_Cmd4bit(0x03);
 	HD44780_Delay(4500);
+
+	//Second try
+	HD44780_Cmd4bit(0x03);
+	HD44780_Delay(150);
+
+	//Third goo!
+	HD44780_Cmd4bit(0x03);
+	HD44780_Delay(250);
+
+#ifndef HD44780_SET_8BITMODE
+	//Set 4-bit interface
+	HD44780_Cmd4bit(0x02);
+	HD44780_Delay(150);
+#endif
+
+	//set # lines, font size, etc.
+	HD44780_Cmd(HD44780_FUNCTIONSET | HD44780_Opts.DisplayFunction);
+
+	//turn the display on with no cursor or blinking default
+	HD44780_Opts.DisplayControl = HD44780_DISPLAYON;
+	HD44780_DisplayOn();
+
+	//Clear lcd
+	HD44780_Clear();
+
+	//Default font directions
+	HD44780_Opts.DisplayMode = HD44780_ENTRYLEFT | HD44780_ENTRYSHIFTDECREMENT;
+	HD44780_Cmd(HD44780_ENTRYMODESET | HD44780_Opts.DisplayMode);
+
+	HD44780_Delay(150);
 }
 
 void HD44780_InitPins(void) {
@@ -155,7 +210,7 @@ void HD44780_InitPins(void) {
 
 void HD44780_Clear(void) {
 	HD44780_Cmd(HD44780_CLEARDISPLAY);
-	HD44780_Delay(3000);
+	HD44780_Delay(2000);
 }
 
 void HD44780_Cmd(uint8_t cmd) {
