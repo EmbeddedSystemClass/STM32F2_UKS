@@ -14,8 +14,12 @@
 #include "queue.h"
 #include "semphr.h"
 
-xQueueHandle xKeyQueue;//очередь клавиатуры
-xSemaphoreHandle xKeySemaphore;
+#include "buzzer.h"
+#include "uks.h"
+
+//xQueueHandle xKeyQueue;//очередь клавиатуры
+//xSemaphoreHandle xKeySemaphore;
+extern struct uks uks_channels;
 
 static void vKeyboardTask(void *pvParameters);
 
@@ -23,134 +27,45 @@ void Keyboard_Init(void)
 {
 	RCC_AHB1PeriphClockCmd(INIT_KEYB_PORT, ENABLE);
 	GPIO_InitTypeDef init_pin;
-	init_pin.GPIO_Pin  = KO_0 | KO_1 | KO_2 | KO_3;
-	init_pin.GPIO_Mode  = GPIO_Mode_OUT;
-	init_pin.GPIO_OType = GPIO_OType_PP;
-	init_pin.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init (KEYB_PORT, &init_pin);
 
-	init_pin.GPIO_Pin  = KI_0 | KI_1 | KI_2;//подт€гиваем вверх, дл€ уменьшени€ помех
+	init_pin.GPIO_Pin  = KEY_0 | KEY_1;//подт€гиваем вверх, дл€ уменьшени€ помех
 	init_pin.GPIO_Speed = GPIO_Speed_2MHz;
 	init_pin.GPIO_Mode  = GPIO_Mode_IN;
-	init_pin.GPIO_PuPd = GPIO_PuPd_DOWN;
+	init_pin.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init (KEYB_PORT, &init_pin);
 
-	KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-
-	vSemaphoreCreateBinary( xKeySemaphore );
-	xKeyQueue = xQueueCreate( 2, sizeof( uint16_t ) );
 	xTaskCreate(vKeyboardTask,(signed char*)"Keyboard",64,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
 static void vKeyboardTask(void *pvParameters)
 {
-	uint16_t key, last_key, key_port;
-
-	uint8_t key_counter=0;
-	uint16_t key_mask=0;
-
-	key_mask=KI_0 | KI_1 | KI_2;
     while(1)
     {
-
-
-//    	    key_counter++;
-//    	    key_counter&=0x3;
-
-    for(key_counter=0;key_counter<4;key_counter++)
-    {
-			if(key_counter==0)
+    	if(GPIO_ReadInputDataBit(KEYB_PORT,KEY_0)==Bit_RESET)
+    	{
+    		vTaskDelay(10);
+    		if(GPIO_ReadInputDataBit(KEYB_PORT,KEY_0)==Bit_RESET)
     		{
-				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-				KEYB_PORT->BSRRH=KO_0;
+    			uint8_t i=0;
 
-				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
-				if(key_port!=key_mask)
-				{
-					break;
-				}
-			}
-			if(key_counter==1)
-			{
-				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-				KEYB_PORT->BSRRH=KO_1;
+    			Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_OFF);
+    			for(i=0;i<DRYING_CHANNELS_NUM;i++)
+    			{
+    				if(uks_channels.drying_channel_list[i].drying_state==DRYING_DONE)
+    				{
+    					uks_channels.drying_channel_list[i].drying_state=DRYING_WAIT_NEW_OPERATION;
+    				}
+    			}
+    		}
+    	}
 
-				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
-				if(key_port!=key_mask)
-				{
-					break;
-				}
-			}
+    	if(GPIO_ReadInputDataBit(KEYB_PORT,KEY_1)==Bit_RESET)
+    	{
+    		vTaskDelay(10);
+    		if(GPIO_ReadInputDataBit(KEYB_PORT,KEY_1)==Bit_RESET)
+    		{
 
-			if(key_counter==2)
-			{
-				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-				KEYB_PORT->BSRRH=KO_2;
-
-				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
-				if(key_port!=key_mask)
-				{
-					break;
-				}
-			}
-
-			if(key_counter==3)
-			{
-				KEYB_PORT->BSRRL=(KO_0 | KO_1 | KO_2 | KO_3);
-				KEYB_PORT->BSRRH=KO_3;
-
-				key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
-				if(key_port!=key_mask)
-				{
-					break;
-				}
-				//key_counter=0;
-			}
-    }
-
-//    //	key_counter&=0x3;
-    	vTaskDelay(10);
-//
-    	key_port=GPIO_ReadInputData(KEYB_PORT)&key_mask;
-
-    	vTaskDelay(10);
-        if(key_port==key_mask)
-        {
-        	last_key=0xFFFF;
-        }
-        else
-        {
-
-			if(key_port==(GPIO_ReadInputData(KEYB_PORT)&key_mask))
-			{
-				if((key_port&KI_0)==0)
-				{
-					key=key_counter;
-				}
-
-	//			if((key&KI_1)==0)
-	//			{
-	//				key=(key_counter|(1<<2));
-	//			}
-
-				if((key_port&KI_2)==0)
-				{
-					key=(key_counter|(2<<2));
-				}
-
-				if(key!=last_key)
-				{
-					 last_key=key;
-
-					 xSemaphoreGive(xKeySemaphore);
-					 if( xKeyQueue != 0 )
-					 {
-						 xQueueSend( xKeyQueue,  &key, ( portTickType ) 0 );
-					 }
-				}
-		 }
-     }
-
-	vTaskDelay(10);
+    		}
+    	}
     }
 }

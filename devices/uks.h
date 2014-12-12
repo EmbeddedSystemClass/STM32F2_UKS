@@ -30,7 +30,7 @@ struct drying_channel
 {
 	float temperature_queue[TEMPERATURE_QUEUE_LEN];
 	uint8_t temperature_queue_counter;
-	float temperature;//средн€€ температура за 30 сек
+	float temperature;//current temperature
 	uint16_t time;//minute
 	uint16_t time_forecast;
 	uint8_t text_string[DISPALY_TEXT_STRING_LEN];

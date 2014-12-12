@@ -69,6 +69,18 @@ void Display_Task(void *pvParameters )
 		}
 
 		HD44780_Puts(0,2,str_buf);
+
+		temp=uks_channels.drying_channel_list[0].temperature_queue[uks_channels.drying_channel_list[0].temperature_queue_counter]-uks_channels.drying_channel_list[0].temperature_queue[(uks_channels.drying_channel_list[0].temperature_queue_counter-10)&(TEMPERATURE_QUEUE_LEN-1)];
+
+		if(temp>=0)
+		{
+			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+		}
+		else
+		{
+			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+		}
+
 		HD44780_Puts(0,3,str_buf);
 
 	}

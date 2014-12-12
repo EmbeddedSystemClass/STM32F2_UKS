@@ -112,23 +112,21 @@ static void ADC_Task(void *pvParameters)
 						   taskYIELD ();
 					   }
 					   adc_lm35_chnl.filter_buffer[j][i]=ADC1->DR;
-					   bubblesort(adc_lm35_chnl.filter_buffer[j],ADC_FILTER_BUFFER_LEN);
-					   adc_lm35_chnl.channel[j]=((adc_lm35_chnl.filter_buffer[j][(ADC_FILTER_BUFFER_LEN>>1)-1]+adc_lm35_chnl.filter_buffer[j][ADC_FILTER_BUFFER_LEN>>1])>>1);
 
-					   uks_channels.drying_channel_list[j].temperature=uks_channels.drying_channel_list[j].temperature_queue[uks_channels.drying_channel_list[j].temperature_queue_counter]=(float)adc_lm35_chnl.channel[j]/MAX_ADC_CODE*MAX_ADC_VOLTAGE/LM35_V_FOR_C;
-					   uks_channels.drying_channel_list[j].temperature_queue_counter++;
-					   uks_channels.drying_channel_list[j].temperature_queue_counter&=(TEMPERATURE_QUEUE_LEN-1);
 				   }
 			  }
-//			  sprintf(str_buf,"C0=%04d  C4=%04d\n",adc_lm35_chnl.channel[0],adc_lm35_chnl.channel[4]);
-//			  HD44780_Puts(0,0,str_buf);
-//			  VCP_DataTx( (uint8_t *) str_buf, strlen(str_buf) );
-//			  sprintf(str_buf,"C1=%04d  C5=%04d",adc_lm35_chnl.channel[1],adc_lm35_chnl.channel[5]);
-//			  HD44780_Puts(0,1,str_buf);
-//			  sprintf(str_buf,"C2=%04d  C6=%04d",adc_lm35_chnl.channel[2],adc_lm35_chnl.channel[6]);
-//			  HD44780_Puts(0,2,str_buf);
-//			  sprintf(str_buf,"C3=%04d  C7=%04d",adc_lm35_chnl.channel[3],adc_lm35_chnl.channel[7]);
-//			  HD44780_Puts(0,3,str_buf);
+
+			   for(j=0;j<ADC_LM35_CHANNELS_NUM;j++)
+			   {
+				   bubblesort(adc_lm35_chnl.filter_buffer[j],ADC_FILTER_BUFFER_LEN);
+				   adc_lm35_chnl.channel[j]=((adc_lm35_chnl.filter_buffer[j][(ADC_FILTER_BUFFER_LEN>>1)-1]+adc_lm35_chnl.filter_buffer[j][ADC_FILTER_BUFFER_LEN>>1])>>1);
+
+				   uks_channels.drying_channel_list[j].temperature_queue_counter++;
+				   uks_channels.drying_channel_list[j].temperature_queue_counter&=(TEMPERATURE_QUEUE_LEN-1);
+				   uks_channels.drying_channel_list[j].temperature=uks_channels.drying_channel_list[j].temperature_queue[uks_channels.drying_channel_list[j].temperature_queue_counter]=(float)adc_lm35_chnl.channel[j]/MAX_ADC_CODE*MAX_ADC_VOLTAGE/LM35_V_FOR_C;
+			   }
+
+
 			  xSemaphoreGive(xMeasure_LM35_Semaphore);
 			  vTaskDelay(1000);
 		}

@@ -36,7 +36,7 @@ void Buzzer_Init(void)
 
     GPIO_WriteBit(BUZZER_PORT, BUZZER_PIN,0);
 
-//    xTaskCreate(buzzer_task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
+    xTaskCreate(Buzzer_Task,(signed char*)"BUZZER",64,NULL, tskIDLE_PRIORITY + 1, &xBuzzer_Handle);
 //    task_watches[BUZZER_TASK].task_status=TASK_IDLE;
 }
 void Buzzer_Task(void *pvParameters )

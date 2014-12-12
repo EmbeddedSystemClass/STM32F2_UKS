@@ -51,6 +51,9 @@ int main(void)
 	ADC_Channel_Init();
 	PID_Heater_Init();
 	UKS_Drying_Init();
+
+	Buzzer_Init();
+	Keyboard_Init();
 	USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
 //	RTC_Clock_Init();
 ////	Watchdog_Init();
