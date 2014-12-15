@@ -143,7 +143,7 @@ void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
 		{
 			for (j = (chnl_count-dry_wait_count); j < i; j++)
 			{
-				  if (uks_chnl->drying_channel_sort_list[j]->temperature > uks_chnl->drying_channel_sort_list[j + 1]->temperature)
+				  if (uks_chnl->drying_channel_sort_list[j]->number > uks_chnl->drying_channel_sort_list[j + 1]->number)
 				  {
 					  SWAP( uks_chnl->drying_channel_sort_list[j], uks_chnl->drying_channel_sort_list[j + 1] );
 				  }

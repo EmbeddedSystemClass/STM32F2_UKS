@@ -25,6 +25,8 @@ void Display_Init(void)
 static volatile uint16_t display_init_counter=0;
 #define DISPLAY_INIT_PERIOD		3
 
+uint8_t drying_states[3][16]={{"continue "},{"done     "},{"wait     "}};
+
 void Display_Task(void *pvParameters )
 {
 	static volatile uint8_t str_buf[32];
@@ -47,7 +49,11 @@ void Display_Task(void *pvParameters )
 		uint8_t i=0;
 		for(i=0;i<4/*DRYING_CHANNELS_NUM*/;i++)
 		{
-			sprintf(str_buf,"%1d",uks_channels.drying_channel_sort_list[i]->number);
+			//float temp=PT100_Code_To_Temperature(ADS1120_res.result);
+			float temp=uks_channels.drying_channel_sort_list[i]->temperature;
+
+
+			sprintf(str_buf,"%1d t= %3d.%01d %s",uks_channels.drying_channel_sort_list[i]->number,(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
 			HD44780_Puts(0,i,str_buf);
 		}
 
