@@ -28,6 +28,7 @@ enum
 
 struct drying_channel
 {
+	uint8_t number;
 	float temperature_queue[TEMPERATURE_QUEUE_LEN];
 	uint8_t temperature_queue_counter;
 	float temperature;//current temperature

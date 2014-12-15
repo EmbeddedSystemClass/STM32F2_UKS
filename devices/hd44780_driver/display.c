@@ -42,46 +42,55 @@ void Display_Task(void *pvParameters )
 		}
 
 
-		sprintf(str_buf,"VAL=%09d       ",ADS1120_res.result);
-		HD44780_Puts(0,0,str_buf);
+		UKS_Sort_Channels(&uks_channels,DRYING_CHANNELS_NUM);
+
+		uint8_t i=0;
+		for(i=0;i<4/*DRYING_CHANNELS_NUM*/;i++)
+		{
+			sprintf(str_buf,"%1d",uks_channels.drying_channel_sort_list[i]->number);
+			HD44780_Puts(0,i,str_buf);
+		}
+
+//		sprintf(str_buf,"VAL=%09d       ",ADS1120_res.result);
+//		HD44780_Puts(0,0,str_buf);
 //
-		float temp=PT100_Code_To_Temperature(ADS1120_res.result);
-		if(temp>=0)
-		{
-			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
-		}
-		else
-		{
-			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
-		}
-
-
-		HD44780_Puts(0,1,str_buf);
-
-		temp=uks_channels.drying_channel_list[0].temperature;
-		if(temp>=0)
-		{
-			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
-		}
-		else
-		{
-			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
-		}
-
-		HD44780_Puts(0,2,str_buf);
-
-		temp=uks_channels.drying_channel_list[0].temperature_queue[uks_channels.drying_channel_list[0].temperature_queue_counter]-uks_channels.drying_channel_list[0].temperature_queue[(uks_channels.drying_channel_list[0].temperature_queue_counter-10)&(TEMPERATURE_QUEUE_LEN-1)];
-
-		if(temp>=0)
-		{
-			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
-		}
-		else
-		{
-			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
-		}
-
-		HD44780_Puts(0,3,str_buf);
+//		float temp=PT100_Code_To_Temperature(ADS1120_res.result);
+//		if(temp>=0)
+//		{
+//			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+//		}
+//		else
+//		{
+//			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+//		}
+//
+//
+//		HD44780_Puts(0,1,str_buf);
+//
+//		temp=uks_channels.drying_channel_list[0].temperature;
+//		if(temp>=0)
+//		{
+//			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+//		}
+//		else
+//		{
+//			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+//		}
+//
+//		HD44780_Puts(0,2,str_buf);
+//
+//		temp=uks_channels.drying_channel_list[0].temperature_queue[uks_channels.drying_channel_list[0].temperature_queue_counter]-uks_channels.drying_channel_list[0].temperature_queue[(uks_channels.drying_channel_list[0].temperature_queue_counter-10)&(TEMPERATURE_QUEUE_LEN-1)];
+//
+//		if(temp>=0)
+//		{
+//			sprintf(str_buf,"TEMP= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+//		}
+//		else
+//		{
+//			sprintf(str_buf,"TEMP=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+//		}
+//
+//		HD44780_Puts(0,3,str_buf);
 
 	}
 }

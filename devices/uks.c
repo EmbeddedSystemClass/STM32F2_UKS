@@ -25,6 +25,8 @@ void UKS_Drying_Init(void)
 		uks_channels.drying_channel_list[i].temperature=0.0;
 		uks_channels.drying_channel_list[i].time_forecast=0;
 
+		uks_channels.drying_channel_list[i].number=i;
+
 		for(j=0;j<TEMPERATURE_QUEUE_LEN;j++)
 		{
 			uks_channels.drying_channel_list[i].temperature_queue[j]=200.0;
@@ -51,29 +53,106 @@ void UKS_Drying_Task(void *pvParameters )
 }
 
 #define SWAP(A, B) { struct uks *t = A; A = B; B = t; }
+//void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
+//{
+//	  uint16_t i, j;
+//
+//	  for(i=0;i<num;i++)
+//	  {
+//		 // uks_channels.drying_channel_list[i].temperature=uks_channels.drying_channel_list[i].temperature_queue[uks_channels.drying_channel_list[i].temperature_queue_counter];
+//		  uks_channels.drying_channel_sort_list[i]=&uks_channels.drying_channel_list[i];
+//	  }
+//
+//	  for (i = num - 1; i > 0; i--)
+//	  {
+//			for (j = 0; j < i; j++)
+//			{
+//				  if (uks_channels.drying_channel_sort_list[j]->temperature > uks_channels.drying_channel_sort_list[j + 1]->temperature)
+//				  {
+//					  SWAP( uks_channels.drying_channel_sort_list[j], uks_channels.drying_channel_sort_list[j + 1] );
+//				  }
+//			}
+//	  }
+//}
+
 void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
 {
-	  uint16_t i, j;
+	uint8_t chnl_count=0, dry_done_count=0,dry_continue_count=0,dry_wait_count=0;
+	uint8_t i,j;
 
-	  for(i=0;i<num;i++)
-	  {
-		 // uks_channels.drying_channel_list[i].temperature=uks_channels.drying_channel_list[i].temperature_queue[uks_channels.drying_channel_list[i].temperature_queue_counter];
-		  uks_channels.drying_channel_sort_list[i]=&uks_channels.drying_channel_list[i];
-	  }
-
-	  for (i = num - 1; i > 0; i--)
-	  {
+	for(i=0;i<num;i++)
+	{
+		if(uks_chnl->drying_channel_list[i].drying_state==DRYING_DONE)
+		{
+			uks_chnl->drying_channel_sort_list[chnl_count]=&uks_chnl->drying_channel_list[i];
+			chnl_count++;
+			dry_done_count++;
+		}
+	}
+	if(dry_done_count)
+	{
+		for (i = chnl_count - 1; i > 0; i--)
+		{
 			for (j = 0; j < i; j++)
 			{
-				  if (uks_channels.drying_channel_sort_list[j]->temperature > uks_channels.drying_channel_sort_list[j + 1]->temperature)
+				  if (uks_chnl->drying_channel_sort_list[j]->number > uks_chnl->drying_channel_sort_list[j + 1]->number)
 				  {
-					  SWAP( uks_channels.drying_channel_sort_list[j], uks_channels.drying_channel_sort_list[j + 1] );
+					  SWAP( uks_chnl->drying_channel_sort_list[j], uks_chnl->drying_channel_sort_list[j + 1] );
 				  }
 			}
-	  }
+		}
+	}
+//------------------------------------
+	for(i=0;i<num;i++)
+	{
+		if(uks_chnl->drying_channel_list[i].drying_state==DRYING_CONTINUE)
+		{
+			uks_chnl->drying_channel_sort_list[chnl_count]=&uks_chnl->drying_channel_list[i];
+			chnl_count++;
+			dry_continue_count++;
+		}
+	}
+
+	if(dry_continue_count)
+	{
+		for (i = (chnl_count - 1); i > (chnl_count-dry_continue_count); i--)
+		{
+			for (j = (chnl_count-dry_continue_count); j < i; j++)
+			{
+				  if (uks_chnl->drying_channel_sort_list[j]->temperature > uks_chnl->drying_channel_sort_list[j + 1]->temperature)
+				  {
+					  SWAP( uks_chnl->drying_channel_sort_list[j], uks_chnl->drying_channel_sort_list[j + 1] );
+				  }
+			}
+		}
+	}
+//------------------------------------
+	for(i=0;i<num;i++)
+	{
+		if(uks_chnl->drying_channel_list[i].drying_state==DRYING_WAIT_NEW_OPERATION)
+		{
+			uks_chnl->drying_channel_sort_list[chnl_count]=&uks_chnl->drying_channel_list[i];
+			chnl_count++;
+			dry_wait_count++;
+		}
+	}
+
+	if(dry_wait_count)
+	{
+		for (i = (chnl_count - 1); i > (chnl_count-dry_wait_count); i--)
+		{
+			for (j = (chnl_count-dry_wait_count); j < i; j++)
+			{
+				  if (uks_chnl->drying_channel_sort_list[j]->temperature > uks_chnl->drying_channel_sort_list[j + 1]->temperature)
+				  {
+					  SWAP( uks_chnl->drying_channel_sort_list[j], uks_chnl->drying_channel_sort_list[j + 1] );
+				  }
+			}
+		}
+	}
 }
 
-#define MIN_DELTA_TEMP		5.0
+#define MIN_DELTA_TEMP		10.0
 #define MIN_TRESHOLD_TEMP	50.0
 #define TEMP_DRYING_END		72.0
 

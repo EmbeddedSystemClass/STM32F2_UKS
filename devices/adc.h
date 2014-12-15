@@ -2,8 +2,9 @@
 #define ADC_H
 
 #include "stm32f4xx.h"
+#include "uks.h"
 
-#define ADC_LM35_CHANNELS_NUM 	7
+#define ADC_LM35_CHANNELS_NUM 	DRYING_CHANNELS_NUM
 #define ADC_FILTER_BUFFER_LEN	16
 
 struct adc_lm35_channels
