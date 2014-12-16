@@ -31,6 +31,7 @@ enum
 	SCREEN_CHANNELS_FIRST=0,
 	SCREEN_CHANNELS_SECOND,
 	SCREEN_HEATER,
+	SCREEN_ERROR,
 };
 
 struct drying_channel

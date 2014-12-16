@@ -35,6 +35,9 @@
 #include "usbd_desc.h"
 #include "usb_dcd_int.h"
 
+#include "mb.h"
+#include "mbport.h"
+
 __ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 int main(void)
 {
@@ -54,6 +57,10 @@ int main(void)
 
 	Buzzer_Init();
 	Keyboard_Init();
+
+	eMBErrorCode    eStatus;
+
+	 eStatus = eMBInit( MB_ASCII, 0x0A, 0, 19200, 0 );
 	USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
 //	RTC_Clock_Init();
 ////	Watchdog_Init();
