@@ -25,13 +25,15 @@ void UKS_Drying_Init(void)
 		uks_channels.drying_channel_list[i].temperature=0.0;
 		uks_channels.drying_channel_list[i].time_forecast=0;
 
-		uks_channels.drying_channel_list[i].number=i;
+		uks_channels.drying_channel_list[i].number=i+1;
 
 		for(j=0;j<TEMPERATURE_QUEUE_LEN;j++)
 		{
 			uks_channels.drying_channel_list[i].temperature_queue[j]=200.0;
 		}
 	}
+
+	uks_channels.screen=SCREEN_CHANNELS_FIRST;
 
 	xTaskCreate(UKS_Drying_Task,(signed char*)"DUKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
    // task_watches[DRYING_TASK].task_status=TASK_IDLE;

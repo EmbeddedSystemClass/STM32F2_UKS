@@ -37,8 +37,11 @@ void Keyboard_Init(void)
 	xTaskCreate(vKeyboardTask,(signed char*)"Keyboard",64,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
+#define PRESS_SHORT_TIME	50
+
 static void vKeyboardTask(void *pvParameters)
 {
+	volatile static uint16_t press_time_counter=0;
     while(1)
     {
     	if(GPIO_ReadInputDataBit(KEYB_PORT,KEY_0)==Bit_RESET)
@@ -64,8 +67,45 @@ static void vKeyboardTask(void *pvParameters)
     		vTaskDelay(10);
     		if(GPIO_ReadInputDataBit(KEYB_PORT,KEY_1)==Bit_RESET)
     		{
+    			press_time_counter++;
 
+    			if(press_time_counter>PRESS_SHORT_TIME)
+    			{
+    				uks_channels.screen=SCREEN_HEATER;
+    			}
     		}
+    	}
+    	else
+    	{
+    		if((press_time_counter>0)&&(press_time_counter<=PRESS_SHORT_TIME))
+    		{
+				switch(uks_channels.screen)
+				{
+					case SCREEN_CHANNELS_FIRST:
+					{
+						uks_channels.screen=SCREEN_CHANNELS_SECOND;
+					}
+					break;
+
+					case SCREEN_CHANNELS_SECOND:
+					{
+						uks_channels.screen=SCREEN_CHANNELS_FIRST;
+					}
+					break;
+
+					case SCREEN_HEATER:
+					{
+						uks_channels.screen=SCREEN_CHANNELS_FIRST;
+					}
+					break;
+
+					default:
+					{
+						uks_channels.screen=SCREEN_CHANNELS_FIRST;
+					}
+				}
+    		}
+    		press_time_counter=0;
     	}
     }
 }

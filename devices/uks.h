@@ -26,6 +26,13 @@ enum
 	DRYING_WAIT_NEW_OPERATION
 };
 
+enum
+{
+	SCREEN_CHANNELS_FIRST=0,
+	SCREEN_CHANNELS_SECOND,
+	SCREEN_HEATER,
+};
+
 struct drying_channel
 {
 	uint8_t number;
@@ -43,6 +50,7 @@ struct uks
 {
 	struct drying_channel   drying_channel_list[DRYING_CHANNELS_NUM];
 	struct drying_channel * drying_channel_sort_list[DRYING_CHANNELS_NUM];
+	uint8_t screen;
 };
 
 #endif

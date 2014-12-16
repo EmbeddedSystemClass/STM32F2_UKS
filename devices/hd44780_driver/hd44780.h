@@ -192,6 +192,9 @@
 #define  HD44780_5x10DOTS				0x04
 #define  HD44780_5x8DOTS				0x00
 
+
+#define HD44780_HEIGHT	4
+#define HD44780_WIDTH	20
 /**
  * Initialize LCD
  *
