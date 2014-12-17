@@ -90,6 +90,7 @@
     <File name="modbus/ascii/mbascii.h" path="modbus/ascii/mbascii.h" type="1"/>
     <File name="devices/hd44780_driver/delay.h" path="devices/hd44780_driver/delay.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
+    <File name="modbus/protocol.h" path="modbus/protocol.h" type="1"/>
     <File name="devices/hd44780_driver/delay.c" path="devices/hd44780_driver/delay.c" type="1"/>
     <File name="modbus/port/mbport.c" path="modbus/port/mbport.c" type="1"/>
     <File name="modbus/functions" path="" type="2"/>
@@ -133,8 +134,8 @@
     <File name="cmsis_lib/include/stm32f4xx_pwr.h" path="cmsis_lib/include/stm32f4xx_pwr.h" type="1"/>
     <File name="stdio" path="" type="2"/>
     <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
-    <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
     <File name="devices/adc.c" path="devices/adc.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_pwr.c" path="cmsis_lib/source/stm32f4xx_pwr.c" type="1"/>
     <File name="devices/backup_sram.h" path="devices/backup_sram.h" type="1"/>
@@ -181,8 +182,8 @@
     <File name="FreeRTOSV7.1.0/Source/readme.txt" path="FreeRTOSV7.1.0/Source/readme.txt" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
     <File name="cmsis_lib/include/stm32f4xx_syscfg.h" path="cmsis_lib/include/stm32f4xx_syscfg.h" type="1"/>
-    <File name="modbus/port/porttimer.c" path="modbus/port/porttimer.c" type="1"/>
     <File name="usb_cdc/usblib/usb_dcd.h" path="usblib/usb_dcd.h" type="1"/>
+    <File name="modbus/port/porttimer.c" path="modbus/port/porttimer.c" type="1"/>
     <File name="devices/buzzer.h" path="devices/buzzer.h" type="1"/>
     <File name="devices/phaze_detector.h" path="devices/phaze_detector.h" type="1"/>
     <File name="usb_cdc/usblib/usbd_desc.c" path="usblib/usbd_desc.c" type="1"/>
@@ -237,6 +238,7 @@
     <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM3" path="" type="2"/>
     <File name="usb_cdc/usblib" path="" type="2"/>
     <File name="usb_cdc/usblib/usbd_desc.h" path="usblib/usbd_desc.h" type="1"/>
+    <File name="modbus/protocol.c" path="modbus/protocol.c" type="1"/>
     <File name="FreeRTOSV7.1.0/License/license.txt" path="FreeRTOSV7.1.0/License/license.txt" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" path="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" type="1"/>

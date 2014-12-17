@@ -25,8 +25,21 @@
 #include "mb.h"
 #include "mbport.h"
 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
 
+#include "usbd_cdc_vcp.h"
+#include "usbd_cdc_core.h"
+#include "usbd_usr.h"
+#include "usbd_desc.h"
+#include "usb_dcd_int.h"
 
+__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+
+static void Serial_Task(void *pvParameters);
+static volatile uint8_t temp_char;
 /* ----------------------- Start implementation -----------------------------*/
 void
 vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
@@ -53,55 +66,8 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
 BOOL 
 xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
-//    GPIO_InitTypeDef GPIO_InitStructure;
-//    USART_InitTypeDef USART_InitStructure;
-//	USART_ClockInitTypeDef USART_ClockInitStructure;
-//	NVIC_InitTypeDef NVIC_InitStructure;
-//
-//	//使能串口1，PA，AFIO总线
-//    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |
-//            RCC_APB2Periph_AFIO |
-//            RCC_APB2Periph_USART1 ,
-//            ENABLE);
-//
-//    /* A9 USART1_Tx */
-//    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-//    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-//    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;		//推挽输出-TX
-//    GPIO_Init(GPIOA, &GPIO_InitStructure);
-//
-//    /* A10 USART1_Rx  */
-//    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-//    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;//浮空输入-RX
-//    GPIO_Init(GPIOA, &GPIO_InitStructure);
-//
-//
-//    USART_InitStructure.USART_BaudRate = ulBaudRate; //目前只修改波特率
-//	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-//	USART_InitStructure.USART_StopBits = USART_StopBits_1;
-//	USART_InitStructure.USART_Parity = USART_Parity_No;
-//	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-//	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-//
-//	USART_ClockInitStructure.USART_Clock = USART_Clock_Disable;
-//	USART_ClockInitStructure.USART_CPOL = USART_CPOL_Low;
-//	USART_ClockInitStructure.USART_CPHA = USART_CPHA_2Edge;
-//	USART_ClockInitStructure.USART_LastBit = USART_LastBit_Disable;
-//
-//	USART_ClockInit(USART1, &USART_ClockInitStructure);
-//    USART_Init(USART1, &USART_InitStructure);
-//
-//	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1); //两级占先 八级副优先
-//
-//	 /* Enable USART1_IRQn  Channel */
-//	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-//	NVIC_Init(&NVIC_InitStructure);
-//    /* ENABLE the USARTx */
-//    USART_Cmd(USART1, ENABLE);
-//
+	//USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
+	xTaskCreate(Serial_Task,(signed char*)"Serial",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 	return TRUE;
 }
 
@@ -110,6 +76,10 @@ BOOL
 xMBPortSerialPutByte( CHAR ucByte )
 {
     //USART_SendData(USART1, ucByte);
+	if(VCP_DataTx(&ucByte,1)==0)
+	{
+		pxMBFrameCBTransmitterEmpty();
+	}
     return TRUE;
 }
 
@@ -118,6 +88,7 @@ BOOL
 xMBPortSerialGetByte( CHAR * pucByte )
 {
    // *pucByte = USART_ReceiveData(USART1);
+	*pucByte=temp_char;
     return TRUE;
 }
 
@@ -139,5 +110,16 @@ xMBPortSerialGetByte( CHAR * pucByte )
  */
 void prvvUARTRxISR( void )
 {
-     pxMBFrameCBByteReceived(  );
+     pxMBFrameCBByteReceived();
+}
+
+static void Serial_Task(void *pvParameters)
+{
+	while(1)
+	{
+		if(VCP_get_char(&temp_char))
+		{
+			pxMBFrameCBByteReceived();
+		}
+	}
 }

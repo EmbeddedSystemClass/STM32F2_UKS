@@ -28,17 +28,16 @@
 #include "rtc.h"
 #include "pid_regulator.h"
 #include "uks.h"
+#include "protocol.h"
 
-#include "usbd_cdc_vcp.h" // подключаем USB CDC
+#include "usbd_cdc_vcp.h"
 #include "usbd_cdc_core.h"
 #include "usbd_usr.h"
 #include "usbd_desc.h"
 #include "usb_dcd_int.h"
 
-#include "mb.h"
-#include "mbport.h"
-
 __ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+
 int main(void)
 {
 	SystemInit();
@@ -47,7 +46,6 @@ int main(void)
 	Power_Detector_Init();
 ////	Backup_SRAM_Init();
 	Phaze_Detector_Init();
-	//HD44780_Init(20,4);
 	Display_Init();
 
 	ADS1120_init();
@@ -57,11 +55,11 @@ int main(void)
 
 	Buzzer_Init();
 	Keyboard_Init();
-
-	eMBErrorCode    eStatus;
-
-	 eStatus = eMBInit( MB_ASCII, 0x0A, 0, 19200, 0 );
 	USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
+	Protocol_Init();
+
+
+
 //	RTC_Clock_Init();
 ////	Watchdog_Init();
 

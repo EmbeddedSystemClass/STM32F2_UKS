@@ -177,6 +177,7 @@ uint32_t APP_Rx_ptr_in  = 0;
 uint32_t APP_Rx_ptr_out = 0;
 uint32_t APP_Rx_length  = 0;
 
+
 volatile uint8_t  USB_Tx_State = 0;
 
 static uint32_t cdcCmd = 0xFF;

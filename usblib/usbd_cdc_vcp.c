@@ -44,7 +44,7 @@ extern uint32_t APP_Rx_ptr_in;    /* Increment this pointer or roll it back to
 static uint16_t VCP_Init     (void);
 static uint16_t VCP_DeInit   (void);
 static uint16_t VCP_Ctrl     (uint32_t Cmd, uint8_t* Buf, uint32_t Len);
-static uint16_t VCP_DataRx   (uint8_t* Buf, uint32_t Len);
+//static uint16_t VCP_DataRx   (uint8_t* Buf, uint32_t Len);
 
 
 CDC_IF_Prop_TypeDef VCP_fops =
@@ -179,29 +179,60 @@ uint16_t VCP_DataTx (uint8_t* Buf, uint32_t Len)
 
 uint32_t counter=0, counter2=0;
 
-static uint16_t VCP_DataRx( uint8_t* Buf, uint32_t Len )
+//uint16_t VCP_DataRx( uint8_t* Buf, uint32_t Len )
+//{
+//    counter=0;
+//	while(counter<Len)
+//	{
+//		APP_Rx_Buffer[APP_Rx_ptr_in] = Buf[counter2];
+//		APP_Rx_ptr_in++;
+//		counter++;
+//		counter2++;
+//
+//		/* To avoid buffer overflow */
+//		if(APP_Rx_ptr_in >= APP_RX_DATA_SIZE)
+//		{
+//			APP_Rx_ptr_in = 0;
+//		}
+//	}
+//
+//	if(counter2>64)
+//	{
+//		counter2=0;
+//	}
+//}
+uint32_t APP_Rx_ptr_tail  = 0;
+
+uint16_t VCP_DataRx (uint8_t* Buf, uint32_t Len)
 {
-    counter=0;
-	while(counter<Len)
-	{
-		APP_Rx_Buffer[APP_Rx_ptr_in] = Buf[counter2];
-		APP_Rx_ptr_in++;
-		counter++;
-		counter2++;
+  uint32_t i;
 
-		/* To avoid buffer overflow */
-		if(APP_Rx_ptr_in >= APP_RX_DATA_SIZE)
-		{
-			APP_Rx_ptr_in = 0;
-		}
-	}
+  for (i = 0; i < Len; i++)
+  {
+	  APP_Rx_Buffer[APP_Rx_ptr_in] = *(Buf + i);
+	  APP_Rx_ptr_in++;
+	  if(APP_Rx_ptr_in == APP_RX_DATA_SIZE)
+		  APP_Rx_ptr_in = 0;
 
-	if(counter2>64)
-	{
-		counter2=0;
-	}
+	  if(APP_Rx_ptr_in == APP_Rx_ptr_tail)
+		 return USBD_FAIL;
+  }
+
+  return USBD_OK;
 }
 
+uint8_t VCP_get_char(uint8_t *buf)
+{
+ if(APP_Rx_ptr_in == APP_Rx_ptr_tail)
+ 	return 0;
+
+ *buf = APP_Rx_Buffer[APP_Rx_ptr_tail];
+ APP_Rx_ptr_tail++;
+ if(APP_Rx_ptr_tail == APP_RX_DATA_SIZE)
+  APP_Rx_ptr_tail = 0;
+
+ return 1;
+}
 
 //uint8_t usb_cdc_kbhit(void){
 //	if(APP_tx_ptr_head == APP_tx_ptr_tail){
