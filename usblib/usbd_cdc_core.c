@@ -62,6 +62,7 @@
 #include "usbd_desc.h"
 #include "usbd_req.h"
 
+#include "ModBus\port\mbport.h"
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
@@ -676,7 +677,6 @@ static uint8_t  usbd_cdc_DataOut (void *pdev, uint8_t epnum)
   
   /* Get the received data buffer and update the counter */
   USB_Rx_Cnt = ((USB_OTG_CORE_HANDLE*)pdev)->dev.out_ep[epnum].xfer_count;
-  
   /* USB data will be immediately processed, this allow next USB traffic being 
      NAKed till the end of the application Xfer */
   APP_FOPS.pIf_DataRx(USB_Rx_Buffer, USB_Rx_Cnt);
@@ -686,6 +686,8 @@ static uint8_t  usbd_cdc_DataOut (void *pdev, uint8_t epnum)
                    CDC_OUT_EP,
                    (uint8_t*)(USB_Rx_Buffer),
                    CDC_DATA_OUT_PACKET_SIZE);
+
+
 
   return USBD_OK;
 }

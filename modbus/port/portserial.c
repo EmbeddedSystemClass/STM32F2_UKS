@@ -68,7 +68,7 @@ BOOL
 xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity eParity )
 {
 	//USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
-	xTaskCreate(Serial_Task,(signed char*)"Serial",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	xTaskCreate(Serial_Task,(signed char*)"Serial",64,NULL, tskIDLE_PRIORITY + 1, NULL);
 	return TRUE;
 }
 
@@ -76,7 +76,6 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
 BOOL
 xMBPortSerialPutByte( CHAR ucByte )
 {
-    //USART_SendData(USART1, ucByte);
 	if(VCP_DataTx(&ucByte,1)==0)
 	{
 		pxMBFrameCBTransmitterEmpty();
@@ -88,8 +87,8 @@ xMBPortSerialPutByte( CHAR ucByte )
 BOOL
 xMBPortSerialGetByte( CHAR * pucByte )
 {
-   // *pucByte = USART_ReceiveData(USART1);
 	*pucByte=temp_char;
+//	VCP_get_char(pucByte);
     return TRUE;
 }
 
@@ -122,5 +121,6 @@ static void Serial_Task(void *pvParameters)
 		{
 			pxMBFrameCBByteReceived();
 		}
+		 //vTaskDelay(1);
 	}
 }

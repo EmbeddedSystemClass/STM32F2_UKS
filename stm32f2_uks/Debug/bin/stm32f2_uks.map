@@ -2401,7 +2401,7 @@ OUTPUT(stm32f2_uks.elf elf32-littlearm)
  .debug_abbrev  0x000051f8      0x163 ..\obj\stm32f4xx_tim.o
  .debug_abbrev  0x0000535b      0x165 ..\obj\power_detector.o
 
-.debug_info     0x00000000    0x213ac
+.debug_info     0x00000000    0x213b3
  .debug_info    0x00000000      0x27a ..\obj\stm32f4xx_syscfg.o
  .debug_info    0x0000027a     0x27fc ..\obj\usb_core.o
  .debug_info    0x00002a76      0x777 ..\obj\delay.o
@@ -2454,20 +2454,20 @@ OUTPUT(stm32f2_uks.elf elf32-littlearm)
  .debug_info    0x0001596d      0x1d7 ..\obj\port.o
  .debug_info    0x00015b44     0x2027 ..\obj\usb_dcd_int.o
  .debug_info    0x00017b6b      0xdae ..\obj\portserial.o
- .debug_info    0x00018919     0x1102 ..\obj\usbd_cdc_core.o
- .debug_info    0x00019a1b      0x4af ..\obj\croutine.o
- .debug_info    0x00019eca      0x4d1 ..\obj\timer_properties.o
- .debug_info    0x0001a39b      0xbcc ..\obj\stm32f4xx_spi.o
- .debug_info    0x0001af67      0x313 ..\obj\mbfunccoils.o
- .debug_info    0x0001b27a      0x372 ..\obj\stm32f4xx_exti.o
- .debug_info    0x0001b5ec      0x594 ..\obj\misc.o
- .debug_info    0x0001bb80     0x1184 ..\obj\usb_dcd.o
- .debug_info    0x0001cd04      0x186 ..\obj\heap_1.o
- .debug_info    0x0001ce8a     0x1223 ..\obj\stm32f4xx_rtc.o
- .debug_info    0x0001e0ad      0xde4 ..\obj\usbd_ioreq.o
- .debug_info    0x0001ee91       0x9b ..\obj\mbascii.o
- .debug_info    0x0001ef2c     0x1e28 ..\obj\stm32f4xx_tim.o
- .debug_info    0x00020d54      0x658 ..\obj\power_detector.o
+ .debug_info    0x00018919     0x1109 ..\obj\usbd_cdc_core.o
+ .debug_info    0x00019a22      0x4af ..\obj\croutine.o
+ .debug_info    0x00019ed1      0x4d1 ..\obj\timer_properties.o
+ .debug_info    0x0001a3a2      0xbcc ..\obj\stm32f4xx_spi.o
+ .debug_info    0x0001af6e      0x313 ..\obj\mbfunccoils.o
+ .debug_info    0x0001b281      0x372 ..\obj\stm32f4xx_exti.o
+ .debug_info    0x0001b5f3      0x594 ..\obj\misc.o
+ .debug_info    0x0001bb87     0x1184 ..\obj\usb_dcd.o
+ .debug_info    0x0001cd0b      0x186 ..\obj\heap_1.o
+ .debug_info    0x0001ce91     0x1223 ..\obj\stm32f4xx_rtc.o
+ .debug_info    0x0001e0b4      0xde4 ..\obj\usbd_ioreq.o
+ .debug_info    0x0001ee98       0x9b ..\obj\mbascii.o
+ .debug_info    0x0001ef33     0x1e28 ..\obj\stm32f4xx_tim.o
+ .debug_info    0x00020d5b      0x658 ..\obj\power_detector.o
 
 .debug_line     0x00000000     0xbfee
  .debug_line    0x00000000      0x1e7 ..\obj\stm32f4xx_syscfg.o
@@ -3159,7 +3159,7 @@ OUTPUT(stm32f2_uks.elf elf32-littlearm)
  .debug_str     0x00006fed       0xfb ..\obj\portserial.o
                                 0x9c0 (size before relaxing)
  .debug_str     0x000070e8      0x1a9 ..\obj\usbd_cdc_core.o
-                                0xaa3 (size before relaxing)
+                                0xaa8 (size before relaxing)
  .debug_str     0x00007291      0x282 ..\obj\croutine.o
                                 0x3df (size before relaxing)
  .debug_str     0x00007513      0x1e3 ..\obj\timer_properties.o
