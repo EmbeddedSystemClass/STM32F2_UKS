@@ -21,7 +21,7 @@ void Protocol_Init(void)
 {
 	eMBErrorCode    eStatus;
 
-	eStatus = eMBInit( MB_ASCII, 0x0A, 0, 57600, 0 );
+	eStatus = eMBInit( MB_RTU, 0x0A, 0, 57600, 0 );
 	xTaskCreate(Modbus_Task,(signed char*)"Modbus",256,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
 
@@ -35,5 +35,6 @@ static void Modbus_Task(void *pvParameters)
     for( ;; )
     {
         eMBPoll();
+        vTaskDelay(10);
     }
 }

@@ -2007,15 +2007,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\modbus\protocol.c" lastModified="14a57e07f7b">
-         <include file="..\..\..\modbus\protocol.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\modbus\include\mb.h"/>
-         <include file="..\..\..\modbus\port\mbport.h"/>
-      </source>
       <source file="..\..\..\devices\phaze_detector.h" lastModified="14a19781989">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
@@ -2057,7 +2048,7 @@
       <source file="..\..\..\usblib\usb_conf.h" lastModified="13a79098530">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\modbus\include\mbconfig.h" lastModified="14a5863660b">
+      <source file="..\..\..\modbus\include\mbconfig.h" lastModified="14a5c92ccba">
       </source>
       <source file="..\..\..\cmsis_boot\stm32f4xx.h" lastModified="14a0a90fca7">
          <include file="..\..\..\cmsis\core_cm4.h"/>
@@ -2074,6 +2065,19 @@
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h" lastModified="14a0a930d85">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      </source>
+      <source file="..\..\..\modbus\rtu\mbrtu.c" lastModified="14a5d02fb1d">
+         <include file="..\..\..\modbus\port\mbport.h"/>
+         <include file="..\..\..\modbus\include\mb.h"/>
+         <include file="..\..\..\modbus\rtu\mbrtu.h"/>
+         <include file="..\..\..\modbus\include\mbframe.h"/>
+         <include file="..\..\..\modbus\rtu\mbcrc.h"/>
+         <include file="..\..\..\modbus\port\mbport.h"/>
+         <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
+         <include file="..\..\..\usblib\usbd_cdc_core.h"/>
+         <include file="..\..\..\usblib\usbd_usr.h"/>
+         <include file="..\..\..\usblib\usbd_desc.h"/>
+         <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
       <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a52768628">
          <include file="..\..\..\devices\hd44780_driver\display.h"/>
@@ -2236,7 +2240,7 @@
          <include file="..\..\..\modbus\include\mbproto.h"/>
          <include file="..\..\..\modbus\include\mbconfig.h"/>
       </source>
-      <source file="..\..\..\usblib\usbd_cdc_vcp.c" lastModified="14a57602719">
+      <source file="..\..\..\usblib\usbd_cdc_vcp.c" lastModified="14a5c7014ba">
          <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h" lastModified="13e3b1eb900">
@@ -2386,7 +2390,7 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\adc.c" lastModified="14a3d56becc">
+      <source file="..\..\..\devices\adc.c" lastModified="14a5c738d37">
          <include file="..\..\..\devices\adc.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -2398,6 +2402,11 @@
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
          <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
          <include file="..\..\..\devices\uks.h"/>
+         <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
+         <include file="..\..\..\usblib\usbd_cdc_core.h"/>
+         <include file="..\..\..\usblib\usbd_usr.h"/>
+         <include file="..\..\..\usblib\usbd_desc.h"/>
+         <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
       <source file="..\..\..\devices\ADS1120.c" lastModified="14a3916ae5d">
          <include file="..\..\..\devices\ADS1120.h"/>
@@ -2487,7 +2496,7 @@
       <source file="..\..\..\usblib\usb_regs.h" lastModified="13349a79f90">
          <include file="..\..\..\usblib\usb_conf.h"/>
       </source>
-      <source file="..\..\..\main.c" lastModified="14a57b63b0c">
+      <source file="..\..\..\main.c" lastModified="14a5c73f26a">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -2537,7 +2546,7 @@
       <source file="..\..\..\devices\buzzer.h" lastModified="14a0fba4add">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\modbus\port\portserial.c" lastModified="14a57b8469b">
+      <source file="..\..\..\modbus\port\portserial.c" lastModified="14a5cf77c8c">
          <include file="..\..\..\modbus\port\mbport.h"/>
          <include file="..\..\..\modbus\include\mb.h"/>
          <include file="..\..\..\modbus\port\mbport.h"/>

@@ -141,24 +141,21 @@ static uint16_t VCP_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
   * @param  Len: Number of data to be sent (in bytes)
   * @retval Result of the opeartion: USBD_OK if all operations are OK else VCP_FAIL
   */
-uint16_t VCP_DataTx (uint8_t* Buf, uint32_t Len)
+ uint16_t VCP_DataTx (uint8_t* Buf, uint32_t Len)
 {
-    uint32_t i;
-
-    if ( Len < 0 )
-        return USBD_FAIL;
-
-    for ( i = 0; i < Len; i++ )
-    {
-        APP_Rx_Buffer[ APP_Rx_ptr_in++ ] = Buf[i];
-
-        /* To avoid buffer overflow */
-        if ( APP_Rx_ptr_in == APP_RX_DATA_SIZE )
-        {
-            APP_Rx_ptr_in = 0;
-        }
-    }
-    return USBD_OK;
+	uint32_t i=0;
+	while(i < Len)
+	{
+		APP_Rx_Buffer[APP_Rx_ptr_in] = *(Buf + i);
+		APP_Rx_ptr_in++;
+		i++;
+		/* To avoid buffer overflow */
+		if(APP_Rx_ptr_in == APP_RX_DATA_SIZE)
+		{
+			APP_Rx_ptr_in = 0;
+		}
+	}
+	return USBD_OK;
 }
 
 /**
@@ -201,37 +198,34 @@ uint32_t counter=0, counter2=0;
 //		counter2=0;
 //	}
 //}
-uint32_t APP_Rx_ptr_tail  = 0;
+#define APP_TX_BUF_SIZE 128
+uint8_t APP_Tx_Buffer[APP_TX_BUF_SIZE];
+uint32_t APP_tx_ptr_head;
+uint32_t APP_tx_ptr_tail;
 
 uint16_t VCP_DataRx (uint8_t* Buf, uint32_t Len)
 {
-  uint32_t i;
-
-  for (i = 0; i < Len; i++)
-  {
-	  APP_Rx_Buffer[APP_Rx_ptr_in] = *(Buf + i);
-	  APP_Rx_ptr_in++;
-	  if(APP_Rx_ptr_in == APP_RX_DATA_SIZE)
-		  APP_Rx_ptr_in = 0;
-
-	  if(APP_Rx_ptr_in == APP_Rx_ptr_tail)
-		 return USBD_FAIL;
-  }
-
-  return USBD_OK;
+	uint32_t i;
+	for (i = 0; i < Len; i++)
+	{
+		APP_Tx_Buffer[APP_tx_ptr_head] = *(Buf + i);
+		APP_tx_ptr_head++;
+		if(APP_tx_ptr_head == APP_TX_BUF_SIZE)
+		APP_tx_ptr_head = 0;
+		if(APP_tx_ptr_head == APP_tx_ptr_tail)
+		return USBD_FAIL;
+	}
+	return USBD_OK;
 }
-
 uint8_t VCP_get_char(uint8_t *buf)
 {
- if(APP_Rx_ptr_in == APP_Rx_ptr_tail)
- 	return 0;
-
- *buf = APP_Rx_Buffer[APP_Rx_ptr_tail];
- APP_Rx_ptr_tail++;
- if(APP_Rx_ptr_tail == APP_RX_DATA_SIZE)
-  APP_Rx_ptr_tail = 0;
-
- return 1;
+	if(APP_tx_ptr_head == APP_tx_ptr_tail)
+	return 0;
+	*buf = APP_Tx_Buffer[APP_tx_ptr_tail];
+	APP_tx_ptr_tail++;
+	if(APP_tx_ptr_tail == APP_TX_BUF_SIZE)
+	APP_tx_ptr_tail = 0;
+	return 1;
 }
 
 //uint8_t usb_cdc_kbhit(void){

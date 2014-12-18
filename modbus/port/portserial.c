@@ -56,6 +56,7 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
 	if(TRUE==xTxEnable)
 	{
 		//USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+		pxMBFrameCBTransmitterEmpty();
 	}
 	else
 	{

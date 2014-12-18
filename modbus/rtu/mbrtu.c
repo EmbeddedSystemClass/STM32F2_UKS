@@ -43,6 +43,14 @@
 #include "mbcrc.h"
 #include "mbport.h"
 
+#include "usbd_cdc_vcp.h"
+#include "usbd_cdc_core.h"
+#include "usbd_usr.h"
+#include "usbd_desc.h"
+#include "usb_dcd_int.h"
+
+__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+
 /* ----------------------- Defines ------------------------------------------*/
 #define MB_SER_PDU_SIZE_MIN     4       /*!< Minimum size of a Modbus RTU frame. */
 #define MB_SER_PDU_SIZE_MAX     256     /*!< Maximum size of a Modbus RTU frame. */
@@ -302,9 +310,11 @@ xMBRTUTransmitFSM( void )
         /* check if we are finished. */
         if( usSndBufferCount != 0 )
         {
-            xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur );
-            pucSndBufferCur++;  /* next byte in sendbuffer. */
-            usSndBufferCount--;
+//            xMBPortSerialPutByte( ( CHAR )*pucSndBufferCur );
+//            pucSndBufferCur++;  /* next byte in sendbuffer. */
+//            usSndBufferCount--;
+        	VCP_DataTx(pucSndBufferCur,usSndBufferCount);
+        	usSndBufferCount=0;
         }
         else
         {
