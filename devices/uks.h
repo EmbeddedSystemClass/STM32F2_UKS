@@ -51,6 +51,7 @@ struct uks
 {
 	struct drying_channel   drying_channel_list[DRYING_CHANNELS_NUM];
 	struct drying_channel * drying_channel_sort_list[DRYING_CHANNELS_NUM];
+	float heater_temperature;
 	uint8_t screen;
 };
 

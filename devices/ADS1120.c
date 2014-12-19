@@ -17,16 +17,11 @@
 #include "string.h"
 #include "hd44780.h"
 
-//#include "usbd_cdc_vcp.h" // подключаем USB CDC
-//#include "usbd_cdc_core.h"
-//#include "usbd_usr.h"
-//#include "usbd_desc.h"
-//#include "usb_dcd_int.h"
-//
-//__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
+#include "uks.h"
 
 
 extern struct task_watch task_watches[];
+extern struct uks uks_channels;
 
 static void ADS1120_task(void *pvParameters);//
 
@@ -116,7 +111,7 @@ uint32_t ADC_result_temp;
 int32_t ADC_result;
 uint8_t adc_reg;
 
-struct ADS1120_result ADS1120_res;
+//struct ADS1120_result ADS1120_res;
 
 enum
 {
@@ -125,27 +120,10 @@ enum
 	ADS_REG_2,
 	ADS_REG_3,
 };
-
-//#define SWAP(A, B) { int32_t t = A; A = B; B = t; }
-//
-//void bubblesort_int32(int32_t *a, uint16_t n)
-//{
-//  uint16_t i, j;
-//
-//  for (i = n - 1; i > 0; i--)
-//  {
-//    for (j = 0; j < i; j++)
-//    {
-//      if (a[j] > a[j + 1])
-//        SWAP( a[j], a[j + 1] );
-//    }
-//  }
-//}
 //----------------------------------------------------------------
 static void ADS1120_task(void *pvParameters)//
 {
 //	uint8_t str_buf[32];
-	ADS1120_res.filter_counter=0;
 
 	SPI2_GPIO_CS->BSRRH|=SPI2_CS1;// pin down SPI1_CS1
 	SPI2_send (ADS_RESET);
@@ -191,27 +169,9 @@ static void ADS1120_task(void *pvParameters)//
 			ADC_result=(int32_t)ADC_result_temp;
 		}
 
-//		ADS1120_res.filter_buffer[ADS1120_res.filter_counter]=ADC_result;
-//		ADS1120_res.filter_counter++;
-//		ADS1120_res.filter_counter&=(ADC_FILTER_BUFFER_LEN-1);
-//
-//		   bubblesort_int32(ADS1120_res.filter_buffer,ADC_FILTER_BUFFER_LEN);
-//		   ADS1120_res.result=ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1];//((ADS1120_res.filter_buffer[(ADC_FILTER_BUFFER_LEN>>1)-1]+ADS1120_res.filter_buffer[ADC_FILTER_BUFFER_LEN>>1])>>1);
-		ADS1120_res.result=ADC_result;
-//		//HD44780_Init(20,4);
-//		sprintf(str_buf,"VAL=%09d",ADS1120_res.result);
-//		HD44780_Puts(0,0,str_buf);
-////
-//		float temp=PT100_Code_To_Temperature(ADS1120_res.result);//(((ADC_result/8)/1568)-268);//-271
-//		if(temp>=0)
-//		{
-//			sprintf(str_buf,"TEMP= %03d.%01d",(uint16_t)temp,(uint16_t)(temp*10)%10);
-//		}
-//		else
-//		{
-//			sprintf(str_buf,"TEMP=-%03d.%01d",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
-//		}
-//		HD44780_Puts(0,1,str_buf);
+
+		//ADS1120_res.result=ADC_result;
+		uks_channels.heater_temperature=PT100_Code_To_Temperature(ADC_result);
 
 		vTaskDelay(100);
 	}

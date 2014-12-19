@@ -88,7 +88,7 @@ void Display_Task(void *pvParameters )
 
 			case SCREEN_HEATER:
 			{
-				float temp=PT100_Code_To_Temperature(ADS1120_res.result);
+				float temp=uks_channels.heater_temperature;
 				if(temp>=0)
 				{
 					sprintf(str_buf,"Heater= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);

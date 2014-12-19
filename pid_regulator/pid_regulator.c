@@ -9,6 +9,7 @@
 
 #include "phaze_detector.h"
 #include "ADS1120.h"
+#include "uks.h"
 
 #include "stm32f4xx.h"
 #include "stm32f4xx_rcc.h"
@@ -16,6 +17,7 @@
 
 extern xSemaphoreHandle xPhazeSemaphore;
 extern struct ADS1120_result ADS1120_res;
+extern struct uks uks_channels;
 
 struct PID_DATA pid_heater;
 
@@ -160,7 +162,7 @@ static void PID_Regulator_Task(void *pvParameters)
 					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
 					pid_heater.maxSumError = MAX_I_TERM / (pid_heater.I_Factor + 1);
 				}
-				Set_Heater_Power((uint8_t)pid_Controller(70.0,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
+				Set_Heater_Power((uint8_t)pid_Controller(70.0,uks_channels.heater_temperature,&pid_heater));
 			}
 			else
 			{
@@ -172,7 +174,7 @@ static void PID_Regulator_Task(void *pvParameters)
 					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
 					pid_heater.maxSumError = MAX_I_TERM / (pid_heater.I_Factor + 1);
 				}
-				Set_Heater_Power((uint8_t)pid_Controller(50.0,PT100_Code_To_Temperature(ADS1120_res.result),&pid_heater));
+				Set_Heater_Power((uint8_t)pid_Controller(50.0,uks_channels.heater_temperature,&pid_heater));
 			}
 		}
 	}

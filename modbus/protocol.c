@@ -9,12 +9,6 @@
 #include "mbport.h"
 
 
-
-#define REG_INPUT_START 1000
-#define REG_INPUT_NREGS 4
-
-static unsigned short     usRegInputStart = REG_INPUT_START;
-static unsigned short     usRegInputBuf[REG_INPUT_NREGS]={1,2,3,4};
 static void Modbus_Task(void *pvParameters);
 
 void Protocol_Init(void)

@@ -35,12 +35,12 @@
 
 #define ADC_FILTER_BUFFER_LEN	8
 
-struct ADS1120_result
-{
-	int32_t  result;
-	int32_t filter_buffer[ADC_FILTER_BUFFER_LEN];
-	uint8_t  filter_counter;
-};
+//struct ADS1120_result
+//{
+//	int32_t  result;
+//	int32_t filter_buffer[ADC_FILTER_BUFFER_LEN];
+//	uint8_t  filter_counter;
+//};
 
 uint8_t ADS1120_init(void);
 float PT100_Code_To_Temperature(int32_t adc_code);

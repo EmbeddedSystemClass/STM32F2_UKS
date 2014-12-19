@@ -15,13 +15,6 @@
 #include "hd44780.h"
 #include "uks.h"
 
-#include "usbd_cdc_vcp.h" // подключаем USB CDC
-#include "usbd_cdc_core.h"
-#include "usbd_usr.h"
-#include "usbd_desc.h"
-#include "usb_dcd_int.h"
-
-__ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
 struct adc_lm35_channels adc_lm35_chnl;
 extern struct uks uks_channels;
@@ -98,7 +91,6 @@ void bubblesort(uint16_t *a, uint16_t n)
 static void ADC_Task(void *pvParameters)
 {
 		uint8_t i=0,j=0;
-		uint8_t str_buf[32]={"LOOX"};
 		while(1)
 		{
 			  for(i=0;i<ADC_FILTER_BUFFER_LEN;i++)
@@ -126,7 +118,6 @@ static void ADC_Task(void *pvParameters)
 				   uks_channels.drying_channel_list[j].temperature=uks_channels.drying_channel_list[j].temperature_queue[uks_channels.drying_channel_list[j].temperature_queue_counter]=(float)adc_lm35_chnl.channel[j]/MAX_ADC_CODE*MAX_ADC_VOLTAGE/LM35_V_FOR_C;
 			   }
 
-			 // VCP_DataTx(str_buf,4);
 			  xSemaphoreGive(xMeasure_LM35_Semaphore);
 			  vTaskDelay(1000);
 		}
