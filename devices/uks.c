@@ -55,27 +55,6 @@ void UKS_Drying_Task(void *pvParameters )
 }
 
 #define SWAP(A, B) { struct uks *t = A; A = B; B = t; }
-//void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
-//{
-//	  uint16_t i, j;
-//
-//	  for(i=0;i<num;i++)
-//	  {
-//		 // uks_channels.drying_channel_list[i].temperature=uks_channels.drying_channel_list[i].temperature_queue[uks_channels.drying_channel_list[i].temperature_queue_counter];
-//		  uks_channels.drying_channel_sort_list[i]=&uks_channels.drying_channel_list[i];
-//	  }
-//
-//	  for (i = num - 1; i > 0; i--)
-//	  {
-//			for (j = 0; j < i; j++)
-//			{
-//				  if (uks_channels.drying_channel_sort_list[j]->temperature > uks_channels.drying_channel_sort_list[j + 1]->temperature)
-//				  {
-//					  SWAP( uks_channels.drying_channel_sort_list[j], uks_channels.drying_channel_sort_list[j + 1] );
-//				  }
-//			}
-//	  }
-//}
 
 void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
 {
@@ -154,9 +133,11 @@ void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
 	}
 }
 
-#define MIN_DELTA_TEMP		10.0
-#define MIN_TRESHOLD_TEMP	50.0
-#define TEMP_DRYING_END		72.0
+#define MIN_DELTA_TEMP		4.0
+#define MIN_TRESHOLD_TEMP	45.0
+#define TEMP_DRYING_END		52.0
+#define START_TEMP_UP_TIME	10
+#define AVERAGE_TEMP_TIME	10
 
 uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 {
@@ -164,7 +145,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 	{
 		case DRYING_WAIT_NEW_OPERATION:
 		{
-			float delta_temp=drying_chnl->temperature_queue[drying_chnl->temperature_queue_counter]-drying_chnl->temperature_queue[(drying_chnl->temperature_queue_counter-10)&(TEMPERATURE_QUEUE_LEN-1)];
+			float delta_temp=drying_chnl->temperature_queue[drying_chnl->temperature_queue_counter]-drying_chnl->temperature_queue[(drying_chnl->temperature_queue_counter-START_TEMP_UP_TIME)&(TEMPERATURE_QUEUE_LEN-1)];
 			if((delta_temp>MIN_DELTA_TEMP)&&(drying_chnl->temperature>MIN_TRESHOLD_TEMP))
 			{
 				drying_chnl->drying_state=DRYING_CONTINUE;
@@ -174,7 +155,19 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 
 		case DRYING_CONTINUE:
 		{
-			if(drying_chnl->temperature>TEMP_DRYING_END)
+		    float average_temperature=0.0, summ_temperature=0.0;
+			uint8_t current_queue_position=drying_chnl->temperature_queue_counter;
+			uint8_t i=(current_queue_position-AVERAGE_TEMP_TIME)&(TEMPERATURE_QUEUE_LEN-1);
+
+			while((i&(TEMPERATURE_QUEUE_LEN-1))!=current_queue_position)
+			{
+				summ_temperature+=(drying_chnl->temperature_queue[i&(TEMPERATURE_QUEUE_LEN-1)]);
+				i++;
+			}
+
+			average_temperature=summ_temperature/AVERAGE_TEMP_TIME;
+
+			if(average_temperature>TEMP_DRYING_END)
 			{
 				drying_chnl->drying_state=DRYING_DONE;
 				Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);

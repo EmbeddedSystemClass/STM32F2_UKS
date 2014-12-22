@@ -19,10 +19,9 @@ u16 *usRegHoldingBuf=usRegInputBuf;
 
 u8 REG_INPUT_START=1,REG_HOLDING_START=1;
 u8 REG_INPUT_NREGS=32,REG_HOLDING_NREGS=8;
-u8 usRegInputStart=0,usRegHoldingStart=0;
+u8 usRegInputStart=1,usRegHoldingStart=1;
 
 
-    static float temp=0;
 eMBErrorCode
 eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 {
@@ -32,30 +31,16 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 
     REG_INPUT_NREGS=(DRYING_CHANNELS_NUM+1)*2;
 
-
-    temp=temp+0.01;
     for(i=0;i<DRYING_CHANNELS_NUM;i++)
     {
-//    	usRegInputBuf[i+1]   =((uint16_t*)&uks_channels.drying_channel_list[i>>1].temperature)[0];
-//    	usRegInputBuf[i] =((uint16_t*)&uks_channels.drying_channel_list[i>>1].temperature)[1];
-
     	((float*)usRegInputBuf)[i] = uks_channels.drying_channel_list[i].temperature;
-//    		    float tmp2=temp+i;
-//    		    ((float*)usRegInputBuf)[i]=tmp2;
-//    	    	usRegInputBuf[i+1]   =((uint16_t*)&tmp2)[0];
-//    	    	usRegInputBuf[i] =((uint16_t*)&tmp2)[1];
-//    			usRegInputBuf[i]  =0x1111*i;
-//    			usRegInputBuf[i+1]=0x1111*i;
     }
 
-//
     ((float*)usRegInputBuf)[DRYING_CHANNELS_NUM] = uks_channels.heater_temperature;
-//    ((float*)usRegInputBuf)[DRYING_CHANNELS_NUM+1] +=3.21;//uks_channels.heater_temperature;
-//    ((float*)usRegInputBuf)[DRYING_CHANNELS_NUM+2] = 12.3456789;//uks_channels.heater_temperature;
 
     if( ( usAddress >= REG_INPUT_START )&& ( usAddress + usNRegs <= REG_INPUT_START + REG_INPUT_NREGS ) )
     {
-        iRegIndex = 0;//( int )( usAddress - usRegInputStart );
+        iRegIndex = ( int )( usAddress - usRegInputStart );
         while( usNRegs > 0 )
         {
             *pucRegBuffer++ =
