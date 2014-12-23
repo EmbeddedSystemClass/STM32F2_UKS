@@ -26,6 +26,7 @@ void Set_Heater_Power(uint8_t power);
 struct phaze_detector
 {
 	uint16_t zero_cross_counter;
+	uint16_t input_sp_counter;
 	uint16_t contr_sp_counter;
 	uint8_t  power_value;//0..60
 };

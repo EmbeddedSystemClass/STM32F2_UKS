@@ -34,6 +34,7 @@ void UKS_Drying_Init(void)
 	}
 
 	uks_channels.screen=SCREEN_CHANNELS_FIRST;
+	uks_channels.device_error=ERROR_NONE;
 
 	xTaskCreate(UKS_Drying_Task,(signed char*)"DUKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
    // task_watches[DRYING_TASK].task_status=TASK_IDLE;
@@ -135,9 +136,11 @@ void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
 
 #define MIN_DELTA_TEMP		4.0
 #define MIN_TRESHOLD_TEMP	45.0
-#define TEMP_DRYING_END		52.0
+#define TEMP_DRYING_END		50.0
 #define START_TEMP_UP_TIME	10
 #define AVERAGE_TEMP_TIME	10
+
+#define MIN_DELTA_FALLING_TEMP	-2.0
 
 uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 {
@@ -171,6 +174,12 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 			{
 				drying_chnl->drying_state=DRYING_DONE;
 				Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
+			}
+
+			float delta_temp=drying_chnl->temperature_queue[drying_chnl->temperature_queue_counter]-drying_chnl->temperature_queue[(drying_chnl->temperature_queue_counter-START_TEMP_UP_TIME)&(TEMPERATURE_QUEUE_LEN-1)];
+			if(delta_temp<(MIN_DELTA_FALLING_TEMP))
+			{
+				drying_chnl->drying_state=DRYING_WAIT_NEW_OPERATION;
 			}
 		}
 		break;

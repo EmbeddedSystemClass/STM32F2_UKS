@@ -18,6 +18,8 @@ struct phaze_detector phaze_detect;
 
 xSemaphoreHandle xPhazeSemaphore;
 
+static void Heater_Control_Task(void *pvParameters);
+
 void Phaze_Detector_Init(void)
 {
 	RCC_AHB1PeriphClockCmd(ZERO_CROSS_PORT_RCC, ENABLE);//тактируем портј
@@ -71,8 +73,14 @@ void Phaze_Detector_Init(void)
 	NVIC_EnableIRQ(EXTI0_IRQn);
 	NVIC_EnableIRQ(EXTI1_IRQn);
 
+	phaze_detect.contr_sp_counter=0;
+	phaze_detect.input_sp_counter=0;
+	phaze_detect.zero_cross_counter=0;
+
 	vSemaphoreCreateBinary( xPhazeSemaphore );
 	Set_Heater_Power(5);
+
+	 xTaskCreate(Heater_Control_Task,(signed char*)"Heater Control",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 
 }
 
@@ -100,6 +108,7 @@ void EXTI0_IRQHandler(void)
         if(cross_counter<phaze_detect.power_value)
         {
         	RELAY_PORT->BSRRL|=RELAY_PIN;//pin up
+        	phaze_detect.input_sp_counter++;
         }
         else
         {
@@ -126,4 +135,12 @@ void EXTI1_IRQHandler(void)
         EXTI_ClearITPendingBit(EXTI_Line1);
         phaze_detect.contr_sp_counter++;
     }
+}
+
+static void Heater_Control_Task(void *pvParameters)
+{
+	while(1)
+	{
+		vTaskDelay(300);
+	}
 }

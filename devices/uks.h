@@ -34,6 +34,13 @@ enum
 	SCREEN_ERROR,
 };
 
+enum
+{
+	ERROR_NONE=0,
+	ERROR_HEATER,
+	ERROR_RELAY,
+};
+
 struct drying_channel
 {
 	uint8_t number;
@@ -53,6 +60,7 @@ struct uks
 	struct drying_channel * drying_channel_sort_list[DRYING_CHANNELS_NUM];
 	float heater_temperature;
 	uint8_t screen;
+	uint8_t device_error;
 };
 
 #endif
