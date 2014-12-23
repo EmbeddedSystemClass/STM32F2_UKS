@@ -14,9 +14,13 @@
 #include "queue.h"
 #include "semphr.h"
 
+#include "uks.h"
+#include "buzzer.h"
+
 struct phaze_detector phaze_detect;
 
 xSemaphoreHandle xPhazeSemaphore;
+extern struct uks uks_channels;
 
 static void Heater_Control_Task(void *pvParameters);
 
@@ -78,7 +82,7 @@ void Phaze_Detector_Init(void)
 	phaze_detect.zero_cross_counter=0;
 
 	vSemaphoreCreateBinary( xPhazeSemaphore );
-	Set_Heater_Power(5);
+	Set_Heater_Power(0);
 
 	 xTaskCreate(Heater_Control_Task,(signed char*)"Heater Control",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 
@@ -108,11 +112,11 @@ void EXTI0_IRQHandler(void)
         if(cross_counter<phaze_detect.power_value)
         {
         	RELAY_PORT->BSRRL|=RELAY_PIN;//pin up
-        	phaze_detect.input_sp_counter++;
         }
         else
         {
         	RELAY_PORT->BSRRH|=RELAY_PIN;//pin down
+        	phaze_detect.input_sp_counter++;
         	if(cross_counter>=MAX_POWER_VALUE)
         	{
         		cross_counter=0;
@@ -141,6 +145,38 @@ static void Heater_Control_Task(void *pvParameters)
 {
 	while(1)
 	{
-		vTaskDelay(300);
+		EXTI->IMR &= ~(EXTI_Line0|EXTI_Line1);
+		if(phaze_detect.zero_cross_counter)
+		{
+			if((int16_t)(phaze_detect.input_sp_counter-phaze_detect.contr_sp_counter)>2)
+			{
+				//heater or relay error
+				uks_channels.device_error=ERROR_HEATER_RELAY;
+				uks_channels.screen=SCREEN_ERROR;
+				Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
+			}
+			else
+			{
+				if((int16_t)(phaze_detect.contr_sp_counter-phaze_detect.input_sp_counter)>2)
+				{
+					//heater or relay error
+					uks_channels.device_error=ERROR_RELAY;
+					uks_channels.screen=SCREEN_ERROR;
+					Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
+				}
+			}
+			phaze_detect.contr_sp_counter=0;
+			phaze_detect.input_sp_counter=0;
+			phaze_detect.zero_cross_counter=0;
+		}
+		else
+		{
+			//error-phaze is down
+			uks_channels.device_error=ERROR_PHAZE;
+			uks_channels.screen=SCREEN_ERROR;
+			Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
+		}
+		EXTI->IMR |= (EXTI_Line0|EXTI_Line1);
+		vTaskDelay(1000);
 	}
 }

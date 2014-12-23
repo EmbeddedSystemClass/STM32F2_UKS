@@ -21,14 +21,14 @@ void Set_Heater_Power(uint8_t power);
 
 #define RELAY_PIN					GPIO_Pin_2
 
-#define MAX_POWER_VALUE		60
+#define MAX_POWER_VALUE		50
 
 struct phaze_detector
 {
 	uint16_t zero_cross_counter;
 	uint16_t input_sp_counter;
 	uint16_t contr_sp_counter;
-	uint8_t  power_value;//0..60
+	uint8_t  power_value;//0..50
 };
 
 #endif

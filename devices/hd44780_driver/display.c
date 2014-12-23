@@ -109,7 +109,52 @@ void Display_Task(void *pvParameters )
 
 			case SCREEN_ERROR:
 			{
+				switch(uks_channels.device_error)
+				{
+					case ERROR_PHAZE:
+					{
+						sprintf(str_buf,"                    ");
+						HD44780_Puts(0,0,str_buf);
+						sprintf(str_buf,"       Phaze        ");
+						HD44780_Puts(0,1,str_buf);
+						sprintf(str_buf,"      Error         ");
+						HD44780_Puts(0,2,str_buf);
+						sprintf(str_buf,"                    ");
+						HD44780_Puts(0,3,str_buf);
+					}
+					break;
 
+					case ERROR_HEATER_RELAY:
+					{
+						sprintf(str_buf,"                    ");
+						HD44780_Puts(0,0,str_buf);
+						sprintf(str_buf,"   Heater or Relay  ");
+						HD44780_Puts(0,1,str_buf);
+						sprintf(str_buf,"      Error         ");
+						HD44780_Puts(0,2,str_buf);
+						sprintf(str_buf,"                    ");
+						HD44780_Puts(0,3,str_buf);
+					}
+					break;
+
+					case ERROR_RELAY:
+					{
+						sprintf(str_buf,"                    ");
+						HD44780_Puts(0,0,str_buf);
+						sprintf(str_buf,"      Relay         ");
+						HD44780_Puts(0,1,str_buf);
+						sprintf(str_buf,"      Error         ");
+						HD44780_Puts(0,2,str_buf);
+						sprintf(str_buf,"                    ");
+						HD44780_Puts(0,3,str_buf);
+					}
+					break;
+
+					default:
+					{
+						uks_channels.screen=SCREEN_CHANNELS_FIRST;
+					}
+				}
 			}
 			break;
 

@@ -31,7 +31,7 @@ typedef struct PID_DATA{
  * Needed to avoid sign/overflow problems
  */
 // Maximum value of variables
-#define MAX_INT         60//INT16_MAX
+#define MAX_INT         50//INT16_MAX
 #define MAX_LONG        MAX_INT
 #define MAX_I_TERM      (MAX_INT / 2)
 

@@ -37,20 +37,22 @@ enum
 enum
 {
 	ERROR_NONE=0,
-	ERROR_HEATER,
+	ERROR_HEATER_RELAY,
 	ERROR_RELAY,
+	ERROR_PHAZE,
 };
 
 struct drying_channel
 {
-	uint8_t number;
-	float temperature_queue[TEMPERATURE_QUEUE_LEN];
-	uint8_t temperature_queue_counter;
-	float temperature;//current temperature
-	uint16_t time;//minute
-	uint16_t time_forecast;
-	uint8_t text_string[DISPALY_TEXT_STRING_LEN];
-	uint8_t drying_state;
+	uint8_t 	number;
+	float 		temperature_queue[TEMPERATURE_QUEUE_LEN];
+	uint8_t 	temperature_queue_counter;
+	uint16_t 	code;
+	float 	 	temperature;//current temperature
+	uint16_t 	time;//minute
+	uint16_t 	time_forecast;
+	uint8_t 	drying_state;
+	float 		drying_end_temperature;
 };
 
 #define DRYING_CHANNELS_NUM	7
@@ -58,9 +60,10 @@ struct uks
 {
 	struct drying_channel   drying_channel_list[DRYING_CHANNELS_NUM];
 	struct drying_channel * drying_channel_sort_list[DRYING_CHANNELS_NUM];
-	float heater_temperature;
-	uint8_t screen;
-	uint8_t device_error;
+	float 		heater_temperature;
+	uint32_t 	heater_code;
+	uint8_t 	screen;
+	uint8_t 	device_error;
 };
 
 #endif
