@@ -101,12 +101,14 @@ static volatile uint8_t cross_counter=0;
 
 void EXTI0_IRQHandler(void)
 {
+	EXTI->IMR &= ~(EXTI_Line0);
  	static portBASE_TYPE xHigherPriorityTaskWoken;
  	xHigherPriorityTaskWoken = pdFALSE;
 
-    if(EXTI_GetITStatus(EXTI_Line0) != RESET)
-    {
-        EXTI_ClearITPendingBit(EXTI_Line0);
+ //   if(EXTI_GetITStatus(EXTI_Line0) != RESET)
+ //   {
+        //EXTI_ClearITPendingBit(EXTI_Line0);
+ 	 	EXTI->PR = EXTI_Line0;
         phaze_detect.zero_cross_counter++;
 
         if(cross_counter<phaze_detect.power_value)
@@ -129,16 +131,18 @@ void EXTI0_IRQHandler(void)
         	}
         }
         cross_counter++;
-    }
+ //   }
+        EXTI->IMR |= EXTI_Line0;
 }
 
 void EXTI1_IRQHandler(void)
 {
-    if(EXTI_GetITStatus(EXTI_Line1) != RESET)
-    {
-        EXTI_ClearITPendingBit(EXTI_Line1);
+ //   if(EXTI_GetITStatus(EXTI_Line1) != RESET)
+//    {
+        //EXTI_ClearITPendingBit(EXTI_Line1);
+        EXTI->PR = EXTI_Line1;
         phaze_detect.contr_sp_counter++;
-    }
+//    }
 }
 
 static void Heater_Control_Task(void *pvParameters)
@@ -148,7 +152,7 @@ static void Heater_Control_Task(void *pvParameters)
 		EXTI->IMR &= ~(EXTI_Line0|EXTI_Line1);
 		if(phaze_detect.zero_cross_counter)
 		{
-			if((int16_t)(phaze_detect.input_sp_counter-phaze_detect.contr_sp_counter)>2)
+			if((int16_t)(phaze_detect.input_sp_counter-phaze_detect.contr_sp_counter)>10)
 			{
 				//heater or relay error
 				uks_channels.device_error=ERROR_HEATER_RELAY;
@@ -157,7 +161,7 @@ static void Heater_Control_Task(void *pvParameters)
 			}
 			else
 			{
-				if((int16_t)(phaze_detect.contr_sp_counter-phaze_detect.input_sp_counter)>2)
+				if((int16_t)(phaze_detect.contr_sp_counter-phaze_detect.input_sp_counter)>10)
 				{
 					//heater or relay error
 					uks_channels.device_error=ERROR_RELAY;

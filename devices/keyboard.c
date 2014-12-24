@@ -52,7 +52,7 @@ static void vKeyboardTask(void *pvParameters)
     			uint8_t i=0;
 
     			Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_OFF);
-    			uks_channels.screen=SCREEN_CHANNELS_FIRST;
+    			//uks_channels.screen=SCREEN_CHANNELS_FIRST;
     			for(i=0;i<DRYING_CHANNELS_NUM;i++)
     			{
     				if(uks_channels.drying_channel_list[i].drying_state==DRYING_DONE)
@@ -60,6 +60,38 @@ static void vKeyboardTask(void *pvParameters)
     					uks_channels.drying_channel_list[i].drying_state=DRYING_WAIT_NEW_OPERATION;
     				}
     			}
+
+    			switch(uks_channels.screen)
+				{
+					case SCREEN_CHANNELS_FIRST:
+					{
+
+					}
+					break;
+
+					case SCREEN_CHANNELS_SECOND:
+					{
+						//uks_channels.screen=SCREEN_CHANNELS_FIRST;
+					}
+					break;
+
+					case SCREEN_HEATER:
+					{
+						//uks_channels.screen=SCREEN_CHANNELS_FIRST;
+					}
+					break;
+
+					case SCREEN_ERROR:
+					{
+
+					}
+					break;
+
+					default:
+					{
+						uks_channels.screen=SCREEN_CHANNELS_FIRST;
+					}
+				}
     		}
     	}
 

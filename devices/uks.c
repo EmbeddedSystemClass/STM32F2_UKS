@@ -173,6 +173,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 			if(average_temperature>TEMP_DRYING_END)
 			{
 				drying_chnl->drying_state=DRYING_DONE;
+				uks_channels.screen=SCREEN_CHANNELS_FIRST;
 				Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
 			}
 
