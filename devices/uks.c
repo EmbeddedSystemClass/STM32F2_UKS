@@ -7,12 +7,22 @@
 
 #include "stdio.h"
 #include "buzzer.h"
+#include "pid_regulator.h"
 
 struct uks uks_channels;
 extern xSemaphoreHandle xMeasure_LM35_Semaphore;
 
 void UKS_Drying_Task(void *pvParameters );
+void UKS_Heater_Init_Task(void *pvParameters );
 uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl);
+
+#define MIN_DELTA_TEMP		4.0
+#define MIN_TRESHOLD_TEMP	45.0
+#define TEMP_DRYING_END		50.0
+#define START_TEMP_UP_TIME	10
+#define AVERAGE_TEMP_TIME	10
+
+#define MIN_DELTA_FALLING_TEMP	-2.0
 
 void UKS_Drying_Init(void)
 {
@@ -25,19 +35,72 @@ void UKS_Drying_Init(void)
 		uks_channels.drying_channel_list[i].temperature=0.0;
 		uks_channels.drying_channel_list[i].time_forecast=0;
 
-		uks_channels.drying_channel_list[i].number=i+1;
+		uks_channels.drying_channel_list[i].number=i;
 
 		for(j=0;j<TEMPERATURE_QUEUE_LEN;j++)
 		{
 			uks_channels.drying_channel_list[i].temperature_queue[j]=200.0;
 		}
+
+		uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
 	}
 
-	uks_channels.screen=SCREEN_CHANNELS_FIRST;
+	uks_channels.screen=SCREEN_INIT_HEATER;
+	//uks_channels.screen=SCREEN_CHANNELS_FIRST;
 	uks_channels.device_error=ERROR_NONE;
-
-	xTaskCreate(UKS_Drying_Task,(signed char*)"DUKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	xTaskCreate(UKS_Heater_Init_Task,(signed char*)"UKS_HEATER_INIT_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	//xTaskCreate(UKS_Drying_Task,(signed char*)"UKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
    // task_watches[DRYING_TASK].task_status=TASK_IDLE;
+}
+
+#define HEATER_INIT_TIMEOUT	40
+void UKS_Heater_Init_Task(void *pvParameters )
+{
+	uint16_t heater_init_timeout_counter=0;
+	float temp_tmp, delta_temp;
+
+	if(uks_channels.heater_tempereature_tumblr==TUMBLR_TEMP_1)
+	{
+		temp_tmp=uks_channels.uks_params.heater_temperature_1;
+	}
+	else
+	{
+		temp_tmp=uks_channels.uks_params.heater_temperature_2;
+	}
+
+	delta_temp=uks_channels.heater_temperature-temp_tmp;
+
+	if(delta_temp<0.0)
+	{
+		delta_temp=-delta_temp;
+	}
+
+	while(delta_temp>1.0)
+	{
+
+		delta_temp=uks_channels.heater_temperature-temp_tmp;
+
+		if(delta_temp<0.0)
+		{
+			delta_temp=-delta_temp;
+		}
+
+		vTaskDelay(1000);
+		uks_channels.screen=SCREEN_INIT_HEATER;
+		heater_init_timeout_counter++;
+
+		if(heater_init_timeout_counter>=HEATER_INIT_TIMEOUT)
+		{
+			uks_channels.screen=SCREEN_HEATER_INIT_TIMEOUT;
+		}
+	}
+
+	if(uks_channels.screen!=SCREEN_HEATER_INIT_TIMEOUT)
+	{
+		uks_channels.screen=SCREEN_CHANNELS_FIRST;
+		xTaskCreate(UKS_Drying_Task,(signed char*)"UKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+	}
+	 vTaskDelete( NULL );
 }
 
 void UKS_Drying_Task(void *pvParameters )
@@ -134,13 +197,13 @@ void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
 	}
 }
 
-#define MIN_DELTA_TEMP		4.0
-#define MIN_TRESHOLD_TEMP	45.0
-#define TEMP_DRYING_END		50.0
-#define START_TEMP_UP_TIME	10
-#define AVERAGE_TEMP_TIME	10
-
-#define MIN_DELTA_FALLING_TEMP	-2.0
+//#define MIN_DELTA_TEMP		4.0
+//#define MIN_TRESHOLD_TEMP	45.0
+//#define TEMP_DRYING_END		50.0
+//#define START_TEMP_UP_TIME	10
+//#define AVERAGE_TEMP_TIME	10
+//
+//#define MIN_DELTA_FALLING_TEMP	-2.0
 
 uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 {
@@ -170,7 +233,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 
 			average_temperature=summ_temperature/AVERAGE_TEMP_TIME;
 
-			if(average_temperature>TEMP_DRYING_END)
+			if(average_temperature>/*TEMP_DRYING_END*/uks_channels.uks_params.end_drying_temperature[drying_chnl->number])
 			{
 				drying_chnl->drying_state=DRYING_DONE;
 				uks_channels.screen=SCREEN_CHANNELS_FIRST;

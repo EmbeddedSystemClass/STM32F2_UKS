@@ -156,7 +156,7 @@
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
-      <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a7696ac38">
+      <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a7c24b79d">
          <include file="..\..\..\devices\hd44780_driver\display.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
@@ -173,6 +173,21 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h" lastModified="13e3b1eb900">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+      </source>
+      <source file="..\..\..\devices\keyboard.c" lastModified="14a7c3f2d6b">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_spi.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+         <include file="..\..\..\devices\keyboard.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+         <include file="..\..\..\devices\uks.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_usr.h" lastModified="13349a797c0">
          <include file="..\..\..\usblib\usbd_core.h"/>
@@ -389,7 +404,7 @@
          <include file="..\..\..\usblib\usbd_def.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
       </source>
-      <source file="..\..\..\devices\uks.h" lastModified="14a7690e045">
+      <source file="..\..\..\devices\uks.h" lastModified="14a7c2b5900">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0">
@@ -401,14 +416,6 @@
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="14a0a90f871">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-      </source>
-      <source file="..\..\..\devices\uks.c" lastModified="14a7b80c269">
-         <include file="..\..\..\devices\uks.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\buzzer.h"/>
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\queue.c" lastModified="13e3b1ec0d0">
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
@@ -549,7 +556,7 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_iwdg.c" lastModified="14a0a917810">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_iwdg.h"/>
       </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14a77316123">
+      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14a7c343afd">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">
       </source>
@@ -585,7 +592,7 @@
       <source file="..\..\..\usblib\usb_regs.h" lastModified="13349a79f90">
          <include file="..\..\..\usblib\usb_conf.h"/>
       </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a61464a9a">
+      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a7c522d6e">
          <include file="..\..\..\pid_regulator\pid_regulator.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>

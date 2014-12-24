@@ -21,13 +21,9 @@ extern struct uks uks_channels;
 
 struct PID_DATA pid_heater;
 
-enum
-{
-	TUMBLR_TEMP_1=0,
-	TUMBLR_TEMP_2=1
-};
 
-static volatile tumblr_state=TUMBLR_TEMP_1;
+
+//static volatile uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_1;
 
 static void PID_Regulator_Task(void *pvParameters);
 
@@ -42,7 +38,14 @@ static void PID_Regulator_Task(void *pvParameters);
  */
 void PID_Heater_Init(void)
 {
-	pid_Init(120.0,3.0,0.0,&pid_heater);
+	uks_channels.uks_params.p_factor=120.0;
+	uks_channels.uks_params.i_factor=3.0;
+	uks_channels.uks_params.d_factor=0.0;
+
+	uks_channels.uks_params.heater_temperature_1=50.0;
+	uks_channels.uks_params.heater_temperature_2=70.0;
+
+	pid_Init(uks_channels.uks_params.p_factor,uks_channels.uks_params.i_factor,uks_channels.uks_params.d_factor,&pid_heater);
 }
 void pid_Init(float p_factor, float i_factor, float d_factor, struct PID_DATA *pid)
 // Set up PID controller parameters
@@ -71,6 +74,8 @@ void pid_Init(float p_factor, float i_factor, float d_factor, struct PID_DATA *p
   	GPIO_InitStruct.GPIO_Pin = TEMP_TUMBLR_TEMP_1_PIN|TEMP_TUMBLR_TEMP_2_PIN;
   	GPIO_Init(TEMP_TUMBLR_PORT, &GPIO_InitStruct);
   	//GPIO_WriteBit(TEMP_TUMBLR_PORT, HD44780_RS_PIN, Bit_RESET);
+
+  	uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_1;
 
   xTaskCreate(PID_Regulator_Task,(signed char*)"PID",128,NULL, tskIDLE_PRIORITY + 1, NULL);
 }
@@ -154,27 +159,27 @@ static void PID_Regulator_Task(void *pvParameters)
 		{
 			if(GPIO_ReadInputDataBit(TEMP_TUMBLR_PORT,TEMP_TUMBLR_TEMP_1_PIN)==Bit_RESET)
 			{
-				if(tumblr_state!=TUMBLR_TEMP_1)
+				if(uks_channels.heater_tempereature_tumblr!=TUMBLR_TEMP_1)
 				{
-					tumblr_state=TUMBLR_TEMP_1;
+					uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_1;
 					pid_heater.sumError = 0;
 					pid_heater.lastProcessValue = 0;
 					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
 					pid_heater.maxSumError = MAX_I_TERM / (pid_heater.I_Factor + 1);
 				}
-				Set_Heater_Power((uint8_t)pid_Controller(70.0,uks_channels.heater_temperature,&pid_heater));
+				Set_Heater_Power((uint8_t)pid_Controller(uks_channels.uks_params.heater_temperature_1,uks_channels.heater_temperature,&pid_heater));
 			}
 			else
 			{
-				if(tumblr_state!=TUMBLR_TEMP_2)
+				if(uks_channels.heater_tempereature_tumblr!=TUMBLR_TEMP_2)
 				{
-					tumblr_state=TUMBLR_TEMP_2;
+					uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_2;
 					pid_heater.sumError = 0;
 					pid_heater.lastProcessValue = 0;
 					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
 					pid_heater.maxSumError = MAX_I_TERM / (pid_heater.I_Factor + 1);
 				}
-				Set_Heater_Power((uint8_t)pid_Controller(50.0,uks_channels.heater_temperature,&pid_heater));
+				Set_Heater_Power((uint8_t)pid_Controller(uks_channels.uks_params.heater_temperature_2,uks_channels.heater_temperature,&pid_heater));
 			}
 		}
 	}

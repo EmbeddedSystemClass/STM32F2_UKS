@@ -28,10 +28,12 @@ enum
 
 enum
 {
-	SCREEN_CHANNELS_FIRST=0,
+	SCREEN_INIT_HEATER=0,
+	SCREEN_CHANNELS_FIRST,
 	SCREEN_CHANNELS_SECOND,
 	SCREEN_HEATER,
 	SCREEN_ERROR,
+	SCREEN_HEATER_INIT_TIMEOUT,
 };
 
 enum
@@ -56,6 +58,18 @@ struct drying_channel
 };
 
 #define DRYING_CHANNELS_NUM	7
+
+struct uks_parameters
+{
+	float heater_temperature_1;
+	float heater_temperature_2;
+	float end_drying_temperature[DRYING_CHANNELS_NUM];
+
+	float p_factor;//PID regulator
+	float i_factor;
+	float d_factor;
+};
+
 struct uks
 {
 	struct drying_channel   drying_channel_list[DRYING_CHANNELS_NUM];
@@ -64,6 +78,9 @@ struct uks
 	uint32_t 	heater_code;
 	uint8_t 	screen;
 	uint8_t 	device_error;
+	uint8_t		heater_tempereature_tumblr;
+
+	struct uks_parameters uks_params;
 };
 
 #endif

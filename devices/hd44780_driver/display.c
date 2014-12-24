@@ -49,6 +49,41 @@ void Display_Task(void *pvParameters )
 
 		switch(uks_channels.screen)
 		{
+			case SCREEN_INIT_HEATER:
+			{
+				float temp=uks_channels.heater_temperature;
+				if(temp>=0)
+				{
+					sprintf(str_buf,"Heater= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+				}
+				else
+				{
+					sprintf(str_buf,"Heater=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+				}
+
+
+				HD44780_Puts(0,0,str_buf);
+				sprintf(str_buf,"Please wait...      ");
+				HD44780_Puts(0,1,str_buf);
+				sprintf(str_buf,"                    ");
+				HD44780_Puts(0,2,str_buf);
+				HD44780_Puts(0,3,str_buf);
+			}
+			break;
+
+			case SCREEN_HEATER_INIT_TIMEOUT:
+			{
+				sprintf(str_buf,"                    ");
+				HD44780_Puts(0,0,str_buf);
+				sprintf(str_buf,"   Heater init      ");
+				HD44780_Puts(0,1,str_buf);
+				sprintf(str_buf,"     timeout        ");
+				HD44780_Puts(0,2,str_buf);
+				sprintf(str_buf,"                    ");
+				HD44780_Puts(0,3,str_buf);
+			}
+			break;
+
 			case SCREEN_CHANNELS_FIRST:
 			{
 				for(i=0;i<HD44780_HEIGHT;i++)
@@ -58,7 +93,7 @@ void Display_Task(void *pvParameters )
 					{
 						temp=0.0;
 					}
-					sprintf(str_buf,"%1d t= %3d.%01d %s",uks_channels.drying_channel_sort_list[i]->number,(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
+					sprintf(str_buf,"%1d t= %3d.%01d %s",(uks_channels.drying_channel_sort_list[i]->number+1),(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
 					HD44780_Puts(0,i,str_buf);
 				}
 			}
@@ -73,7 +108,7 @@ void Display_Task(void *pvParameters )
 					{
 						temp=0.0;
 					}
-					sprintf(str_buf,"%1d t= %3d.%01d %s",uks_channels.drying_channel_sort_list[i]->number,(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
+					sprintf(str_buf,"%1d t= %3d.%01d %s",(uks_channels.drying_channel_sort_list[i]->number+1),(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
 					HD44780_Puts(0,(i-HD44780_HEIGHT),str_buf);
 				}
 

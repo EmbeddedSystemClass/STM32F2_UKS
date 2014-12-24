@@ -44,6 +44,12 @@ typedef struct PID_DATA{
 #define  TEMP_TUMBLR_TEMP_1_PIN			GPIO_Pin_9
 #define  TEMP_TUMBLR_TEMP_2_PIN			GPIO_Pin_8
 
+enum
+{
+	TUMBLR_TEMP_1=0,
+	TUMBLR_TEMP_2=1
+};
+
 void pid_Init(float p_factor, float i_factor, float d_factor, struct PID_DATA *pid);
 int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_st);
 void pid_Reset_Integrator(pidData_t *pid_st);

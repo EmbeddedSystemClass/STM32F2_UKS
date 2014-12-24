@@ -69,6 +69,12 @@ static void vKeyboardTask(void *pvParameters)
 					}
 					break;
 
+					case SCREEN_INIT_HEATER:
+					{
+
+					}
+					break;
+
 					case SCREEN_CHANNELS_SECOND:
 					{
 						//uks_channels.screen=SCREEN_CHANNELS_FIRST;
@@ -82,6 +88,12 @@ static void vKeyboardTask(void *pvParameters)
 					break;
 
 					case SCREEN_ERROR:
+					{
+
+					}
+					break;
+
+					case SCREEN_HEATER_INIT_TIMEOUT:
 					{
 
 					}
@@ -104,7 +116,51 @@ static void vKeyboardTask(void *pvParameters)
 
     			if(press_time_counter>PRESS_SHORT_TIME)
     			{
-    				uks_channels.screen=SCREEN_HEATER;
+    				//uks_channels.screen=SCREEN_HEATER;
+
+    				switch(uks_channels.screen)
+    				{
+    					case SCREEN_CHANNELS_FIRST:
+    					{
+    						uks_channels.screen=SCREEN_HEATER;
+    					}
+    					break;
+
+    					case SCREEN_INIT_HEATER:
+    					{
+
+    					}
+    					break;
+
+    					case SCREEN_CHANNELS_SECOND:
+    					{
+    						uks_channels.screen=SCREEN_HEATER;
+    					}
+    					break;
+
+    					case SCREEN_HEATER:
+    					{
+
+    					}
+    					break;
+
+    					case SCREEN_ERROR:
+    					{
+
+    					}
+    					break;
+
+    					case SCREEN_HEATER_INIT_TIMEOUT:
+    					{
+
+    					}
+    					break;
+
+    					default:
+    					{
+    						uks_channels.screen=SCREEN_CHANNELS_FIRST;
+    					}
+    				}
     			}
     		}
     	}
@@ -117,6 +173,12 @@ static void vKeyboardTask(void *pvParameters)
 					case SCREEN_CHANNELS_FIRST:
 					{
 						uks_channels.screen=SCREEN_CHANNELS_SECOND;
+					}
+					break;
+
+					case SCREEN_INIT_HEATER:
+					{
+
 					}
 					break;
 
@@ -133,6 +195,12 @@ static void vKeyboardTask(void *pvParameters)
 					break;
 
 					case SCREEN_ERROR:
+					{
+
+					}
+					break;
+
+					case SCREEN_HEATER_INIT_TIMEOUT:
 					{
 
 					}
