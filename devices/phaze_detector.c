@@ -24,8 +24,16 @@ extern struct uks uks_channels;
 
 static void Heater_Control_Task(void *pvParameters);
 
+xTaskHandle Heater_Control_Task_Handle;
+extern xTaskHandle PID_Regulator_Task_Handle;
+
 void Phaze_Detector_Init(void)
 {
+	if(uks_channels.device_error!=ERROR_NONE)
+	{
+		return;
+	}
+
 	RCC_AHB1PeriphClockCmd(ZERO_CROSS_PORT_RCC, ENABLE);//тактируем портј
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
@@ -84,17 +92,16 @@ void Phaze_Detector_Init(void)
 	vSemaphoreCreateBinary( xPhazeSemaphore );
 	Set_Heater_Power(0);
 
-	 xTaskCreate(Heater_Control_Task,(signed char*)"Heater Control",128,NULL, tskIDLE_PRIORITY + 1, NULL);
-
+	 xTaskCreate(Heater_Control_Task,(signed char*)"Heater Control",128,NULL, tskIDLE_PRIORITY + 1, &Heater_Control_Task_Handle);
 }
 
 void Set_Heater_Power(uint8_t power)
 {
 	if(power<=MAX_POWER_VALUE)
 	{
-		EXTI->IMR &= ~EXTI_Line0;
+		//EXTI->IMR &= ~EXTI_Line0;
 		phaze_detect.power_value=power;
-	}	EXTI->IMR |=  EXTI_Line0;
+	}	//EXTI->IMR |=  EXTI_Line0;
 }
 
 static volatile uint8_t cross_counter=0;
@@ -105,9 +112,6 @@ void EXTI0_IRQHandler(void)
  	static portBASE_TYPE xHigherPriorityTaskWoken;
  	xHigherPriorityTaskWoken = pdFALSE;
 
- //   if(EXTI_GetITStatus(EXTI_Line0) != RESET)
- //   {
-        //EXTI_ClearITPendingBit(EXTI_Line0);
  	 	EXTI->PR = EXTI_Line0;
         phaze_detect.zero_cross_counter++;
 
@@ -131,18 +135,23 @@ void EXTI0_IRQHandler(void)
         	}
         }
         cross_counter++;
- //   }
+
         EXTI->IMR |= EXTI_Line0;
 }
 
 void EXTI1_IRQHandler(void)
 {
- //   if(EXTI_GetITStatus(EXTI_Line1) != RESET)
-//    {
-        //EXTI_ClearITPendingBit(EXTI_Line1);
         EXTI->PR = EXTI_Line1;
         phaze_detect.contr_sp_counter++;
-//    }
+}
+
+void Heater_Power_Down_Block(void)
+{
+//	vTaskSuspend(PID_Regulator_Task_Handle);
+	vTaskSuspend(Heater_Control_Task_Handle);
+	EXTI->IMR &= ~(EXTI_Line0|EXTI_Line1);
+	RELAY_PORT->BSRRH|=RELAY_PIN;//pin down
+	GPIO_PinLockConfig(RELAY_PORT,RELAY_PIN);
 }
 
 static void Heater_Control_Task(void *pvParameters)
@@ -158,6 +167,7 @@ static void Heater_Control_Task(void *pvParameters)
 				uks_channels.device_error=ERROR_HEATER_RELAY;
 				uks_channels.screen=SCREEN_ERROR;
 				Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
+				Heater_Power_Down_Block();
 			}
 			else
 			{
@@ -167,6 +177,7 @@ static void Heater_Control_Task(void *pvParameters)
 					uks_channels.device_error=ERROR_RELAY;
 					uks_channels.screen=SCREEN_ERROR;
 					Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
+					Heater_Power_Down_Block();
 				}
 			}
 			phaze_detect.contr_sp_counter=0;
@@ -179,6 +190,7 @@ static void Heater_Control_Task(void *pvParameters)
 			uks_channels.device_error=ERROR_PHAZE;
 			uks_channels.screen=SCREEN_ERROR;
 			Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
+			Heater_Power_Down_Block();
 		}
 		EXTI->IMR |= (EXTI_Line0|EXTI_Line1);
 		vTaskDelay(1000);

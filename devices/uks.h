@@ -42,6 +42,7 @@ enum
 	ERROR_HEATER_RELAY,
 	ERROR_RELAY,
 	ERROR_PHAZE,
+	ERROR_HEATER_TIMEOUT
 };
 
 struct drying_channel

@@ -38,9 +38,12 @@
 
 __ALIGN_BEGIN USB_OTG_CORE_HANDLE  USB_OTG_dev __ALIGN_END;
 
+extern struct uks uks_channels;
+
 int main(void)
 {
 	SystemInit();
+	uks_channels.device_error=ERROR_NONE;
 
 	Buzzer_Init();
 	Power_Detector_Init();

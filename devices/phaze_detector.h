@@ -4,6 +4,7 @@
 
 void Phaze_Detector_Init(void);
 void Set_Heater_Power(uint8_t power);
+void Heater_Power_Down_Block(void);
 
 #define ZERO_CROSS_PORT    			GPIOB
 #define ZERO_CROSS_PORT_RCC 		RCC_AHB1Periph_GPIOB

@@ -1933,23 +1933,8 @@
          <include file="..\..\..\modbus\include\mb.h"/>
          <include file="..\..\..\modbus\port\mbport.h"/>
       </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a7b4f513e">
+      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a811a5920">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
-      <source file="..\..\..\devices\phaze_detector.c" lastModified="14a7b687b04">
-         <include file="..\..\..\devices\phaze_detector.h"/>
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h"/>
-         <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
-         <include file="..\..\..\cmsis_lib\include\misc.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
-         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
-         <include file="..\..\..\devices\uks.h"/>
-         <include file="..\..\..\devices\buzzer.h"/>
       </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="14a19783a11">
       </source>
@@ -2006,6 +1991,17 @@
          <include file="..\..\..\usblib\usbd_usr.h"/>
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
+      </source>
+      <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14a80dd09f0">
+         <include file="..\..\..\devices\hd44780_driver\display.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\watchdog.h"/>
+         <include file="..\..\..\devices\uks.h"/>
+         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
+         <include file="..\..\..\devices\ADS1120.h"/>
       </source>
       <source file="..\..\..\devices\keyboard.h" lastModified="14a3e117061">
       </source>
@@ -2244,7 +2240,7 @@
          <include file="..\..\..\usblib\usbd_def.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
       </source>
-      <source file="..\..\..\devices\uks.h" lastModified="14a7c2b5900">
+      <source file="..\..\..\devices\uks.h" lastModified="14a80f08974">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0">
@@ -2257,7 +2253,7 @@
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="14a0a90f871">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\uks.c" lastModified="14a7c5b3b0f">
+      <source file="..\..\..\devices\uks.c" lastModified="14a8184d0dd">
          <include file="..\..\..\devices\uks.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
@@ -2412,7 +2408,7 @@
       <source file="..\..\..\usblib\usb_regs.h" lastModified="13349a79f90">
          <include file="..\..\..\usblib\usb_conf.h"/>
       </source>
-      <source file="..\..\..\main.c" lastModified="14a773aab30">
+      <source file="..\..\..\main.c" lastModified="14a817a083e">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -2441,7 +2437,7 @@
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a7c522d6e">
+      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14a817b8bd1">
          <include file="..\..\..\pid_regulator\pid_regulator.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>

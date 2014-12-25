@@ -23,7 +23,7 @@ struct PID_DATA pid_heater;
 
 
 
-//static volatile uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_1;
+xTaskHandle PID_Regulator_Task_Handle;
 
 static void PID_Regulator_Task(void *pvParameters);
 
@@ -38,6 +38,11 @@ static void PID_Regulator_Task(void *pvParameters);
  */
 void PID_Heater_Init(void)
 {
+	if(uks_channels.device_error!=ERROR_NONE)
+	{
+		return;
+	}
+
 	uks_channels.uks_params.p_factor=120.0;
 	uks_channels.uks_params.i_factor=3.0;
 	uks_channels.uks_params.d_factor=0.0;
@@ -77,7 +82,7 @@ void pid_Init(float p_factor, float i_factor, float d_factor, struct PID_DATA *p
 
   	uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_1;
 
-  xTaskCreate(PID_Regulator_Task,(signed char*)"PID",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+  xTaskCreate(PID_Regulator_Task,(signed char*)"PID",128,NULL, tskIDLE_PRIORITY + 1, &PID_Regulator_Task_Handle);
 }
 
 
