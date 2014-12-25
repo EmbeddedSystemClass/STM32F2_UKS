@@ -25,7 +25,7 @@ void Display_Init(void)
 static volatile uint16_t display_init_counter=0;
 #define DISPLAY_INIT_PERIOD		3
 
-uint8_t drying_states[3][16]={{"continue "},{"done     "},{/*"wait     "}*/"C\xB3o\xB2o\xE3\xBDo "}};
+uint8_t drying_states[3][16]={{/*"Процесс "*/"\xA8po\xE5\x65\x63\x63  "},{/*"Окончено     "*/"Oko\xBD\xC0\x65\xBDo "},{/*"Свободно     "}*/"C\xB3o\xB2o\xE3\xBDo "}};
 
 void Display_Task(void *pvParameters )
 {
@@ -93,7 +93,7 @@ void Display_Task(void *pvParameters )
 					{
 						temp=0.0;
 					}
-					sprintf(str_buf,"%1d t= %3d.%01d %s",(uks_channels.drying_channel_sort_list[i]->number+1),(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
+					sprintf(str_buf,"%1d %3d.%01d \xEF\x43 %s",(uks_channels.drying_channel_sort_list[i]->number+1),(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
 					HD44780_Puts(0,i,str_buf);
 				}
 			}
@@ -108,7 +108,7 @@ void Display_Task(void *pvParameters )
 					{
 						temp=0.0;
 					}
-					sprintf(str_buf,"%1d t= %3d.%01d %s",(uks_channels.drying_channel_sort_list[i]->number+1),(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
+					sprintf(str_buf,"%1d %3d.%01d \xEF\x43 %s",(uks_channels.drying_channel_sort_list[i]->number+1),(uint16_t)temp,(uint16_t)(temp*10)%10,&drying_states[uks_channels.drying_channel_sort_list[i]->drying_state]);
 					HD44780_Puts(0,(i-HD44780_HEIGHT),str_buf);
 				}
 
