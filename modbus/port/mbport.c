@@ -18,7 +18,7 @@ static volatile u16 usRegInputBuf[64];
 u16 *usRegHoldingBuf=usRegInputBuf;
 
 u8 REG_INPUT_START=1,REG_HOLDING_START=1;
-u8 REG_INPUT_NREGS=32,REG_HOLDING_NREGS=8;
+u8 REG_INPUT_NREGS=32,REG_HOLDING_NREGS=24;
 u8 usRegInputStart=1,usRegHoldingStart=1;
 
 
@@ -67,34 +67,54 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
     eMBErrorCode    eStatus = MB_ENOERR;
     int             iRegIndex;
 	u16 *PRT=(u16*)pucRegBuffer;
+	uint16_t i=0;
 
     if( ( usAddress >= REG_HOLDING_START ) && ( usAddress + usNRegs <= REG_HOLDING_START + REG_HOLDING_NREGS ) )
     {
         iRegIndex = ( int )( usAddress - usRegHoldingStart );
+        REG_HOLDING_NREGS=(DRYING_CHANNELS_NUM+5)*2;
         switch ( eMode )
         {
-        case MB_REG_READ:
-            while( usNRegs > 0 )
-            {
-                *PRT++ = __REV16(usRegHoldingBuf[iRegIndex++]);
+			case MB_REG_READ:
+			{
 
-// 				*pucRegBuffer++ = ( unsigned char )( usRegHoldingBuf[iRegIndex] >> 8 );
-//              *pucRegBuffer++ = ( unsigned char )( usRegHoldingBuf[iRegIndex] & 0xFF );
-//				iRegIndex++;
-                usNRegs--;
-            }
-            break;
+			    for(i=0;i<DRYING_CHANNELS_NUM;i++)
+			    {
+			    	((float*)usRegHoldingBuf)[i] = uks_channels.uks_params.end_drying_temperature[i];
+			    }
 
-        case MB_REG_WRITE:
-            while( usNRegs > 0 )
-            {
-                usRegHoldingBuf[iRegIndex++] = __REV16(*PRT++);
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM] = uks_channels.uks_params.heater_temperature_1;
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+1] = uks_channels.uks_params.heater_temperature_2;
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+2] = uks_channels.uks_params.p_factor;
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+3] = uks_channels.uks_params.i_factor;
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+4] = uks_channels.uks_params.d_factor;
 
-//				usRegHoldingBuf[iRegIndex] = *pucRegBuffer++ << 8;
-//              usRegHoldingBuf[iRegIndex] |= *pucRegBuffer++;
-//              iRegIndex++;
-                usNRegs--;
-            }
+				while( usNRegs > 0 )
+				{
+//					*PRT++ = __REV16(usRegHoldingBuf[iRegIndex++]);
+
+	 				*pucRegBuffer++ = ( unsigned char )( usRegHoldingBuf[iRegIndex] >> 8 );
+	                *pucRegBuffer++ = ( unsigned char )( usRegHoldingBuf[iRegIndex] & 0xFF );
+					iRegIndex++;
+
+					usNRegs--;
+				}
+			}
+			break;
+
+			case MB_REG_WRITE:
+			{
+				while( usNRegs > 0 )
+				{
+//					usRegHoldingBuf[iRegIndex++] = __REV16(*PRT++);
+
+	//				usRegHoldingBuf[iRegIndex] = *pucRegBuffer++ << 8;
+	//              usRegHoldingBuf[iRegIndex] |= *pucRegBuffer++;
+	//              iRegIndex++;
+					usNRegs--;
+				}
+			}
+			break;
         }
     }
     else

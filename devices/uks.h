@@ -3,17 +3,6 @@
 
 #include "stm32f4xx.h"
 
-//struct calibrate
-//{
-//	uint16_t adc_code;
-//	uint32_t value;
-//};
-//
-//struct backup_registers
-//{
-//	struct calibrate thermo_resistor;
-//};
-//
 
 #define UKS_DRYING_EMP_END	120.0
 
@@ -62,9 +51,10 @@ struct drying_channel
 
 struct uks_parameters
 {
+	float end_drying_temperature[DRYING_CHANNELS_NUM];
+
 	float heater_temperature_1;
 	float heater_temperature_2;
-	float end_drying_temperature[DRYING_CHANNELS_NUM];
 
 	float p_factor;//PID regulator
 	float i_factor;

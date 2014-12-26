@@ -1936,6 +1936,21 @@
       <source file="..\..\..\devices\phaze_detector.h" lastModified="14a811a5920">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
+      <source file="..\..\..\devices\phaze_detector.c" lastModified="14a818851f5">
+         <include file="..\..\..\devices\phaze_detector.h"/>
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_exti.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\uks.h"/>
+         <include file="..\..\..\devices\buzzer.h"/>
+      </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="14a19783a11">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
@@ -2120,10 +2135,6 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h" lastModified="13e3b1eb8f0">
       </source>
-      <source file="..\..\..\modbus\port\mbport.c" lastModified="14a70efa09d">
-         <include file="..\..\..\modbus\include\mb.h"/>
-         <include file="..\..\..\devices\uks.h"/>
-      </source>
       <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff">
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
          <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
@@ -2240,7 +2251,7 @@
          <include file="..\..\..\usblib\usbd_def.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
       </source>
-      <source file="..\..\..\devices\uks.h" lastModified="14a80f08974">
+      <source file="..\..\..\devices\uks.h" lastModified="14a861c7a78">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0">
