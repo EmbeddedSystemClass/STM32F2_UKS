@@ -43,12 +43,12 @@ void PID_Heater_Init(void)
 		return;
 	}
 
-	uks_channels.uks_params.p_factor=120.0;
-	uks_channels.uks_params.i_factor=3.0;
-	uks_channels.uks_params.d_factor=0.0;
-
-	uks_channels.uks_params.heater_temperature_1=50.0;
-	uks_channels.uks_params.heater_temperature_2=70.0;
+//	uks_channels.uks_params.p_factor=120.0;
+//	uks_channels.uks_params.i_factor=3.0;
+//	uks_channels.uks_params.d_factor=0.0;
+//
+//	uks_channels.uks_params.heater_temperature_1=50.0;
+//	uks_channels.uks_params.heater_temperature_2=70.0;
 
 	pid_Init(uks_channels.uks_params.p_factor,uks_channels.uks_params.i_factor,uks_channels.uks_params.d_factor,&pid_heater);
 }

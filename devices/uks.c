@@ -6,6 +6,7 @@
 #include "semphr.h"
 
 #include "stdio.h"
+#include "string.h"
 #include "buzzer.h"
 #include "pid_regulator.h"
 
@@ -15,6 +16,7 @@ extern xSemaphoreHandle xMeasure_LM35_Semaphore;
 void UKS_Drying_Task(void *pvParameters );
 void UKS_Heater_Init_Task(void *pvParameters );
 uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl);
+uint8_t CRC_Check( uint8_t  *Spool_pr,uint8_t Count_pr );
 
 #define MIN_DELTA_TEMP		4.0
 #define MIN_TRESHOLD_TEMP	45.0
@@ -47,10 +49,14 @@ void UKS_Drying_Init(void)
 			uks_channels.drying_channel_list[i].temperature_queue[j]=200.0;
 		}
 
-		uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
+//		uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
 	}
 
 	uks_channels.screen=SCREEN_INIT_HEATER;
+
+//	uks_channels.backup_uks_params=(struct uks_parameters *) BKPSRAM_BASE;
+
+//	memcpy(&uks_channels.uks_params,uks_channels.backup_uks_params,sizeof(struct uks_parameters));
 
 	//uks_channels.device_error=ERROR_NONE;
 	xTaskCreate(UKS_Heater_Init_Task,(signed char*)"UKS_HEATER_INIT_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
@@ -261,4 +267,64 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 
 		}
 	}
+}
+
+void UKS_Restore_Settings(void)
+{
+	uint8_t i=0;
+
+	uks_channels.backup_uks_params=(struct uks_parameters *) BKPSRAM_BASE;
+
+	uint8_t *back_crc=(uint8_t*)(BKPSRAM_BASE+sizeof(struct uks_parameters));
+	uint8_t true_crc=CRC_Check((uint8_t*)(uks_channels.backup_uks_params),sizeof(struct uks_parameters));
+
+	if(/**back_crc==true_crc*/1)
+	{
+		for(i=0;i<DRYING_CHANNELS_NUM;i++)
+		{
+			uks_channels.uks_params.end_drying_temperature[i]=uks_channels.backup_uks_params->end_drying_temperature[i];
+		}
+
+		uks_channels.uks_params.heater_temperature_1=uks_channels.backup_uks_params->heater_temperature_1;
+		uks_channels.uks_params.heater_temperature_2=uks_channels.backup_uks_params->heater_temperature_2;
+		uks_channels.uks_params.p_factor=uks_channels.backup_uks_params->p_factor;
+		uks_channels.uks_params.i_factor=uks_channels.backup_uks_params->i_factor;
+		uks_channels.uks_params.d_factor=uks_channels.backup_uks_params->d_factor;
+	}
+//	else
+//	{
+//		for(i=0;i<DRYING_CHANNELS_NUM;i++)
+//		{
+//			uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
+//		}
+//
+//		uks_channels.uks_params.p_factor=120.0;
+//		uks_channels.uks_params.i_factor=3.0;
+//		uks_channels.uks_params.d_factor=0.0;
+//
+//		uks_channels.uks_params.heater_temperature_1=50.0;
+//		uks_channels.uks_params.heater_temperature_2=70.0;
+//	}
+}
+
+
+uint8_t  CRC_Check( uint8_t  *Spool_pr,uint8_t Count_pr )
+{
+	uint8_t crc_n = 0;
+	uint8_t  *Spool;
+	uint8_t  Count ;
+
+	Spool=Spool_pr;
+	Count=Count_pr;
+
+  		while(Count!=0x0)
+        {
+	        crc_n = crc_n ^ (*Spool++);//
+
+	        crc_n = ((crc_n & 0x01) ? (uint8_t)0x80: (uint8_t)0x00) | (uint8_t)(crc_n >> 1);
+
+	        if (crc_n & (uint8_t)0x80) crc_n = crc_n ^ (uint8_t)0x3C;
+			Count--;
+        }
+    return crc_n;
 }

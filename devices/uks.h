@@ -72,6 +72,10 @@ struct uks
 	uint8_t		heater_tempereature_tumblr;
 
 	struct uks_parameters uks_params;
+	struct uks_parameters *backup_uks_params;
 };
+
+void UKS_Drying_Init(void);
+void UKS_Restore_Settings(void);
 
 #endif

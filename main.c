@@ -47,12 +47,16 @@ int main(void)
 
 	Buzzer_Init();
 	Power_Detector_Init();
-////	Backup_SRAM_Init();
+	Backup_SRAM_Init();
+
+
 	Phaze_Detector_Init();
 	Display_Init();
 
 	ADS1120_init();
 	ADC_Channel_Init();
+
+	UKS_Restore_Settings();
 	PID_Heater_Init();
 	UKS_Drying_Init();
 

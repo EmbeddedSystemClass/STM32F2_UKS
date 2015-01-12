@@ -1,5 +1,6 @@
 #include "ModBus/include/mb.h" 
 #include "uks.h"
+#include "backup_sram.h"
 
 extern struct uks uks_channels;
 
@@ -121,6 +122,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 						iRegIndex+=2;
 						usNRegs-=2;
+
+						Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->end_drying_temperature[(iRegIndex>>1)],&uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)],sizeof(float));
 						//pucRegBuffer+=4;
 					}
 					else
@@ -136,6 +139,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_1,&uks_channels.uks_params.heater_temperature_1,sizeof(float));
 //								pucRegBuffer+=4;
 							}
 							break;
@@ -149,6 +154,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_2,&uks_channels.uks_params.heater_temperature_2,sizeof(float));
 							//	pucRegBuffer+=4;
 							}
 							break;
@@ -162,6 +169,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								((uint8_t*)(&uks_channels.uks_params.p_factor))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->p_factor,&uks_channels.uks_params.p_factor,sizeof(float));
 							//	pucRegBuffer+=4;
 							}
 							break;
@@ -175,6 +184,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								((uint8_t*)(&uks_channels.uks_params.i_factor))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->i_factor,&uks_channels.uks_params.i_factor,sizeof(float));
 								//pucRegBuffer+=4;
 							}
 							break;
@@ -188,6 +199,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								((uint8_t*)(&uks_channels.uks_params.d_factor))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
 								//pucRegBuffer+=4;
 							}
 							break;
