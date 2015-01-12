@@ -61,6 +61,12 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 }
 
 
+#define REG_INDEX_HEATER_TEMP_1	14
+#define REG_INDEX_HEATER_TEMP_2	16
+#define REG_INDEX_P_FACTOR		18
+#define REG_INDEX_I_FACTOR		20
+#define REG_INDEX_D_FACTOR		22
+
 eMBErrorCode
 eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
 {
@@ -91,8 +97,6 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 				while( usNRegs > 0 )
 				{
-//					*PRT++ = __REV16(usRegHoldingBuf[iRegIndex++]);
-
 	 				*pucRegBuffer++ = ( unsigned char )( usRegHoldingBuf[iRegIndex] >> 8 );
 	                *pucRegBuffer++ = ( unsigned char )( usRegHoldingBuf[iRegIndex] & 0xFF );
 					iRegIndex++;
@@ -106,12 +110,70 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 			{
 				while( usNRegs > 0 )
 				{
-//					usRegHoldingBuf[iRegIndex++] = __REV16(*PRT++);
+					if((iRegIndex>=0)&&(iRegIndex<(DRYING_CHANNELS_NUM*2)))
+					{
+						uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]=*((float*)pucRegBuffer);
 
-	//				usRegHoldingBuf[iRegIndex] = *pucRegBuffer++ << 8;
-	//              usRegHoldingBuf[iRegIndex] |= *pucRegBuffer++;
-	//              iRegIndex++;
-					usNRegs--;
+						iRegIndex+=2;
+						usNRegs-=2;
+						pucRegBuffer+=4;
+					}
+					else
+					{
+						switch(iRegIndex)
+						{
+							case REG_INDEX_HEATER_TEMP_1:
+							{
+								uks_channels.uks_params.heater_temperature_1=*((float*)pucRegBuffer);
+								iRegIndex+=2;
+								usNRegs-=2;
+								pucRegBuffer+=4;
+							}
+							break;
+
+							case REG_INDEX_HEATER_TEMP_2:
+							{
+								uks_channels.uks_params.heater_temperature_2=*((float*)pucRegBuffer);
+								iRegIndex+=2;
+								usNRegs-=2;
+								pucRegBuffer+=4;
+							}
+							break;
+
+							case REG_INDEX_P_FACTOR:
+							{
+								uks_channels.uks_params.p_factor=*((float*)pucRegBuffer);
+								iRegIndex+=2;
+								usNRegs-=2;
+								pucRegBuffer+=4;
+							}
+							break;
+
+							case REG_INDEX_I_FACTOR:
+							{
+								uks_channels.uks_params.i_factor=*((float*)pucRegBuffer);
+								iRegIndex+=2;
+								usNRegs-=2;
+								pucRegBuffer+=4;
+							}
+							break;
+
+							case REG_INDEX_D_FACTOR:
+							{
+								uks_channels.uks_params.d_factor=*((float*)pucRegBuffer);
+								iRegIndex+=2;
+								usNRegs-=2;
+								pucRegBuffer+=4;
+							}
+							break;
+
+							default:
+							{
+
+							}
+							break;
+						}
+					}
 				}
 			}
 			break;
