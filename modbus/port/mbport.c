@@ -112,11 +112,16 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 				{
 					if((iRegIndex>=0)&&(iRegIndex<(DRYING_CHANNELS_NUM*2)))
 					{
-						uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]=*((float*)pucRegBuffer);
+						//uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]=*((float*)pucRegBuffer);
+
+						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[1]=*pucRegBuffer++;
+						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[0]=*pucRegBuffer++;
+						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[3]=*pucRegBuffer++;
+						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[2]=*pucRegBuffer++;
 
 						iRegIndex+=2;
 						usNRegs-=2;
-						pucRegBuffer+=4;
+						//pucRegBuffer+=4;
 					}
 					else
 					{
@@ -124,46 +129,66 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 						{
 							case REG_INDEX_HEATER_TEMP_1:
 							{
-								uks_channels.uks_params.heater_temperature_1=*((float*)pucRegBuffer);
+								//uks_channels.uks_params.heater_temperature_1=30;//*((float*)pucRegBuffer);
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
-								pucRegBuffer+=4;
+//								pucRegBuffer+=4;
 							}
 							break;
 
 							case REG_INDEX_HEATER_TEMP_2:
 							{
-								uks_channels.uks_params.heater_temperature_2=*((float*)pucRegBuffer);
+								//uks_channels.uks_params.heater_temperature_2=*((float*)pucRegBuffer);
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
-								pucRegBuffer+=4;
+							//	pucRegBuffer+=4;
 							}
 							break;
 
 							case REG_INDEX_P_FACTOR:
 							{
-								uks_channels.uks_params.p_factor=*((float*)pucRegBuffer);
+								//uks_channels.uks_params.p_factor=*((float*)pucRegBuffer);
+								((uint8_t*)(&uks_channels.uks_params.p_factor))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.p_factor))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.p_factor))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.p_factor))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
-								pucRegBuffer+=4;
+							//	pucRegBuffer+=4;
 							}
 							break;
 
 							case REG_INDEX_I_FACTOR:
 							{
-								uks_channels.uks_params.i_factor=*((float*)pucRegBuffer);
+								//uks_channels.uks_params.i_factor=*((float*)pucRegBuffer);
+								((uint8_t*)(&uks_channels.uks_params.i_factor))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.i_factor))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.i_factor))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.i_factor))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
-								pucRegBuffer+=4;
+								//pucRegBuffer+=4;
 							}
 							break;
 
 							case REG_INDEX_D_FACTOR:
 							{
-								uks_channels.uks_params.d_factor=*((float*)pucRegBuffer);
+								//uks_channels.uks_params.d_factor=*((float*)pucRegBuffer);
+								((uint8_t*)(&uks_channels.uks_params.d_factor))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.d_factor))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.d_factor))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.d_factor))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
-								pucRegBuffer+=4;
+								//pucRegBuffer+=4;
 							}
 							break;
 

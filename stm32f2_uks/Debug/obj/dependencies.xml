@@ -284,10 +284,6 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h" lastModified="13e3b1eb8f0">
       </source>
-      <source file="..\..\..\modbus\port\mbport.c" lastModified="14add2c9337">
-         <include file="..\..\..\modbus\include\mb.h"/>
-         <include file="..\..\..\devices\uks.h"/>
-      </source>
       <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff">
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
          <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
