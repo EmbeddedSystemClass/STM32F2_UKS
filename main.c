@@ -45,7 +45,6 @@ int main(void)
 	SystemInit();
 	uks_channels.device_error=ERROR_NONE;
 
-	Buzzer_Init();
 	Power_Detector_Init();
 	Backup_SRAM_Init();
 
@@ -63,13 +62,11 @@ int main(void)
 	Buzzer_Init();
 	Keyboard_Init();
 	USBD_Init(&USB_OTG_dev,USB_OTG_FS_CORE_ID,&USR_desc,&USBD_CDC_cb,&USR_cb);
+
+
 	Protocol_Init();
 
-
-
-//	RTC_Clock_Init();
-////	Watchdog_Init();
-
+//	Watchdog_Init();
 
     vTaskStartScheduler();
 

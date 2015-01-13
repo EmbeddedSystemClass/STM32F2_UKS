@@ -278,7 +278,7 @@ void UKS_Restore_Settings(void)
 	uint8_t *back_crc=(uint8_t*)(BKPSRAM_BASE+sizeof(struct uks_parameters));
 	uint8_t true_crc=CRC_Check((uint8_t*)(uks_channels.backup_uks_params),sizeof(struct uks_parameters));
 
-	if(/**back_crc==true_crc*/1)
+	if(*back_crc==true_crc)
 	{
 		for(i=0;i<DRYING_CHANNELS_NUM;i++)
 		{
@@ -291,20 +291,20 @@ void UKS_Restore_Settings(void)
 		uks_channels.uks_params.i_factor=uks_channels.backup_uks_params->i_factor;
 		uks_channels.uks_params.d_factor=uks_channels.backup_uks_params->d_factor;
 	}
-//	else
-//	{
-//		for(i=0;i<DRYING_CHANNELS_NUM;i++)
-//		{
-//			uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
-//		}
-//
-//		uks_channels.uks_params.p_factor=120.0;
-//		uks_channels.uks_params.i_factor=3.0;
-//		uks_channels.uks_params.d_factor=0.0;
-//
-//		uks_channels.uks_params.heater_temperature_1=50.0;
-//		uks_channels.uks_params.heater_temperature_2=70.0;
-//	}
+	else
+	{
+		for(i=0;i<DRYING_CHANNELS_NUM;i++)
+		{
+			uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
+		}
+
+		uks_channels.uks_params.p_factor=120.0;
+		uks_channels.uks_params.i_factor=3.0;
+		uks_channels.uks_params.d_factor=0.0;
+
+		uks_channels.uks_params.heater_temperature_1=50.0;
+		uks_channels.uks_params.heater_temperature_2=70.0;
+	}
 }
 
 

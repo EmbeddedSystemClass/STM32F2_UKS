@@ -119,12 +119,11 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[0]=*pucRegBuffer++;
 						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[3]=*pucRegBuffer++;
 						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[2]=*pucRegBuffer++;
-
+						Backup_SRAM_Write_Reg(&(uks_channels.backup_uks_params->end_drying_temperature[(iRegIndex>>1)]),&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]),sizeof(float));
 						iRegIndex+=2;
 						usNRegs-=2;
 
-						Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->end_drying_temperature[(iRegIndex>>1)],&uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)],sizeof(float));
-						//pucRegBuffer+=4;
+
 					}
 					else
 					{
@@ -147,7 +146,6 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 							case REG_INDEX_HEATER_TEMP_2:
 							{
-								//uks_channels.uks_params.heater_temperature_2=*((float*)pucRegBuffer);
 								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[1]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[0]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[3]=*pucRegBuffer++;
@@ -156,13 +154,11 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								usNRegs-=2;
 
 								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_2,&uks_channels.uks_params.heater_temperature_2,sizeof(float));
-							//	pucRegBuffer+=4;
 							}
 							break;
 
 							case REG_INDEX_P_FACTOR:
 							{
-								//uks_channels.uks_params.p_factor=*((float*)pucRegBuffer);
 								((uint8_t*)(&uks_channels.uks_params.p_factor))[1]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.p_factor))[0]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.p_factor))[3]=*pucRegBuffer++;
@@ -171,13 +167,11 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								usNRegs-=2;
 
 								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->p_factor,&uks_channels.uks_params.p_factor,sizeof(float));
-							//	pucRegBuffer+=4;
 							}
 							break;
 
 							case REG_INDEX_I_FACTOR:
 							{
-								//uks_channels.uks_params.i_factor=*((float*)pucRegBuffer);
 								((uint8_t*)(&uks_channels.uks_params.i_factor))[1]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.i_factor))[0]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.i_factor))[3]=*pucRegBuffer++;
@@ -186,13 +180,11 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								usNRegs-=2;
 
 								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->i_factor,&uks_channels.uks_params.i_factor,sizeof(float));
-								//pucRegBuffer+=4;
 							}
 							break;
 
 							case REG_INDEX_D_FACTOR:
 							{
-								//uks_channels.uks_params.d_factor=*((float*)pucRegBuffer);
 								((uint8_t*)(&uks_channels.uks_params.d_factor))[1]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.d_factor))[0]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.d_factor))[3]=*pucRegBuffer++;
@@ -201,7 +193,6 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								usNRegs-=2;
 
 								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
-								//pucRegBuffer+=4;
 							}
 							break;
 

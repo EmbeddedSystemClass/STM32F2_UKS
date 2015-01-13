@@ -253,7 +253,7 @@ void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
 
 
   /* enable the PWR clock */
-  RCC_APB1PeriphResetCmd(RCC_APB1Periph_PWR, ENABLE);
+  //RCC_APB1PeriphResetCmd(RCC_APB1Periph_PWR, ENABLE);
 
 
 #ifdef USB_OTG_FS_LOW_PWR_MGMT_SUPPORT
