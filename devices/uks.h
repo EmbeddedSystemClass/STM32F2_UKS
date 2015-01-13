@@ -49,6 +49,42 @@ struct drying_channel
 
 #define DRYING_CHANNELS_NUM	7
 
+#define END_DRYING_TEMP_MIN		  0.0
+#define END_DRYING_TEMP_MAX		200.0
+
+#define HEATER_TEMP_MIN			  0.0
+#define HEATER_TEMP_MAX			  0.0
+
+#define P_FACTOR_MIN			  0.0
+#define P_FACTOR_MAX		  10000.0
+
+#define I_FACTOR_MIN		   -100.0
+#define I_FACTOR_MAX		    100.0
+
+#define D_FACTOR_MIN		   -100.0
+#define D_FACTOR_MAX		    100.0
+
+#define DELTA_TEMP_START_DRYING_MIN		 0.0
+#define DELTA_TEMP_START_DRYING_MAX 	10.0
+
+#define DELTA_TEMP_CANCEL_DRYING_MIN   -10.0
+#define DELTA_TEMP_CANCEL_DRYING_MAX    -1.0
+
+#define TRESHOLD_TEMP_START_DRYING_MIN	40.0
+#define TRESHOLD_TEMP_START_DRYING_MAX  100.0
+
+
+#define END_DRYING_TEMP_DEFAULT	 		  110.0
+#define HEATER_TEMP_DEFAULT		 		  115.0
+#define P_FACTOR_DEFAULT		 		  120.0
+#define I_FACTOR_DEFAULT		   			3.0
+#define D_FACTOR_DEFAULT		   			0.0
+#define DELTA_TEMP_START_DRYING_DEFAULT		4.0
+#define DELTA_TEMP_CANCEL_DRYING_DEFAULT   -2.0
+#define TRESHOLD_TEMP_START_DRYING_DEFAULT	45.0
+
+
+
 struct uks_parameters
 {
 	float end_drying_temperature[DRYING_CHANNELS_NUM];
@@ -59,6 +95,10 @@ struct uks_parameters
 	float p_factor;//PID regulator
 	float i_factor;
 	float d_factor;
+
+	float delta_temp_start_drying;
+	float treshold_temp_start_drying;
+	float delta_temp_cancel_drying;
 };
 
 struct uks

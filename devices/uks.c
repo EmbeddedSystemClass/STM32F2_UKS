@@ -48,17 +48,10 @@ void UKS_Drying_Init(void)
 		{
 			uks_channels.drying_channel_list[i].temperature_queue[j]=200.0;
 		}
-
-//		uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
 	}
-
 	uks_channels.screen=SCREEN_INIT_HEATER;
 
-//	uks_channels.backup_uks_params=(struct uks_parameters *) BKPSRAM_BASE;
-
-//	memcpy(&uks_channels.uks_params,uks_channels.backup_uks_params,sizeof(struct uks_parameters));
-
-	//uks_channels.device_error=ERROR_NONE;
+  //uks_channels.device_error=ERROR_NONE;
 	xTaskCreate(UKS_Heater_Init_Task,(signed char*)"UKS_HEATER_INIT_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
    // task_watches[DRYING_TASK].task_status=TASK_IDLE;
 }
@@ -241,7 +234,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 
 			average_temperature=summ_temperature/AVERAGE_TEMP_TIME;
 
-			if(average_temperature>/*TEMP_DRYING_END*/uks_channels.uks_params.end_drying_temperature[drying_chnl->number])
+			if(average_temperature>uks_channels.uks_params.end_drying_temperature[drying_chnl->number])
 			{
 				drying_chnl->drying_state=DRYING_DONE;
 				uks_channels.screen=SCREEN_CHANNELS_FIRST;
@@ -290,20 +283,29 @@ void UKS_Restore_Settings(void)
 		uks_channels.uks_params.p_factor=uks_channels.backup_uks_params->p_factor;
 		uks_channels.uks_params.i_factor=uks_channels.backup_uks_params->i_factor;
 		uks_channels.uks_params.d_factor=uks_channels.backup_uks_params->d_factor;
+
+		uks_channels.uks_params.delta_temp_start_drying=uks_channels.backup_uks_params->delta_temp_start_drying;
+		uks_channels.uks_params.delta_temp_cancel_drying=uks_channels.backup_uks_params->delta_temp_cancel_drying;
+		uks_channels.uks_params.treshold_temp_start_drying=uks_channels.backup_uks_params->treshold_temp_start_drying;
 	}
 	else
 	{
 		for(i=0;i<DRYING_CHANNELS_NUM;i++)
 		{
-			uks_channels.uks_params.end_drying_temperature[i]=TEMP_DRYING_END;
+			uks_channels.uks_params.end_drying_temperature[i]=END_DRYING_TEMP_DEFAULT;
 		}
 
-		uks_channels.uks_params.p_factor=120.0;
-		uks_channels.uks_params.i_factor=3.0;
-		uks_channels.uks_params.d_factor=0.0;
+		uks_channels.uks_params.p_factor=P_FACTOR_DEFAULT;
+		uks_channels.uks_params.i_factor=I_FACTOR_DEFAULT;
+		uks_channels.uks_params.d_factor=D_FACTOR_DEFAULT;
 
-		uks_channels.uks_params.heater_temperature_1=50.0;
-		uks_channels.uks_params.heater_temperature_2=70.0;
+		uks_channels.uks_params.heater_temperature_1=HEATER_TEMP_DEFAULT;
+		uks_channels.uks_params.heater_temperature_2=HEATER_TEMP_DEFAULT;
+
+		uks_channels.uks_params.delta_temp_start_drying=DELTA_TEMP_START_DRYING_DEFAULT;
+		uks_channels.uks_params.delta_temp_cancel_drying=DELTA_TEMP_CANCEL_DRYING_DEFAULT;
+		uks_channels.uks_params.treshold_temp_start_drying=TRESHOLD_TEMP_START_DRYING_DEFAULT;
+
 	}
 }
 
@@ -319,7 +321,7 @@ uint8_t  CRC_Check( uint8_t  *Spool_pr,uint8_t Count_pr )
 
   		while(Count!=0x0)
         {
-	        crc_n = crc_n ^ (*Spool++);//
+	        crc_n = crc_n ^ (*Spool++);
 
 	        crc_n = ((crc_n & 0x01) ? (uint8_t)0x80: (uint8_t)0x00) | (uint8_t)(crc_n >> 1);
 
