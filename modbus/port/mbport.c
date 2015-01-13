@@ -62,11 +62,14 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 }
 
 
-#define REG_INDEX_HEATER_TEMP_1	14
-#define REG_INDEX_HEATER_TEMP_2	16
-#define REG_INDEX_P_FACTOR		18
-#define REG_INDEX_I_FACTOR		20
-#define REG_INDEX_D_FACTOR		22
+#define REG_INDEX_HEATER_TEMP_1			14
+#define REG_INDEX_HEATER_TEMP_2			16
+#define REG_INDEX_P_FACTOR				18
+#define REG_INDEX_I_FACTOR				20
+#define REG_INDEX_D_FACTOR				22
+#define REG_DELTA_TEMP_START_DRYING		24
+#define REG_TRESHOLD_TEMP_START_DRYING	26
+#define REG_TEMP_CANCEL_DRYING 			28
 
 eMBErrorCode
 eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
@@ -193,6 +196,45 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								usNRegs-=2;
 
 								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
+							}
+							break;
+//---------------------
+							case REG_DELTA_TEMP_START_DRYING:
+							{
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[2]=*pucRegBuffer++;
+								iRegIndex+=2;
+								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_start_drying,&uks_channels.uks_params.delta_temp_start_drying,sizeof(float));
+							}
+							break;
+
+							case REG_TRESHOLD_TEMP_START_DRYING:
+							{
+								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[2]=*pucRegBuffer++;
+								iRegIndex+=2;
+								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->treshold_temp_start_drying,&uks_channels.uks_params.treshold_temp_start_drying,sizeof(float));
+							}
+							break;
+
+							case REG_TEMP_CANCEL_DRYING:
+							{
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[0]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[3]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[2]=*pucRegBuffer++;
+								iRegIndex+=2;
+								usNRegs-=2;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_cancel_drying,&uks_channels.uks_params.delta_temp_cancel_drying,sizeof(float));
 							}
 							break;
 
