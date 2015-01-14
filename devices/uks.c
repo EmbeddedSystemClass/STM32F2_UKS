@@ -383,7 +383,7 @@ void UKS_Restore_Settings(void)
 			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_init_timeout,&uks_channels.uks_params.heater_init_timeout,sizeof(uint16_t));
 		}
 
-		if((uks_channels.backup_uks_params->measuring_frame_time>=HEATER_INIT_TIMEOUT_MIN)&&(uks_channels.backup_uks_params->measuring_frame_time<=HEATER_INIT_TIMEOUT_MAX))
+		if((uks_channels.backup_uks_params->measuring_frame_time>=MEASURING_FRAME_TIME_MIN)&&(uks_channels.backup_uks_params->measuring_frame_time<=MEASURING_FRAME_TIME_MAX))
 		{
 			uks_channels.uks_params.measuring_frame_time=uks_channels.backup_uks_params->measuring_frame_time;
 		}
