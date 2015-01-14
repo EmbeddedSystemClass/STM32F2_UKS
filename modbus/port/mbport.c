@@ -15,11 +15,11 @@ void EXIT_CRITICAL_SECTION(void)
 }
 
 
-static volatile u16 usRegInputBuf[64];
+static volatile u16 usRegInputBuf[128];
 u16 *usRegHoldingBuf=usRegInputBuf;
 
 u8 REG_INPUT_START=1,REG_HOLDING_START=1;
-u8 REG_INPUT_NREGS=32,REG_HOLDING_NREGS=24;
+u8 REG_INPUT_NREGS=32,REG_HOLDING_NREGS=48;
 u8 usRegInputStart=1,usRegHoldingStart=1;
 
 
@@ -69,7 +69,9 @@ eMBRegInputCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs )
 #define REG_INDEX_D_FACTOR				22
 #define REG_DELTA_TEMP_START_DRYING		24
 #define REG_TRESHOLD_TEMP_START_DRYING	26
-#define REG_TEMP_CANCEL_DRYING 			28
+#define REG_DELTA_TEMP_CANCEL_DRYING 	28
+#define REG_HEATER_INIT_TIMEOUT			30
+#define REG_MEASURING_FRAME_TIME		31
 
 eMBErrorCode
 eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegisterMode eMode )
@@ -82,7 +84,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
     if( ( usAddress >= REG_HOLDING_START ) && ( usAddress + usNRegs <= REG_HOLDING_START + REG_HOLDING_NREGS ) )
     {
         iRegIndex = ( int )( usAddress - usRegHoldingStart );
-        REG_HOLDING_NREGS=(DRYING_CHANNELS_NUM+5)*2;
+        REG_HOLDING_NREGS=(DRYING_CHANNELS_NUM+8)*2+2;//исправить
         switch ( eMode )
         {
 			case MB_REG_READ:
@@ -98,6 +100,12 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+2] = uks_channels.uks_params.p_factor;
 			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+3] = uks_channels.uks_params.i_factor;
 			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+4] = uks_channels.uks_params.d_factor;
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+5] = uks_channels.uks_params.delta_temp_start_drying;
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+6] = uks_channels.uks_params.treshold_temp_start_drying;
+			    ((float*)usRegHoldingBuf)[DRYING_CHANNELS_NUM+7] = uks_channels.uks_params.delta_temp_cancel_drying;
+			     usRegHoldingBuf[(DRYING_CHANNELS_NUM+8)*2] = uks_channels.uks_params.heater_init_timeout;
+			     usRegHoldingBuf[(DRYING_CHANNELS_NUM+8)*2+1] = uks_channels.uks_params.measuring_frame_time;
+
 
 				while( usNRegs > 0 )
 				{
@@ -225,7 +233,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 							}
 							break;
 
-							case REG_TEMP_CANCEL_DRYING:
+							case REG_DELTA_TEMP_CANCEL_DRYING:
 							{
 								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[1]=*pucRegBuffer++;
 								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[0]=*pucRegBuffer++;
@@ -235,6 +243,30 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								usNRegs-=2;
 
 								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_cancel_drying,&uks_channels.uks_params.delta_temp_cancel_drying,sizeof(float));
+							}
+							break;
+//--------
+							case REG_HEATER_INIT_TIMEOUT:
+							{
+								((uint8_t*)(&uks_channels.uks_params.heater_init_timeout))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.heater_init_timeout))[0]=*pucRegBuffer++;
+
+								iRegIndex+=1;
+								usNRegs-=1;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_init_timeout,&uks_channels.uks_params.heater_init_timeout,sizeof(uint16_t));
+							}
+							break;
+
+							case REG_MEASURING_FRAME_TIME:
+							{
+								((uint8_t*)(&uks_channels.uks_params.measuring_frame_time))[1]=*pucRegBuffer++;
+								((uint8_t*)(&uks_channels.uks_params.measuring_frame_time))[0]=*pucRegBuffer++;
+
+								iRegIndex+=1;
+								usNRegs-=1;
+
+								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->measuring_frame_time,&uks_channels.uks_params.measuring_frame_time,sizeof(uint16_t));
 							}
 							break;
 
