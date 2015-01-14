@@ -53,7 +53,7 @@ struct drying_channel
 #define END_DRYING_TEMP_MAX		200.0
 
 #define HEATER_TEMP_MIN			  0.0
-#define HEATER_TEMP_MAX			  0.0
+#define HEATER_TEMP_MAX			200.0
 
 #define P_FACTOR_MIN			  0.0
 #define P_FACTOR_MAX		  10000.0
@@ -73,6 +73,12 @@ struct drying_channel
 #define TRESHOLD_TEMP_START_DRYING_MIN	40.0
 #define TRESHOLD_TEMP_START_DRYING_MAX  100.0
 
+#define HEATER_INIT_TIMEOUT_MIN			10
+#define HEATER_INIT_TIMEOUT_MAX			1000
+
+#define MEASURING_FRAME_TIME_MIN		5
+#define MEASURING_FRAME_TIME_MAX		30
+
 
 #define END_DRYING_TEMP_DEFAULT	 		  110.0
 #define HEATER_TEMP_DEFAULT		 		  115.0
@@ -82,6 +88,8 @@ struct drying_channel
 #define DELTA_TEMP_START_DRYING_DEFAULT		4.0
 #define DELTA_TEMP_CANCEL_DRYING_DEFAULT   -2.0
 #define TRESHOLD_TEMP_START_DRYING_DEFAULT	45.0
+#define HEATER_INIT_TIMEOUT_DEFAULT			60
+#define MEASURING_FRAME_TIME_DEFAULT		10
 
 
 
@@ -99,6 +107,9 @@ struct uks_parameters
 	float delta_temp_start_drying;
 	float treshold_temp_start_drying;
 	float delta_temp_cancel_drying;
+
+	uint16_t heater_init_timeout;
+	uint16_t measuring_frame_time;
 };
 
 struct uks
