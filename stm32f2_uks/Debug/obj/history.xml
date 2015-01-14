@@ -87,8 +87,8 @@
       <target file="portserial.o" lastModified="14a6275b122">
          <source file="..\..\..\modbus\port\portserial.c" lastModified="14a5d56c8aa"/>
       </target>
-      <target file="uks.o" lastModified="14ae3756177">
-         <source file="..\..\..\devices\uks.c" lastModified="14ae355b5fb"/>
+      <target file="uks.o" lastModified="14ae75e8d93">
+         <source file="..\..\..\devices\uks.c" lastModified="14ae75e79bd"/>
       </target>
       <target file="usbd_core.o" lastModified="14a623543c9">
          <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0"/>
@@ -96,11 +96,11 @@
       <target file="mbfuncother.o" lastModified="14a62353aa1">
          <source file="..\..\..\modbus\functions\mbfuncother.c" lastModified="138ec4f99a0"/>
       </target>
-      <target file="backup_sram.o" lastModified="14ae3755cf2">
-         <source file="..\..\..\devices\backup_sram.c" lastModified="14ade32ee0f"/>
-      </target>
       <target file="delay.o" lastModified="14a623531d7">
          <source file="..\..\..\devices\hd44780_driver\delay.c" lastModified="14a190cc73b"/>
+      </target>
+      <target file="backup_sram.o" lastModified="14ae3755cf2">
+         <source file="..\..\..\devices\backup_sram.c" lastModified="14ade32ee0f"/>
       </target>
       <target file="mbfuncinput.o" lastModified="14a62354abe">
          <source file="..\..\..\modbus\functions\mbfuncinput.c" lastModified="138ec4f99a0"/>

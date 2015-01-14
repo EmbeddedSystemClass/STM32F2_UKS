@@ -18,13 +18,13 @@ void UKS_Heater_Init_Task(void *pvParameters );
 uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl);
 uint8_t CRC_Check( uint8_t  *Spool_pr,uint8_t Count_pr );
 
-#define MIN_DELTA_TEMP		4.0
-#define MIN_TRESHOLD_TEMP	45.0
-#define TEMP_DRYING_END		50.0
+//#define MIN_DELTA_TEMP		4.0
+//#define MIN_TRESHOLD_TEMP	45.0
+//#define TEMP_DRYING_END		50.0
 #define START_TEMP_UP_TIME	10
 #define AVERAGE_TEMP_TIME	10
-
-#define MIN_DELTA_FALLING_TEMP	-2.0
+//
+//#define MIN_DELTA_FALLING_TEMP	-2.0
 
 void UKS_Drying_Init(void)
 {
@@ -213,7 +213,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 		case DRYING_WAIT_NEW_OPERATION:
 		{
 			float delta_temp=drying_chnl->temperature_queue[drying_chnl->temperature_queue_counter]-drying_chnl->temperature_queue[(drying_chnl->temperature_queue_counter-START_TEMP_UP_TIME)&(TEMPERATURE_QUEUE_LEN-1)];
-			if((delta_temp>MIN_DELTA_TEMP)&&(drying_chnl->temperature>MIN_TRESHOLD_TEMP))
+			if((delta_temp>uks_channels.uks_params.delta_temp_start_drying)&&(drying_chnl->temperature>uks_channels.uks_params.treshold_temp_start_drying))
 			{
 				drying_chnl->drying_state=DRYING_CONTINUE;
 			}
@@ -242,7 +242,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 			}
 
 			float delta_temp=drying_chnl->temperature_queue[drying_chnl->temperature_queue_counter]-drying_chnl->temperature_queue[(drying_chnl->temperature_queue_counter-START_TEMP_UP_TIME)&(TEMPERATURE_QUEUE_LEN-1)];
-			if(delta_temp<(MIN_DELTA_FALLING_TEMP))
+			if(delta_temp<(uks_channels.uks_params.delta_temp_cancel_drying))
 			{
 				drying_chnl->drying_state=DRYING_WAIT_NEW_OPERATION;
 			}
@@ -275,18 +275,102 @@ void UKS_Restore_Settings(void)
 	{
 		for(i=0;i<DRYING_CHANNELS_NUM;i++)
 		{
-			uks_channels.uks_params.end_drying_temperature[i]=uks_channels.backup_uks_params->end_drying_temperature[i];
+			if((uks_channels.backup_uks_params->end_drying_temperature[i]>=END_DRYING_TEMP_MIN)&&(uks_channels.backup_uks_params->end_drying_temperature[i]<=END_DRYING_TEMP_MAX))
+			{
+				uks_channels.uks_params.end_drying_temperature[i]=uks_channels.backup_uks_params->end_drying_temperature[i];
+			}
+			else
+			{
+				uks_channels.uks_params.end_drying_temperature[i]=END_DRYING_TEMP_DEFAULT;
+				Backup_SRAM_Write_Reg(&(uks_channels.backup_uks_params->end_drying_temperature[i]),&(uks_channels.uks_params.end_drying_temperature[i]),sizeof(float));
+			}
 		}
 
-		uks_channels.uks_params.heater_temperature_1=uks_channels.backup_uks_params->heater_temperature_1;
-		uks_channels.uks_params.heater_temperature_2=uks_channels.backup_uks_params->heater_temperature_2;
-		uks_channels.uks_params.p_factor=uks_channels.backup_uks_params->p_factor;
-		uks_channels.uks_params.i_factor=uks_channels.backup_uks_params->i_factor;
-		uks_channels.uks_params.d_factor=uks_channels.backup_uks_params->d_factor;
+		if((uks_channels.backup_uks_params->heater_temperature_1>=HEATER_TEMP_MIN)&&(uks_channels.backup_uks_params->heater_temperature_1<=HEATER_TEMP_MAX))
+		{
+			uks_channels.uks_params.heater_temperature_1=uks_channels.backup_uks_params->heater_temperature_1;
+		}
+		else
+		{
+			uks_channels.uks_params.heater_temperature_1=HEATER_TEMP_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_1,&uks_channels.uks_params.heater_temperature_1,sizeof(float));
+		}
 
-		uks_channels.uks_params.delta_temp_start_drying=uks_channels.backup_uks_params->delta_temp_start_drying;
-		uks_channels.uks_params.delta_temp_cancel_drying=uks_channels.backup_uks_params->delta_temp_cancel_drying;
-		uks_channels.uks_params.treshold_temp_start_drying=uks_channels.backup_uks_params->treshold_temp_start_drying;
+		if((uks_channels.backup_uks_params->heater_temperature_2>=HEATER_TEMP_MIN)&&(uks_channels.backup_uks_params->heater_temperature_2<=HEATER_TEMP_MAX))
+		{
+			uks_channels.uks_params.heater_temperature_2=uks_channels.backup_uks_params->heater_temperature_2;
+		}
+		else
+		{
+			uks_channels.uks_params.heater_temperature_2=HEATER_TEMP_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_2,&uks_channels.uks_params.heater_temperature_2,sizeof(float));
+		}
+
+
+		if((uks_channels.backup_uks_params->p_factor>=P_FACTOR_MIN)&&(uks_channels.backup_uks_params->p_factor<=P_FACTOR_MAX))
+		{
+			uks_channels.uks_params.p_factor=uks_channels.backup_uks_params->p_factor;
+		}
+		else
+		{
+			uks_channels.uks_params.p_factor=P_FACTOR_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->p_factor,&uks_channels.uks_params.p_factor,sizeof(float));
+		}
+
+
+		if((uks_channels.backup_uks_params->i_factor>=I_FACTOR_MIN)&&(uks_channels.backup_uks_params->i_factor<=I_FACTOR_MAX))
+		{
+			uks_channels.uks_params.i_factor=uks_channels.backup_uks_params->i_factor;
+		}
+		else
+		{
+			uks_channels.uks_params.i_factor=I_FACTOR_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->i_factor,&uks_channels.uks_params.i_factor,sizeof(float));
+		}
+
+
+		if((uks_channels.backup_uks_params->d_factor>=D_FACTOR_MIN)&&(uks_channels.backup_uks_params->d_factor<=D_FACTOR_MAX))
+		{
+			uks_channels.uks_params.d_factor=uks_channels.backup_uks_params->d_factor;
+		}
+		else
+		{
+			uks_channels.uks_params.d_factor=D_FACTOR_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
+		}
+
+
+		if((uks_channels.backup_uks_params->delta_temp_start_drying>=DELTA_TEMP_START_DRYING_MIN)&&(uks_channels.backup_uks_params->delta_temp_start_drying<=DELTA_TEMP_START_DRYING_MAX))
+		{
+			uks_channels.uks_params.delta_temp_start_drying=uks_channels.backup_uks_params->delta_temp_start_drying;
+		}
+		else
+		{
+			uks_channels.uks_params.delta_temp_start_drying=DELTA_TEMP_START_DRYING_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_start_drying,&uks_channels.uks_params.delta_temp_start_drying,sizeof(float));
+		}
+
+
+		if((uks_channels.backup_uks_params->delta_temp_cancel_drying>=DELTA_TEMP_CANCEL_DRYING_MIN)&&(uks_channels.backup_uks_params->delta_temp_cancel_drying<=DELTA_TEMP_CANCEL_DRYING_MAX))
+		{
+			uks_channels.uks_params.delta_temp_cancel_drying=uks_channels.backup_uks_params->delta_temp_cancel_drying;
+		}
+		else
+		{
+			uks_channels.uks_params.delta_temp_cancel_drying=DELTA_TEMP_CANCEL_DRYING_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_cancel_drying,&uks_channels.uks_params.delta_temp_cancel_drying,sizeof(float));
+		}
+
+
+		if((uks_channels.backup_uks_params->treshold_temp_start_drying>=TRESHOLD_TEMP_START_DRYING_MIN)&&(uks_channels.backup_uks_params->treshold_temp_start_drying<=TRESHOLD_TEMP_START_DRYING_MAX))
+		{
+			uks_channels.uks_params.treshold_temp_start_drying=uks_channels.backup_uks_params->treshold_temp_start_drying;
+		}
+		else
+		{
+			uks_channels.uks_params.treshold_temp_start_drying=TRESHOLD_TEMP_START_DRYING_DEFAULT;
+			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->treshold_temp_start_drying,&uks_channels.uks_params.treshold_temp_start_drying,sizeof(float));
+		}
 	}
 	else
 	{
