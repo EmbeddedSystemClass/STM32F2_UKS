@@ -12,6 +12,7 @@
 
 extern struct ADS1120_result ADS1120_res;
 extern struct uks uks_channels;
+extern struct task_watch task_watches[];
 
 void Display_Task(void *pvParameters );
 
@@ -30,6 +31,7 @@ uint8_t drying_states[3][16]={{/*"Процесс "*/"\xA8po\xE5\x65\x63\x63  "},{/*"Око
 void Display_Task(void *pvParameters )
 {
 	static volatile uint8_t str_buf[32];
+	task_watches[DISPLAY_TASK].task_status=TASK_ACTIVE;
 	while(1)
 	{
 		vTaskDelay(300);
@@ -198,5 +200,6 @@ void Display_Task(void *pvParameters )
 				uks_channels.screen=SCREEN_CHANNELS_FIRST;
 			}
 		}
+		task_watches[DISPLAY_TASK].counter++;
 	}
 }

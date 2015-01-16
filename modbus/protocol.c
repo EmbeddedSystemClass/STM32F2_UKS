@@ -8,6 +8,9 @@
 #include "mb.h"
 #include "mbport.h"
 
+#include "watchdog.h"
+
+extern struct task_watch task_watches[];
 
 static void Modbus_Task(void *pvParameters);
 
@@ -26,9 +29,11 @@ static void Modbus_Task(void *pvParameters)
     portTickType    xLastWakeTime;
 
     eMBEnable();
+    task_watches[PROTO_TASK].task_status=TASK_ACTIVE;
     for( ;; )
     {
         eMBPoll();
         vTaskDelay(10);
+        task_watches[PROTO_TASK].counter++;
     }
 }

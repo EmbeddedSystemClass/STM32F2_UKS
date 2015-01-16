@@ -17,10 +17,14 @@
 #include "uks.h"
 #include "buzzer.h"
 
+#include "watchdog.h"
+
 struct phaze_detector phaze_detect;
 
 xSemaphoreHandle xPhazeSemaphore;
 extern struct uks uks_channels;
+
+extern struct task_watch task_watches[];
 
 static void Heater_Control_Task(void *pvParameters);
 
@@ -156,6 +160,7 @@ void Heater_Power_Down_Block(void)
 
 static void Heater_Control_Task(void *pvParameters)
 {
+	task_watches[HEATER_CONTROL_TASK].task_status=TASK_ACTIVE;
 	while(1)
 	{
 		EXTI->IMR &= ~(EXTI_Line0|EXTI_Line1);
@@ -193,6 +198,7 @@ static void Heater_Control_Task(void *pvParameters)
 			Heater_Power_Down_Block();
 		}
 		EXTI->IMR |= (EXTI_Line0|EXTI_Line1);
+		task_watches[HEATER_CONTROL_TASK].counter++;
 		vTaskDelay(1000);
 	}
 }

@@ -17,11 +17,13 @@
 #include "buzzer.h"
 #include "uks.h"
 
-//xQueueHandle xKeyQueue;//очередь клавиатуры
-//xSemaphoreHandle xKeySemaphore;
+#include "watchdog.h"
+
 extern struct uks uks_channels;
 
 static void vKeyboardTask(void *pvParameters);
+
+extern struct task_watch task_watches[];
 
 void Keyboard_Init(void)
 {
@@ -42,6 +44,7 @@ void Keyboard_Init(void)
 static void vKeyboardTask(void *pvParameters)
 {
 	volatile static uint16_t press_time_counter=0;
+	task_watches[KEYBOARD_TASK].task_status=TASK_ACTIVE;
     while(1)
     {
     	if(GPIO_ReadInputDataBit(KEYB_PORT,KEY_0)==Bit_RESET)
@@ -214,5 +217,6 @@ static void vKeyboardTask(void *pvParameters)
     		}
     		press_time_counter=0;
     	}
+    	task_watches[KEYBOARD_TASK].counter++;
     }
 }

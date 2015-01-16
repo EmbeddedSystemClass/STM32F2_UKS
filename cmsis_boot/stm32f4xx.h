@@ -6978,6 +6978,10 @@ typedef struct
 
 #define MODIFY_REG(REG, CLEARMASK, SETMASK)  WRITE_REG((REG), (((READ_REG(REG)) & (~(CLEARMASK))) | (SETMASK)))
 
+
+#define TRUE  1
+#define FALSE 0
+
 /**
   * @}
   */

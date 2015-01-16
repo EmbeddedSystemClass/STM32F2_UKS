@@ -15,11 +15,15 @@
 #include "hd44780.h"
 #include "uks.h"
 
+#include "watchdog.h"
+
 
 struct adc_lm35_channels adc_lm35_chnl;
 extern struct uks uks_channels;
 
 xSemaphoreHandle xMeasure_LM35_Semaphore;
+
+extern struct task_watch task_watches[];
 
 static void ADC_Task(void *pvParameters);
 
@@ -91,6 +95,7 @@ void bubblesort(uint16_t *a, uint16_t n)
 static void ADC_Task(void *pvParameters)
 {
 		uint8_t i=0,j=0;
+		task_watches[ADC_TASK].task_status=TASK_ACTIVE;
 		while(1)
 		{
 			  for(i=0;i<ADC_FILTER_BUFFER_LEN;i++)
@@ -120,5 +125,6 @@ static void ADC_Task(void *pvParameters)
 
 			  xSemaphoreGive(xMeasure_LM35_Semaphore);
 			  vTaskDelay(1000);
+			  task_watches[ADC_TASK].counter++;
 		}
 }

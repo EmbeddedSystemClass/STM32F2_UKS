@@ -29,7 +29,7 @@ static void	SPI2_config(void);
 
 
 xSemaphoreHandle xSPI_Buf_Mutex;
-
+extern struct task_watch task_watches[];
 
 uint8_t ADS1120_init(void)//
 {
@@ -147,6 +147,8 @@ static void ADS1120_task(void *pvParameters)//
 //	adc_reg=spi_read ();
 //	vTaskDelay(10);
 
+	task_watches[ADS1120_TASK].task_status=TASK_ACTIVE;
+
 	while(1)
 	{
 		SPI2_send (ADS_START);
@@ -174,6 +176,7 @@ static void ADS1120_task(void *pvParameters)//
 		uks_channels.heater_temperature=PT100_Code_To_Temperature(ADC_result);
 
 		vTaskDelay(100);
+		task_watches[ADS1120_TASK].counter++;
 	}
 }
 

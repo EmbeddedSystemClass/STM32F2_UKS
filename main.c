@@ -14,7 +14,6 @@
 #include "semphr.h"
 
 
-//#include "menu.h"
 #include "ADS1120.h"
 
 #include "keyboard.h"
@@ -23,9 +22,7 @@
 #include "power_detector.h"
 #include "phaze_detector.h"
 #include "backup_sram.h"
-//#include "hd44780.h"
 #include "display.h"
-#include "rtc.h"
 #include "pid_regulator.h"
 #include "uks.h"
 #include "protocol.h"
@@ -66,7 +63,7 @@ int main(void)
 
 	Protocol_Init();
 
-//	Watchdog_Init();
+	Watchdog_Init();
 
     vTaskStartScheduler();
 

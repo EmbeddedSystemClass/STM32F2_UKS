@@ -10,21 +10,18 @@
 #include "buzzer.h"
 #include "pid_regulator.h"
 
+#include "watchdog.h"
+
 struct uks uks_channels;
 extern xSemaphoreHandle xMeasure_LM35_Semaphore;
+
+extern struct task_watch task_watches[];
 
 void UKS_Drying_Task(void *pvParameters );
 void UKS_Heater_Init_Task(void *pvParameters );
 uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl);
 uint8_t CRC_Check( uint8_t  *Spool_pr,uint8_t Count_pr );
 
-//#define MIN_DELTA_TEMP		4.0
-//#define MIN_TRESHOLD_TEMP	45.0
-//#define TEMP_DRYING_END		50.0
-//#define START_TEMP_UP_TIME	10
-//#define AVERAGE_TEMP_TIME	10
-//
-//#define MIN_DELTA_FALLING_TEMP	-2.0
 
 void UKS_Drying_Init(void)
 {
@@ -113,6 +110,7 @@ void UKS_Heater_Init_Task(void *pvParameters )
 void UKS_Drying_Task(void *pvParameters )
 {
 	uint8_t i=0;
+	task_watches[DRYING_TASK].task_status=TASK_ACTIVE;
 	while(1)
 	{
 		if( xSemaphoreTake( xMeasure_LM35_Semaphore, ( portTickType ) portMAX_DELAY ) == pdTRUE )
@@ -122,6 +120,7 @@ void UKS_Drying_Task(void *pvParameters )
 				UKS_Channel_State_Drying(&uks_channels.drying_channel_list[i]);
 			}
 		}
+		task_watches[DRYING_TASK].counter++;
 	}
 }
 
