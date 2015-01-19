@@ -53,23 +53,24 @@ void Display_Task(void *pvParameters )
 		{
 			case SCREEN_INIT_HEATER:
 			{
+				sprintf(str_buf,"   ¨poåecc ½a´pe³a  ");/*  Ïðîöåññ íàãðåâà  */
+				HD44780_Puts(0,0,str_buf);
+				sprintf(str_buf,"¨o¶a»y¹c¿a,¾oão¶ã¸¿e");/*Ïîæàëóéñòà,ïîäîæäèòå*/
+				HD44780_Puts(0,1,str_buf);
+				sprintf(str_buf,"                    ");
+				HD44780_Puts(0,2,str_buf);
+
 				float temp=uks_channels.heater_temperature;
 				if(temp>=0)
 				{
-					sprintf(str_buf,"Heater= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+					sprintf(str_buf,"Ha´pe³a¿e»Ä %3d.%01d \xEF\x43",(uint16_t)temp,(uint16_t)(temp*10)%10);
 				}
 				else
 				{
-					sprintf(str_buf,"Heater=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+					sprintf(str_buf,"Ha´pe³a¿e»Ä-%3d.%01d \xEF\x43",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
 				}
 
 
-				HD44780_Puts(0,0,str_buf);
-				sprintf(str_buf,"   ¨poåecc ½a´pe³a  ");/*  Ïðîöåññ íàãðåâà  */
-				HD44780_Puts(0,1,str_buf);
-				sprintf(str_buf,"¨o¶a»y¹c¿a,¾oão¶ã¸¿e");/*Ïîæàëóéñòà,ïîäîæäèòå*/
-				HD44780_Puts(0,2,str_buf);
-				sprintf(str_buf,"                    ");
 				HD44780_Puts(0,3,str_buf);
 			}
 			break;
@@ -127,19 +128,20 @@ void Display_Task(void *pvParameters )
 			case SCREEN_HEATER:
 			{
 				float temp=uks_channels.heater_temperature;
+
+
+				sprintf(str_buf,"                    ");
+				HD44780_Puts(0,0,str_buf);
 				if(temp>=0)
 				{
-					sprintf(str_buf,"Ha´pe³a¿e»Ä= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+					sprintf(str_buf,"Ha´pe³a¿e»Ä %3d.%01d \xEF\x43",(uint16_t)temp,(uint16_t)(temp*10)%10);
 				}
 				else
 				{
-					sprintf(str_buf,"Ha´pe³a¿e»Ä=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+					sprintf(str_buf,"Ha´pe³a¿e»Ä-%3d.%01d \xEF\x43",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
 				}
-
-
-				HD44780_Puts(0,0,str_buf);
-				sprintf(str_buf,"                    ");
 				HD44780_Puts(0,1,str_buf);
+				sprintf(str_buf,"                    ");
 				HD44780_Puts(0,2,str_buf);
 				HD44780_Puts(0,3,str_buf);
 			}
