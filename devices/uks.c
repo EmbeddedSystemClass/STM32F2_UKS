@@ -205,7 +205,7 @@ void UKS_Sort_Channels(struct uks * uks_chnl,uint8_t num)
 
 
 
-uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
+uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)//1 tick= 1 second
 {
 	switch(drying_chnl->drying_state)
 	{
@@ -215,6 +215,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 			if((delta_temp>uks_channels.uks_params.delta_temp_start_drying)&&(drying_chnl->temperature>uks_channels.uks_params.treshold_temp_start_drying))
 			{
 				drying_chnl->drying_state=DRYING_CONTINUE;
+				drying_chnl->time=0;
 			}
 		}
 		break;
@@ -232,10 +233,12 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)
 			}
 
 			average_temperature=summ_temperature/uks_channels.uks_params.measuring_frame_time;
+			drying_chnl->time++;
 
 			if(average_temperature>uks_channels.uks_params.end_drying_temperature[drying_chnl->number])
 			{
 				drying_chnl->drying_state=DRYING_DONE;
+				drying_chnl->time=0;
 				uks_channels.screen=SCREEN_CHANNELS_FIRST;
 				Buzzer_Set_Buzz(BUZZER_EFFECT_0,BUZZER_ON);
 			}
