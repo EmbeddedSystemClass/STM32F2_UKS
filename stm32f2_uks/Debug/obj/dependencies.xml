@@ -52,16 +52,10 @@
          <include file="..\..\..\modbus\rtu\mbcrc.h"/>
          <include file="..\..\..\modbus\port\mbport.h"/>
       </source>
-      <source file="..\..\..\time_forecast\time_forecast.h" lastModified="14af209a4a1">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
       <source file="..\..\..\cmsis\core_cm4.h" lastModified="14a0a90fd24">
          <include file="..\..\..\cmsis\core_cmInstr.h"/>
          <include file="..\..\..\cmsis\core_cmFunc.h"/>
          <include file="..\..\..\cmsis\core_cm4_simd.h"/>
-      </source>
-      <source file="..\..\..\time_forecast\time_forecast.c" lastModified="14af1efc5b5">
-         <include file="..\..\..\time_forecast\time_forecast.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14ae25c89c6">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
