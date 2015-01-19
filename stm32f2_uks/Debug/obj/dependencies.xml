@@ -40,9 +40,6 @@
       </source>
       <source file="..\..\..\modbus\ascii\mbascii.h" lastModified="10f5ec0d910">
       </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a384faaac">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
-      </source>
       <source file="..\..\..\modbus\ascii\mbascii.c" lastModified="14a53034fd8">
          <include file="..\..\..\modbus\port\mbport.h"/>
          <include file="..\..\..\modbus\include\mb.h"/>
@@ -164,6 +161,17 @@
          <include file="..\..\..\usblib\usbd_usr.h"/>
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
+      </source>
+      <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14b017aa65b">
+         <include file="..\..\..\devices\hd44780_driver\display.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\queue.h"/>
+         <include file="..\..\..\FreeRTOSV7.1.0\Source\include\semphr.h"/>
+         <include file="..\..\..\devices\watchdog.h"/>
+         <include file="..\..\..\devices\uks.h"/>
+         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
+         <include file="..\..\..\devices\ADS1120.h"/>
       </source>
       <source file="..\..\..\devices\keyboard.h" lastModified="14a3e117061">
       </source>
@@ -724,9 +732,6 @@
       </source>
       <source file="..\..\..\modbus\ascii\mbascii.h" lastModified="10f5ec0d910">
       </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a384faaac">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
-      </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14ae25c89c6">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
@@ -1089,9 +1094,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a384faaac">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_rtc.c" lastModified="14a0a913cdc">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rtc.h"/>
@@ -2418,9 +2420,6 @@
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
       <source file="..\..\..\modbus\ascii\mbascii.h" lastModified="10f5ec0d910">
-      </source>
-      <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a384faaac">
-         <include file="..\..\..\devices\hd44780_driver\hd44780.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_rtc.c" lastModified="14a0a913cdc">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rtc.h"/>

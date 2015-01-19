@@ -48,8 +48,8 @@
       <target file="usbd_cdc_core.o" lastModified="14af208fe5f">
          <source file="..\..\..\usblib\usbd_cdc_core.c" lastModified="14a5d551c23"/>
       </target>
-      <target file="hd44780.o" lastModified="14af208e2c8">
-         <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14a384faaac"/>
+      <target file="hd44780.o" lastModified="14b017e69eb">
+         <source file="..\..\..\devices\hd44780_driver\hd44780.c" lastModified="14b017e60b4"/>
       </target>
       <target file="mbfunccoils.o" lastModified="14af209012e">
          <source file="..\..\..\modbus\functions\mbfunccoils.c" lastModified="138ec4f99a0"/>
@@ -204,8 +204,8 @@
       <target file="heap_1.o" lastModified="14af2090564">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c" lastModified="13e3b1eb900"/>
       </target>
-      <target file="display.o" lastModified="14b015cfe80">
-         <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14b015cef6c"/>
+      <target file="display.o" lastModified="14b017ab494">
+         <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14b017aa273"/>
       </target>
       <target file="mbfuncdiag.o" lastModified="14af208d9a1">
          <source file="..\..\..\modbus\functions\mbfuncdiag.c" lastModified="10f5ec0d910"/>

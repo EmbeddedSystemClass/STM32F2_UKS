@@ -104,16 +104,16 @@ void HD44780_Reinit(uint8_t cols, uint8_t rows)
 	}
 
 	//Try to set 4bit mode
-	HD44780_Cmd4bit(0x03);
-	HD44780_Delay(4500);
-
-	//Second try
-	HD44780_Cmd4bit(0x03);
-	HD44780_Delay(150);
-
-	//Third goo!
-	HD44780_Cmd4bit(0x03);
-	HD44780_Delay(250);
+//	HD44780_Cmd4bit(0x03);
+//	HD44780_Delay(4500);
+//
+//	//Second try
+//	HD44780_Cmd4bit(0x03);
+//	HD44780_Delay(150);
+//
+//	//Third goo!
+//	HD44780_Cmd4bit(0x03);
+//	HD44780_Delay(250);
 
 #ifndef HD44780_SET_8BITMODE
 	//Set 4-bit interface
