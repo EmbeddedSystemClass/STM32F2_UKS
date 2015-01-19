@@ -65,21 +65,22 @@ void Display_Task(void *pvParameters )
 
 
 				HD44780_Puts(0,0,str_buf);
-				sprintf(str_buf,"Please wait...      ");
+				sprintf(str_buf,"   ¨poåecc ½a´pe³a  ");/*  Ïğîöåññ íàãğåâà  */
 				HD44780_Puts(0,1,str_buf);
-				sprintf(str_buf,"                    ");
+				sprintf(str_buf,"¨o¶a»y¹c¿a,¾oão¶ã¸¿e");/*Ïîæàëóéñòà,ïîäîæäèòå*/
 				HD44780_Puts(0,2,str_buf);
+				sprintf(str_buf,"                    ");
 				HD44780_Puts(0,3,str_buf);
 			}
 			break;
 
 			case SCREEN_HEATER_INIT_TIMEOUT:
 			{
-				sprintf(str_buf,"                    ");
+				sprintf(str_buf,"       OÁ¸²ºa       ");/*       Îøèáêà       */
 				HD44780_Puts(0,0,str_buf);
-				sprintf(str_buf,"   Heater init      ");
+				sprintf(str_buf,"    Bpe¼Ç ½a´pe³a   ");//    Âğåìÿ íàãğåâà
 				HD44780_Puts(0,1,str_buf);
-				sprintf(str_buf,"     timeout        ");
+				sprintf(str_buf,"      ¾pe³ÃÁe½o     ");//     ïğåâûøåíî
 				HD44780_Puts(0,2,str_buf);
 				sprintf(str_buf,"                    ");
 				HD44780_Puts(0,3,str_buf);
@@ -128,11 +129,11 @@ void Display_Task(void *pvParameters )
 				float temp=uks_channels.heater_temperature;
 				if(temp>=0)
 				{
-					sprintf(str_buf,"Heater= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
+					sprintf(str_buf,"Ha´pe³a¿e»Ä= %3d.%01d         ",(uint16_t)temp,(uint16_t)(temp*10)%10);
 				}
 				else
 				{
-					sprintf(str_buf,"Heater=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
+					sprintf(str_buf,"Ha´pe³a¿e»Ä=-%3d.%01d         ",(uint16_t)(-temp),(uint16_t)(((-temp)*10))%10);
 				}
 
 
@@ -150,11 +151,11 @@ void Display_Task(void *pvParameters )
 				{
 					case ERROR_PHAZE:
 					{
-						sprintf(str_buf,"                    ");
+						sprintf(str_buf,"       OÁ¸²ºa       ");/*       Îøèáêà       */
 						HD44780_Puts(0,0,str_buf);
-						sprintf(str_buf,"       Phaze        ");
+						sprintf(str_buf,"        ªa·a        ");//        Ôàçà
 						HD44780_Puts(0,1,str_buf);
-						sprintf(str_buf,"      Error         ");
+						sprintf(str_buf,"    o¿cy¿c¿³ye¿     ");//    îòñóòñòâóåò
 						HD44780_Puts(0,2,str_buf);
 						sprintf(str_buf,"                    ");
 						HD44780_Puts(0,3,str_buf);
@@ -163,11 +164,11 @@ void Display_Task(void *pvParameters )
 
 					case ERROR_HEATER_RELAY:
 					{
-						sprintf(str_buf,"                    ");
+						sprintf(str_buf,"       OÁ¸²ºa       ");/*       Îøèáêà       */
 						HD44780_Puts(0,0,str_buf);
-						sprintf(str_buf,"   Heater or Relay  ");
+						sprintf(str_buf,"Ha´pe³a¿e»Ä ¸»¸ pe»e");//Íàãğåâàòåëü èëè ğåëå
 						HD44780_Puts(0,1,str_buf);
-						sprintf(str_buf,"      Error         ");
+						sprintf(str_buf,"     ½e¸c¾pa³½Ã     ");//     íåèñïğàâíû
 						HD44780_Puts(0,2,str_buf);
 						sprintf(str_buf,"                    ");
 						HD44780_Puts(0,3,str_buf);
@@ -176,11 +177,11 @@ void Display_Task(void *pvParameters )
 
 					case ERROR_RELAY:
 					{
-						sprintf(str_buf,"                    ");
+						sprintf(str_buf,"       OÁ¸²ºa       ");/*       Îøèáêà       */
 						HD44780_Puts(0,0,str_buf);
-						sprintf(str_buf,"      Relay         ");
+						sprintf(str_buf,"        Pe»e        " );//        Ğåëå
 						HD44780_Puts(0,1,str_buf);
-						sprintf(str_buf,"      Error         ");
+						sprintf(str_buf,"     ½e¸c¾pa³½o     ");//     íåèñïğàâíî
 						HD44780_Puts(0,2,str_buf);
 						sprintf(str_buf,"                    ");
 						HD44780_Puts(0,3,str_buf);
