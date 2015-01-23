@@ -162,6 +162,10 @@ static void PID_Regulator_Task(void *pvParameters)
 	{
 		if( xSemaphoreTake( xPhazeSemaphore, ( portTickType ) portMAX_DELAY ) == pdTRUE )
 		{
+			pid_heater.P_Factor=uks_channels.uks_params.p_factor;
+			pid_heater.I_Factor=uks_channels.uks_params.i_factor;
+			pid_heater.D_Factor=uks_channels.uks_params.d_factor;
+
 			if(GPIO_ReadInputDataBit(TEMP_TUMBLR_PORT,TEMP_TUMBLR_TEMP_1_PIN)==Bit_RESET)
 			{
 				if(uks_channels.heater_tempereature_tumblr!=TUMBLR_TEMP_1)

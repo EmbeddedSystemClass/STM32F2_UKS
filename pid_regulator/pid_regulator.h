@@ -2,6 +2,7 @@
 #define PID_H
 
 #include "stdint.h"
+#include "phaze_detector.h"
 
 #define SCALING_FACTOR  128//128
 
@@ -31,7 +32,7 @@ typedef struct PID_DATA{
  * Needed to avoid sign/overflow problems
  */
 // Maximum value of variables
-#define MAX_INT         50//INT16_MAX
+#define MAX_INT         MAX_POWER_VALUE//INT16_MAX
 #define MAX_LONG        MAX_INT
 #define MAX_I_TERM      (MAX_INT / 2)
 
