@@ -81,8 +81,8 @@
       <target file="mbascii.o" lastModified="14af20907c5">
          <source file="..\..\..\modbus\ascii\mbascii.c" lastModified="14a53034808"/>
       </target>
-      <target file="mbport.o" lastModified="14b158fcdfa">
-         <source file="..\..\..\modbus\port\mbport.c" lastModified="14b158f6acc"/>
+      <target file="mbport.o" lastModified="14b15b7385f">
+         <source file="..\..\..\modbus\port\mbport.c" lastModified="14b15b72def"/>
       </target>
       <target file="portserial.o" lastModified="14af208fd17">
          <source file="..\..\..\modbus\port\portserial.c" lastModified="14a5d56c8aa"/>
