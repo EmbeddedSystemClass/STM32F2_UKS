@@ -32,7 +32,7 @@
 	<Property value = "false" name = "WebConfig3"  />
 	<Property value = "false" name = "Invisible"  />
 	<Property value = "Èñòèíà" name = "OpenFromTray"  />
-	<Property value = "Cp4pDJTxEZfzEZewJazGGLDJLqzIH3ewEW==" name = "RZ1"  />
+	<Property value = "Cp8sDJDxEZfzEZewJazGGLDJLqzIH3ewEW==" name = "RZ1"  />
 	<Property value = "false" name = "RZ2"  />
 	<Property value = "false" name = "RZ3"  />
 	<Property value = "false" name = "RZ4"  />
@@ -384,6 +384,42 @@
 				<Property value = "INPUT_REGISTERS" name = "Region"  />
 				<Property value = "float" name = "Type"  />
 				<Property value = "float" name = "TypeInDevice"  />
+				<Property value = "ReadOnly" name = "Access"  />
+				<Property value = "Èñòèíà" name = "ChangeBytes"  />
+				<Property value = "10325476" name = "StringChangeBytes"  />
+				<Property value = "1" name = "CountBytes"  />
+				<Property value = "ascii" name = "TypeString"  />
+				<Property value = "Ëîæü" name = "TegCalculation"  />
+				<Property value = "1.0" name = "KoffA"  />
+				<Property value = "0.0" name = "KoffB"  />
+				<Property value = "Ëîæü" name = "IsWriteRegister"  />
+				<Property value = "0" name = "AddressWriteRegister"  />
+				<Property value = "Ëîæü" name = "IsBitFromData"  />
+				<Property value = "0" name = "NumberBitFromData"  />
+				<Property value = "Ëîæü" name = "ReadAfterWrite"  />
+				<Property value = "Ëîæü" name = "IsBoundRegister"  />
+				<Property value = "Ëîæü" name = "EnableProgramAfterTagRead"  />
+				<Property value = "BIqWwEtezkZWw+ZduFRe/o0D2Y1cTMvZT6blRY1FRabkQNGeAGqA86LkP0qABIqWvENexUZswE3hwEVWzkZ/3GeWPdLkOtHfRsuWJsv3R6zpPIWf3GeWPMva3GejBI3kuV3WuUxowk0D2Y1cTMvZT6blRY1FRb9bOMGeAGqA86LkP0qA" name = "SourceCodeRead"  />
+				<Property value = "Ëîæü" name = "EnableProgramBeforeTagWrite"  />
+				<Property value = "BIqWwEtezkZWw+ZduFRe/o0D2Y1cTMvZT6blRY1FRabkQNGeAGqA86LkP0qABIqWvENexUZswE3hwEVWzkZ/3GeWPdLkOtHfRsuWJsv3R6zpPIWf3GeWPMva3GejBI3kuV3WuUxowk0D2Y1cTMvZT6blRY1FRbToQNHbA2aD2Y1bRcGD2" name = "SourceCodeWrite"  />
+				<Property value = "3" name = "Level"  />
+				<Property value = "Ëîæü" name = "IsHDA"  />
+				<Property value = "1000" name = "HDACountRecords"  />
+				<Property value = "false" name = "HDASaveToFile"  />
+				<Property value = "true" name = "HDASaveAutomatic"  />
+				<Property value = "false" name = "HDASaveIfChange"  />
+				<Property value = "false" name = "Invisible"  />
+				<Property value = "false" name = "RZ01"  />
+				<Property value = "Ëîæü" name = "WriteCmd6"  />
+			</Element>
+			<Element>
+				<Property value = "Teg" name = "Category"  />
+				<Property value = "power_value" name = "NameInTree"  />
+				<Property value = "Èñòèíà" name = "Enabled"  />
+				<Property value = "16" name = "Address"  />
+				<Property value = "INPUT_REGISTERS" name = "Region"  />
+				<Property value = "uint32" name = "Type"  />
+				<Property value = "uint16" name = "TypeInDevice"  />
 				<Property value = "ReadOnly" name = "Access"  />
 				<Property value = "Èñòèíà" name = "ChangeBytes"  />
 				<Property value = "10325476" name = "StringChangeBytes"  />
