@@ -118,6 +118,7 @@ struct uks
 	struct drying_channel * drying_channel_sort_list[DRYING_CHANNELS_NUM];
 	float 		heater_temperature;
 	uint32_t 	heater_code;
+	uint16_t    power_value;
 	uint8_t 	screen;
 	uint8_t 	device_error;
 	uint8_t		heater_tempereature_tumblr;

@@ -22,7 +22,7 @@ void Heater_Power_Down_Block(void);
 
 #define RELAY_PIN					GPIO_Pin_2
 
-#define MAX_POWER_VALUE		50
+#define MAX_POWER_VALUE		100
 
 struct phaze_detector
 {

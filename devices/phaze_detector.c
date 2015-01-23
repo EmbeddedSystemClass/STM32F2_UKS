@@ -105,6 +105,7 @@ void Set_Heater_Power(uint8_t power)
 	{
 		//EXTI->IMR &= ~EXTI_Line0;
 		phaze_detect.power_value=power;
+		uks_channels.power_value=(uint16_t)power;
 	}	//EXTI->IMR |=  EXTI_Line0;
 }
 
@@ -153,6 +154,7 @@ void Heater_Power_Down_Block(void)
 {
 //	vTaskSuspend(PID_Regulator_Task_Handle);
 	vTaskSuspend(Heater_Control_Task_Handle);
+	task_watches[HEATER_CONTROL_TASK].task_status=TASK_IDLE;
 	EXTI->IMR &= ~(EXTI_Line0|EXTI_Line1);
 	RELAY_PORT->BSRRH|=RELAY_PIN;//pin down
 	GPIO_PinLockConfig(RELAY_PORT,RELAY_PIN);

@@ -52,10 +52,16 @@
          <include file="..\..\..\modbus\rtu\mbcrc.h"/>
          <include file="..\..\..\modbus\port\mbport.h"/>
       </source>
+      <source file="..\..\..\time_forecast\time_forecast.h" lastModified="14b02613212">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      </source>
       <source file="..\..\..\cmsis\core_cm4.h" lastModified="14a0a90fd24">
          <include file="..\..\..\cmsis\core_cmInstr.h"/>
          <include file="..\..\..\cmsis\core_cmFunc.h"/>
          <include file="..\..\..\cmsis\core_cm4_simd.h"/>
+      </source>
+      <source file="..\..\..\time_forecast\time_forecast.c" lastModified="14b026658bc">
+         <include file="..\..\..\time_forecast\time_forecast.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_pwr.c" lastModified="14ae25c89c6">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h"/>
@@ -84,10 +90,10 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a811a5920">
+      <source file="..\..\..\devices\phaze_detector.h" lastModified="14b15927f7e">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\devices\phaze_detector.c" lastModified="14af290d229">
+      <source file="..\..\..\devices\phaze_detector.c" lastModified="14b158856d8">
          <include file="..\..\..\devices\phaze_detector.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
@@ -219,7 +225,7 @@
          <include file="..\..\..\modbus\include\mbproto.h"/>
          <include file="..\..\..\modbus\include\mbconfig.h"/>
       </source>
-      <source file="..\..\..\devices\watchdog.h" lastModified="14af286d18d">
+      <source file="..\..\..\devices\watchdog.h" lastModified="14b156df108">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h" lastModified="14a0a90f851">
@@ -288,7 +294,7 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h" lastModified="13e3b1eb8f0">
       </source>
-      <source file="..\..\..\modbus\port\mbport.c" lastModified="14ae7cd7888">
+      <source file="..\..\..\modbus\port\mbport.c" lastModified="14b158f6acc">
          <include file="..\..\..\modbus\include\mb.h"/>
          <include file="..\..\..\devices\uks.h"/>
          <include file="..\..\..\devices\backup_sram.h"/>
@@ -409,7 +415,7 @@
          <include file="..\..\..\usblib\usbd_def.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
       </source>
-      <source file="..\..\..\devices\uks.h" lastModified="14ae7813d17">
+      <source file="..\..\..\devices\uks.h" lastModified="14b15809aae">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0">
@@ -746,9 +752,6 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\devices\phaze_detector.h" lastModified="14a811a5920">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
-      </source>
       <source file="..\..\..\devices\power_detector.h" lastModified="14a19783a11">
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12">
@@ -915,9 +918,6 @@
          <include file="..\..\..\usblib\usb_dcd.h"/>
          <include file="..\..\..\usblib\usbd_def.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
-      </source>
-      <source file="..\..\..\devices\uks.h" lastModified="14ae7813d17">
-         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0">
          <include file="..\..\..\usblib\usbd_core.h"/>

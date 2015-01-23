@@ -95,10 +95,10 @@
     <File name="modbus/port/mbport.c" path="modbus/port/mbport.c" type="1"/>
     <File name="modbus/functions" path="" type="2"/>
     <File name="modbus/functions/mbfuncdisc.c" path="modbus/functions/mbfuncdisc.c" type="1"/>
-    <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
-    <File name="usb_cdc/usblib/usbd_ioreq.h" path="usblib/usbd_ioreq.h" type="1"/>
     <File name="modbus/port/assert.h" path="modbus/port/assert.h" type="1"/>
     <File name="devices/ADS1120.h" path="devices/ADS1120.h" type="1"/>
+    <File name="usb_cdc/usblib/usbd_ioreq.h" path="usblib/usbd_ioreq.h" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
     <File name="usb_cdc/usblib/usbd_cdc_core.h" path="usblib/usbd_cdc_core.h" type="1"/>
     <File name="modbus/port" path="" type="2"/>
     <File name="FreeRTOSV7.1.0/Source/tasks.c" path="FreeRTOSV7.1.0/Source/tasks.c" type="1"/>
@@ -184,9 +184,9 @@
     <File name="cmsis_lib/include/stm32f4xx_syscfg.h" path="cmsis_lib/include/stm32f4xx_syscfg.h" type="1"/>
     <File name="modbus/port/porttimer.c" path="modbus/port/porttimer.c" type="1"/>
     <File name="usb_cdc/usblib/usb_dcd.h" path="usblib/usb_dcd.h" type="1"/>
-    <File name="usb_cdc/usblib/usbd_desc.c" path="usblib/usbd_desc.c" type="1"/>
     <File name="devices/phaze_detector.h" path="devices/phaze_detector.h" type="1"/>
     <File name="devices/buzzer.h" path="devices/buzzer.h" type="1"/>
+    <File name="usb_cdc/usblib/usbd_desc.c" path="usblib/usbd_desc.c" type="1"/>
     <File name="devices/adc.h" path="devices/adc.h" type="1"/>
     <File name="usb_cdc/usblib/usbd_core.h" path="usblib/usbd_core.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/croutine.h" path="FreeRTOSV7.1.0/Source/include/croutine.h" type="1"/>
@@ -235,15 +235,15 @@
     <File name="usb_cdc/usblib/usbd_ioreq.c" path="usblib/usbd_ioreq.c" type="1"/>
     <File name="usb_cdc/usblib/usbd_def.h" path="usblib/usbd_def.h" type="1"/>
     <File name="modbus/rtu" path="" type="2"/>
-    <File name="modbus/port/mbport.h" path="modbus/port/mbport.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/portable/ARM_CM3" path="" type="2"/>
-    <File name="usb_cdc/usblib" path="" type="2"/>
+    <File name="modbus/port/mbport.h" path="modbus/port/mbport.h" type="1"/>
     <File name="usb_cdc/usblib/usbd_desc.h" path="usblib/usbd_desc.h" type="1"/>
+    <File name="usb_cdc/usblib" path="" type="2"/>
     <File name="modbus/protocol.c" path="modbus/protocol.c" type="1"/>
-    <File name="FreeRTOSV7.1.0/License/license.txt" path="FreeRTOSV7.1.0/License/license.txt" type="1"/>
-    <File name="FreeRTOSV7.1.0/Source/include" path="" type="2"/>
     <File name="modbus/rtu/mbrtu.h" path="modbus/rtu/mbrtu.h" type="1"/>
     <File name="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" path="FreeRTOSV7.1.0/Source/include/mpu_wrappers.h" type="1"/>
+    <File name="FreeRTOSV7.1.0/Source/include" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/License/license.txt" path="FreeRTOSV7.1.0/License/license.txt" type="1"/>
     <File name="devices/keyboard.h" path="devices/keyboard.h" type="1"/>
     <File name="devices/hd44780_driver/timer_properties.h" path="devices/hd44780_driver/timer_properties.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_tim.c" path="cmsis_lib/source/stm32f4xx_tim.c" type="1"/>
@@ -255,8 +255,8 @@
     <File name="FreeRTOSV7.1.0/Source/portable/MemMang" path="" type="2"/>
     <File name="modbus/include/mbport.h" path="modbus/include/mbport.h" type="1"/>
     <File name="usb_cdc/usblib/usb_regs.h" path="usblib/usb_regs.h" type="1"/>
-    <File name="FreeRTOSV7.1.0/Source" path="" type="2"/>
     <File name="cmsis_lib/include" path="" type="2"/>
+    <File name="FreeRTOSV7.1.0/Source" path="" type="2"/>
     <File name="modbus/include/mb.h" path="modbus/include/mb.h" type="1"/>
     <File name="devices/hd44780_driver/display.h" path="devices/hd44780_driver/display.h" type="1"/>
     <File name="FreeRTOSConfig.h" path="FreeRTOSConfig.h" type="1"/>
