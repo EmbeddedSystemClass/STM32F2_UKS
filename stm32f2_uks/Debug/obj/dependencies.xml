@@ -2300,11 +2300,6 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h" lastModified="13e3b1eb8f0">
       </source>
-      <source file="..\..\..\modbus\port\mbport.c" lastModified="14b15b72def">
-         <include file="..\..\..\modbus\include\mb.h"/>
-         <include file="..\..\..\devices\uks.h"/>
-         <include file="..\..\..\devices\backup_sram.h"/>
-      </source>
       <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff">
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
          <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
@@ -2421,7 +2416,7 @@
          <include file="..\..\..\usblib\usbd_def.h"/>
          <include file="..\..\..\usblib\usbd_conf.h"/>
       </source>
-      <source file="..\..\..\devices\uks.h" lastModified="14b15809aae">
+      <source file="..\..\..\devices\uks.h" lastModified="14b254c1c12">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0">

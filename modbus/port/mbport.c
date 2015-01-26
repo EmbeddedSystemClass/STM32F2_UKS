@@ -125,13 +125,19 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 				{
 					if((iRegIndex>=0)&&(iRegIndex<(DRYING_CHANNELS_NUM*2)))
 					{
-						//uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]=*((float*)pucRegBuffer);
+						float temp=0;
 
-						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[1]=*pucRegBuffer++;
-						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[0]=*pucRegBuffer++;
-						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[3]=*pucRegBuffer++;
-						((uint8_t*)(&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)])))[2]=*pucRegBuffer++;
-						Backup_SRAM_Write_Reg(&(uks_channels.backup_uks_params->end_drying_temperature[(iRegIndex>>1)]),&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]),sizeof(float));
+						((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+						((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+						((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+						((uint8_t*)(&temp))[2]=*pucRegBuffer++;
+
+						if((temp>=END_DRYING_TEMP_MIN)&&(temp<=END_DRYING_TEMP_MAX))
+						{
+							uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]=temp;
+							Backup_SRAM_Write_Reg(&(uks_channels.backup_uks_params->end_drying_temperature[(iRegIndex>>1)]),&(uks_channels.uks_params.end_drying_temperature[(iRegIndex>>1)]),sizeof(float));
+						}
+
 						iRegIndex+=2;
 						usNRegs-=2;
 
@@ -143,131 +149,193 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 						{
 							case REG_INDEX_HEATER_TEMP_1:
 							{
-								//uks_channels.uks_params.heater_temperature_1=30;//*((float*)pucRegBuffer);
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_1))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
+
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_1,&uks_channels.uks_params.heater_temperature_1,sizeof(float));
-//								pucRegBuffer+=4;
+
+								if((temp>=HEATER_TEMP_MIN)&&(temp<=HEATER_TEMP_MAX))
+								{
+									uks_channels.uks_params.heater_temperature_1=temp;
+								    Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_1,&uks_channels.uks_params.heater_temperature_1,sizeof(float));
+								}
 							}
 							break;
 
 							case REG_INDEX_HEATER_TEMP_2:
 							{
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.heater_temperature_2))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
+
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_2,&uks_channels.uks_params.heater_temperature_2,sizeof(float));
+
+								if((temp>=HEATER_TEMP_MIN)&&(temp<=HEATER_TEMP_MAX))
+								{
+									uks_channels.uks_params.heater_temperature_2=temp;
+								    Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_2,&uks_channels.uks_params.heater_temperature_1,sizeof(float));
+								}
 							}
 							break;
 
 							case REG_INDEX_P_FACTOR:
 							{
-								((uint8_t*)(&uks_channels.uks_params.p_factor))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.p_factor))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.p_factor))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.p_factor))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->p_factor,&uks_channels.uks_params.p_factor,sizeof(float));
+								if((temp>=P_FACTOR_MIN)&&(temp<=P_FACTOR_MAX))
+								{
+									uks_channels.backup_uks_params->p_factor=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->p_factor,&uks_channels.uks_params.p_factor,sizeof(float));
+								}
 							}
 							break;
 
 							case REG_INDEX_I_FACTOR:
 							{
-								((uint8_t*)(&uks_channels.uks_params.i_factor))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.i_factor))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.i_factor))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.i_factor))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->i_factor,&uks_channels.uks_params.i_factor,sizeof(float));
+								if((temp>=I_FACTOR_MIN)&&(temp<=I_FACTOR_MAX))
+								{
+									uks_channels.backup_uks_params->i_factor=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->i_factor,&uks_channels.uks_params.i_factor,sizeof(float));
+								}
 							}
 							break;
 
 							case REG_INDEX_D_FACTOR:
 							{
-								((uint8_t*)(&uks_channels.uks_params.d_factor))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.d_factor))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.d_factor))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.d_factor))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
+								if((temp>=D_FACTOR_MIN)&&(temp<=D_FACTOR_MAX))
+								{
+									uks_channels.backup_uks_params->d_factor=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
+								}
 							}
 							break;
 //---------------------
 							case REG_DELTA_TEMP_START_DRYING:
 							{
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_start_drying))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_start_drying,&uks_channels.uks_params.delta_temp_start_drying,sizeof(float));
+								if((temp>=DELTA_TEMP_START_DRYING_MIN)&&(temp<=DELTA_TEMP_START_DRYING_MAX))
+								{
+									uks_channels.uks_params.delta_temp_start_drying=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_start_drying,&uks_channels.uks_params.delta_temp_start_drying,sizeof(float));
+								}
 							}
 							break;
 
 							case REG_TRESHOLD_TEMP_START_DRYING:
 							{
-								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.treshold_temp_start_drying))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->treshold_temp_start_drying,&uks_channels.uks_params.treshold_temp_start_drying,sizeof(float));
+								if((temp>=TRESHOLD_TEMP_START_DRYING_MIN)&&(temp<=TRESHOLD_TEMP_START_DRYING_MAX))
+								{
+									uks_channels.uks_params.treshold_temp_start_drying=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->treshold_temp_start_drying,&uks_channels.uks_params.treshold_temp_start_drying,sizeof(float));
+								}
 							}
 							break;
 
 							case REG_DELTA_TEMP_CANCEL_DRYING:
 							{
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[0]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[3]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.delta_temp_cancel_drying))[2]=*pucRegBuffer++;
+								float temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[3]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[2]=*pucRegBuffer++;
 								iRegIndex+=2;
 								usNRegs-=2;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_cancel_drying,&uks_channels.uks_params.delta_temp_cancel_drying,sizeof(float));
+								if((temp>=DELTA_TEMP_CANCEL_DRYING_MIN)&&(temp<=DELTA_TEMP_CANCEL_DRYING_MAX))
+								{
+									uks_channels.uks_params.delta_temp_cancel_drying=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->delta_temp_cancel_drying,&uks_channels.uks_params.delta_temp_cancel_drying,sizeof(float));
+								}
 							}
 							break;
 //--------
 							case REG_HEATER_INIT_TIMEOUT:
 							{
-								((uint8_t*)(&uks_channels.uks_params.heater_init_timeout))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.heater_init_timeout))[0]=*pucRegBuffer++;
+								uint16_t temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
 
 								iRegIndex+=1;
 								usNRegs-=1;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_init_timeout,&uks_channels.uks_params.heater_init_timeout,sizeof(uint16_t));
+								if((temp>=HEATER_INIT_TIMEOUT_MIN)&&(temp<=HEATER_INIT_TIMEOUT_MAX))
+								{
+									uks_channels.uks_params.heater_init_timeout=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_init_timeout,&uks_channels.uks_params.heater_init_timeout,sizeof(uint16_t));
+								}
 							}
 							break;
 
 							case REG_MEASURING_FRAME_TIME:
 							{
-								((uint8_t*)(&uks_channels.uks_params.measuring_frame_time))[1]=*pucRegBuffer++;
-								((uint8_t*)(&uks_channels.uks_params.measuring_frame_time))[0]=*pucRegBuffer++;
+								uint16_t temp=0;
+
+								((uint8_t*)(&temp))[1]=*pucRegBuffer++;
+								((uint8_t*)(&temp))[0]=*pucRegBuffer++;
 
 								iRegIndex+=1;
 								usNRegs-=1;
 
-								Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->measuring_frame_time,&uks_channels.uks_params.measuring_frame_time,sizeof(uint16_t));
+								if((temp>=MEASURING_FRAME_TIME_MIN)&&(temp<=MEASURING_FRAME_TIME_MAX))
+								{
+									uks_channels.uks_params.measuring_frame_time=temp;
+									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->measuring_frame_time,&uks_channels.uks_params.measuring_frame_time,sizeof(uint16_t));
+								}
 							}
 							break;
 
