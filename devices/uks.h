@@ -61,8 +61,8 @@ struct drying_channel
 #define I_FACTOR_MIN		   -100.0
 #define I_FACTOR_MAX		    100.0
 
-#define D_FACTOR_MIN		   -100.0
-#define D_FACTOR_MAX		    100.0
+#define D_FACTOR_MIN		   -10000.0
+#define D_FACTOR_MAX		    10000.0
 
 #define DELTA_TEMP_START_DRYING_MIN		 0.0
 #define DELTA_TEMP_START_DRYING_MAX 	10.0
