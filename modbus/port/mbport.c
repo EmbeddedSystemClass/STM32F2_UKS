@@ -184,7 +184,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 								if((temp>=HEATER_TEMP_MIN)&&(temp<=HEATER_TEMP_MAX))
 								{
 									uks_channels.uks_params.heater_temperature_2=temp;
-								    Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_2,&uks_channels.uks_params.heater_temperature_1,sizeof(float));
+								    Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->heater_temperature_2,&uks_channels.uks_params.heater_temperature_2,sizeof(float));
 								}
 							}
 							break;
