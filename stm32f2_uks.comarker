@@ -2,7 +2,7 @@
 <breakpoints>
 <breakpoint enabled="true" persistant="true" registered="true">
 <resource path="/stm32f2_uks/devices/phaze_detector.c" type="1"/>
-<marker lineNumber="172" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
+<marker lineNumber="174" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
 <attrib name="enabled" value="true"/>
 <attrib name="org.eclipse.cdt.debug.core.condition" value=""/>
 <attrib name="org.eclipse.debug.core.id" value="org.eclipse.cdt.debug.core"/>
@@ -16,13 +16,13 @@
 <attrib name="registered" value="true"/>
 <attrib name="path" value="/stm32f2_uks/devices/phaze_detector.c"/>
 <attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="D:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\devices\phaze_detector.c"/>
-<attrib name="org.eclipse.debug.core.enabled" value="true"/>
 <attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
+<attrib name="org.eclipse.debug.core.enabled" value="true"/>
 </marker>
 </breakpoint>
 <breakpoint enabled="true" persistant="true" registered="true">
 <resource path="/stm32f2_uks/devices/phaze_detector.c" type="1"/>
-<marker lineNumber="182" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
+<marker lineNumber="184" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
 <attrib name="enabled" value="true"/>
 <attrib name="org.eclipse.cdt.debug.core.condition" value=""/>
 <attrib name="org.eclipse.debug.core.id" value="org.eclipse.cdt.debug.core"/>
@@ -36,8 +36,8 @@
 <attrib name="registered" value="true"/>
 <attrib name="path" value="/stm32f2_uks/devices/phaze_detector.c"/>
 <attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="D:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\devices\phaze_detector.c"/>
-<attrib name="org.eclipse.debug.core.enabled" value="true"/>
 <attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
+<attrib name="org.eclipse.debug.core.enabled" value="true"/>
 </marker>
 </breakpoint>
 <breakpoint enabled="true" persistant="true" registered="true">
@@ -56,28 +56,8 @@
 <attrib name="registered" value="true"/>
 <attrib name="path" value="/stm32f2_uks/devices/backup_sram.c"/>
 <attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="D:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\devices\backup_sram.c"/>
-<attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
 <attrib name="org.eclipse.debug.core.enabled" value="true"/>
-</marker>
-</breakpoint>
-<breakpoint enabled="true" persistant="true" registered="true">
-<resource path="/stm32f2_uks/modbus/port/mbport.c" type="1"/>
-<marker lineNumber="165" type="org.eclipse.cdt.debug.core.cLineBreakpointMarker">
-<attrib name="enabled" value="true"/>
-<attrib name="org.eclipse.cdt.debug.core.condition" value=""/>
-<attrib name="org.eclipse.debug.core.id" value="org.eclipse.cdt.debug.core"/>
-<attrib name="workingset_name" value=""/>
-<attrib name="org.eclipse.cdt.debug.core.installCount" value="0"/>
-<attrib name="type" value="org.eclipse.cdt.debug.core.cLineBreakpointMarker"/>
-<attrib name="persistant" value="true"/>
-<attrib name="org.eclipse.cdt.debug.core.breakpointType" value="0"/>
-<attrib name="workingset_id" value="org.eclipse.debug.ui.breakpointWorkingSet"/>
-<attrib name="message" value="Line breakpoint: mbport.c [line: 157]"/>
-<attrib name="registered" value="true"/>
-<attrib name="path" value="/stm32f2_uks/modbus/port/mbport.c"/>
-<attrib name="org.eclipse.cdt.debug.core.sourceHandle" value="D:\PROJECTS\GIT_REPOSITORY\STM32\STM32F2_UKS\modbus\port\mbport.c"/>
 <attrib name="org.eclipse.cdt.debug.core.ignoreCount" value="0"/>
-<attrib name="org.eclipse.debug.core.enabled" value="true"/>
 </marker>
 </breakpoint>
 </breakpoints>

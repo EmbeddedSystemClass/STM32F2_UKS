@@ -202,7 +202,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 								if((temp>=P_FACTOR_MIN)&&(temp<=P_FACTOR_MAX))
 								{
-									uks_channels.backup_uks_params->p_factor=temp;
+									uks_channels.uks_params.p_factor=temp;
 									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->p_factor,&uks_channels.uks_params.p_factor,sizeof(float));
 								}
 							}
@@ -221,7 +221,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 								if((temp>=I_FACTOR_MIN)&&(temp<=I_FACTOR_MAX))
 								{
-									uks_channels.backup_uks_params->i_factor=temp;
+									uks_channels.uks_params.i_factor=temp;
 									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->i_factor,&uks_channels.uks_params.i_factor,sizeof(float));
 								}
 							}
@@ -240,7 +240,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 								if((temp>=D_FACTOR_MIN)&&(temp<=D_FACTOR_MAX))
 								{
-									uks_channels.backup_uks_params->d_factor=temp;
+									uks_channels.uks_params.d_factor=temp;
 									Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
 								}
 							}
