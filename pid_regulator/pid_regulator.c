@@ -65,8 +65,24 @@ void pid_Init(float p_factor, float i_factor, float d_factor, struct PID_DATA *p
   pid->I_Factor = i_factor;
   pid->D_Factor = d_factor;
   // Limits to avoid overflow
-  pid->maxError = MAX_INT / (pid->P_Factor + 1);
-  pid->maxSumError = MAX_I_TERM / (pid->I_Factor + 1);
+
+  if(pid->P_Factor!=0.0)
+  {
+	  pid->maxError = MAX_INT / pid->P_Factor;
+  }
+  else
+  {
+	  pid->maxError=0.0;
+  }
+
+  if(pid->I_Factor!=0.0)
+  {
+	  pid->maxSumError = MAX_I_TERM /pid->I_Factor;
+  }
+  else
+  {
+	  pid->maxSumError =0.0;
+  }
 
     GPIO_InitTypeDef GPIO_InitStruct;
   	RCC_AHB1PeriphClockCmd(TEMP_TUMBLR_RCC, ENABLE);
@@ -104,11 +120,13 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   error = setPoint - processValue;
 
   // Calculate Pterm and limit error overflow
-  if (error > pid_st->maxError){
-    p_term = MAX_INT;
+  if (error > pid_st->maxError)
+  {
+    p_term = pid_st->P_Factor*pid_st->maxError;
   }
-  else if (error < (-pid_st->maxError)){
-    p_term = -MAX_INT;
+  else if (error < (-pid_st->maxError))
+  {
+    p_term = pid_st->P_Factor*(-pid_st->maxError);
   }
   else{
     p_term =pid_st->P_Factor * error;
@@ -118,12 +136,12 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   temp = pid_st->sumError + error;
   if(temp > pid_st->maxSumError)
   {
-	  i_term = MAX_I_TERM;
+	  i_term = pid_st->I_Factor *pid_st->maxSumError;
 	  pid_st->sumError = pid_st->maxSumError;
   }
-  else if(temp < -pid_st->maxSumError)
+  else if(temp < (-pid_st->maxSumError))
   {
-	  i_term = -MAX_I_TERM;
+	  i_term = pid_st->I_Factor *(-pid_st->maxSumError);
 	  pid_st->sumError = -pid_st->maxSumError;
   }
   else
