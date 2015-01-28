@@ -40,15 +40,6 @@ static void Watchdog_Task(void *pvParameters)
 {
 	while(1)
 	{
-//		if(((task_watches[PROTO_TASK].counter>0)||(task_watches[PROTO_TASK].task_status==TASK_IDLE))&&
-//		   ((task_watches[BUZZER_TASK].counter>0)	||(task_watches[BUZZER_TASK].task_status==TASK_IDLE)))
-//		{//проверка счетчиков
-//			IWDG_ReloadCounter();
-//		}
-//
-//		task_watches[PROTO_TASK].counter=0;
-//		task_watches[BUZZER_TASK].counter=0;
-
 		uint8_t i=0, task_error_flag=FALSE;
 
 		for(i=0;i<TASK_NUM;i++)

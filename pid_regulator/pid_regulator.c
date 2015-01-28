@@ -107,7 +107,7 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   if (error > pid_st->maxError){
     p_term = MAX_INT;
   }
-  else if (error < -pid_st->maxError){
+  else if (error < (-pid_st->maxError)){
     p_term = -MAX_INT;
   }
   else{
@@ -138,9 +138,9 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   pid_st->lastProcessValue = processValue;
 
   ret = (p_term + i_term + d_term)/* / SCALING_FACTOR*/;
-  if(ret > MAX_INT)
+  if(ret > MAX_POWER_VALUE)
   {
-	  ret = MAX_INT;
+	  ret = MAX_POWER_VALUE;
   }
   else if(ret < /*-MAX_INT*/0){
     ret = /*-MAX_INT*/0;

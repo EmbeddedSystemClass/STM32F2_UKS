@@ -154,22 +154,28 @@ void EXTI1_IRQHandler(void)
 
 void Heater_Power_Down_Block(void)
 {
-//	vTaskSuspend(PID_Regulator_Task_Handle);
+	if(task_watches[DRYING_TASK].task_status==TASK_ACTIVE)
+	{
+		vTaskSuspend(UKS_Drying_Task_Handle);
+		task_watches[DRYING_TASK].task_status=TASK_IDLE;
+	}
 
-	task_watches[HEATER_CONTROL_TASK].task_status=TASK_IDLE;
-
-	vTaskSuspend(UKS_Drying_Task_Handle);
-	task_watches[DRYING_TASK].task_status=TASK_IDLE;
-
-	vTaskSuspend(PID_Regulator_Task_Handle);
-	task_watches[PID_TASK].task_status=TASK_IDLE;
+	if(task_watches[PID_TASK].task_status==TASK_ACTIVE)
+	{
+		vTaskSuspend(PID_Regulator_Task_Handle);
+		task_watches[PID_TASK].task_status=TASK_IDLE;
+	}
 
 	Set_Heater_Power(0);
 	EXTI->IMR &= ~(EXTI_Line0|EXTI_Line1);
-	RELAY_PORT->BSRRH|=RELAY_PIN;//pin down
+	RELAY_PORT->BSRRH|=RELAY_PIN;
 	GPIO_PinLockConfig(RELAY_PORT,RELAY_PIN);
 
-	vTaskSuspend(Heater_Control_Task_Handle);
+	if(	task_watches[HEATER_CONTROL_TASK].task_status==TASK_ACTIVE)
+	{
+		task_watches[HEATER_CONTROL_TASK].task_status=TASK_IDLE;
+		vTaskSuspend(Heater_Control_Task_Handle);
+	}
 }
 
 static void Heater_Control_Task(void *pvParameters)
@@ -177,6 +183,7 @@ static void Heater_Control_Task(void *pvParameters)
 	task_watches[HEATER_CONTROL_TASK].task_status=TASK_ACTIVE;
 	while(1)
 	{
+		vTaskDelay(1000);
 		EXTI->IMR &= ~(EXTI_Line0|EXTI_Line1);
 		if(phaze_detect.zero_cross_counter)
 		{
@@ -213,6 +220,5 @@ static void Heater_Control_Task(void *pvParameters)
 		}
 		EXTI->IMR |= (EXTI_Line0|EXTI_Line1);
 		task_watches[HEATER_CONTROL_TASK].counter++;
-		vTaskDelay(1000);
 	}
 }

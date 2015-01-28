@@ -7,15 +7,15 @@
 enum
 {
 	PROTO_TASK=0,//ok
-	BUZZER_TASK,//ok
-	DISPLAY_TASK,//ok
-	DRYING_TASK,//ok
-	HEATER_INIT_TASK,//not required
-	ADS1120_TASK,//ok
-	ADC_TASK,//ok
-	KEYBOARD_TASK,//ok
-	HEATER_CONTROL_TASK,//ok
-	PID_TASK,
+	BUZZER_TASK=1,//ok
+	DISPLAY_TASK=2,//ok
+	DRYING_TASK=3,//ok
+	HEATER_INIT_TASK=4,//not required
+	ADS1120_TASK=5,//ok
+	ADC_TASK=6,//ok
+	KEYBOARD_TASK=7,//ok
+	HEATER_CONTROL_TASK=8,//ok
+	PID_TASK=9,
 };
 
 enum
