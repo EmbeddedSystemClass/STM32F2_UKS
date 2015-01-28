@@ -15,6 +15,8 @@
 struct uks uks_channels;
 extern xSemaphoreHandle xMeasure_LM35_Semaphore;
 
+xTaskHandle UKS_Drying_Task_Handle;
+
 extern struct task_watch task_watches[];
 
 void UKS_Drying_Task(void *pvParameters );
@@ -102,7 +104,7 @@ void UKS_Heater_Init_Task(void *pvParameters )
 	if(/*uks_channels.screen!=SCREEN_HEATER_INIT_TIMEOUT*/uks_channels.device_error==ERROR_NONE)
 	{
 		uks_channels.screen=SCREEN_CHANNELS_FIRST;
-		xTaskCreate(UKS_Drying_Task,(signed char*)"UKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
+		xTaskCreate(UKS_Drying_Task,(signed char*)"UKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, &UKS_Drying_Task_Handle);
 	}
 	 vTaskDelete( NULL );
 }

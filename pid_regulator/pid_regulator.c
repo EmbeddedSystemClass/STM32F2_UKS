@@ -15,13 +15,15 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_gpio.h"
 
+#include "watchdog.h"
+
 extern xSemaphoreHandle xPhazeSemaphore;
 extern struct ADS1120_result ADS1120_res;
 extern struct uks uks_channels;
 
 struct PID_DATA pid_heater;
 
-
+extern struct task_watch task_watches[];
 
 xTaskHandle PID_Regulator_Task_Handle;
 
@@ -109,7 +111,7 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
     p_term = -MAX_INT;
   }
   else{
-    p_term =(int16_t)(pid_st->P_Factor * error);
+    p_term =pid_st->P_Factor * error;
   }
 
   // Calculate Iterm and limit integral runaway
@@ -127,11 +129,11 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   else
   {
     pid_st->sumError = temp;
-    i_term =(float)(pid_st->I_Factor * pid_st->sumError);
+    i_term =pid_st->I_Factor * pid_st->sumError;
   }
 
   // Calculate Dterm
-  d_term =(float)(pid_st->D_Factor * (pid_st->lastProcessValue - processValue));
+  d_term =pid_st->D_Factor * (pid_st->lastProcessValue - processValue);
 
   pid_st->lastProcessValue = processValue;
 
@@ -144,7 +146,7 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
     ret = /*-MAX_INT*/0;
   }
 
-  return((float)ret);
+  return ret;
 }
 
 /*! \brief Resets the integrator.
@@ -158,6 +160,7 @@ void pid_Reset_Integrator(pidData_t *pid_st)
 
 static void PID_Regulator_Task(void *pvParameters)
 {
+	task_watches[PID_TASK].task_status=TASK_ACTIVE;
 	while(1)
 	{
 		if( xSemaphoreTake( xPhazeSemaphore, ( portTickType ) portMAX_DELAY ) == pdTRUE )
@@ -190,6 +193,8 @@ static void PID_Regulator_Task(void *pvParameters)
 				}
 				Set_Heater_Power((uint8_t)pid_Controller(uks_channels.uks_params.heater_temperature_2,uks_channels.heater_temperature,&pid_heater));
 			}
+
+			task_watches[PID_TASK].counter++;
 		}
 	}
 }
