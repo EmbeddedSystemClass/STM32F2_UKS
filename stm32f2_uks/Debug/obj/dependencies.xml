@@ -2584,7 +2584,7 @@
       <source file="..\..\..\devices\hd44780_driver\delay.c" lastModified="14a190cc73b">
          <include file="..\..\..\devices\hd44780_driver\delay.h"/>
       </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14b2fe03cf4">
+      <source file="..\..\..\pid_regulator\pid_regulator.h" lastModified="14b543b29c5">
          <include file="..\..\..\devices\phaze_detector.h"/>
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h" lastModified="13e3b1eb8f0">

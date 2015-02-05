@@ -34,7 +34,7 @@ typedef struct PID_DATA{
 // Maximum value of variables
 #define MAX_INT         HEATER_TEMP_MAX//INT16_MAX
 #define MAX_LONG        MAX_INT
-#define MAX_I_TERM      (MAX_INT / 2)
+#define MAX_I_TERM      15/*(MAX_INT / 2)*/
 
 // Boolean values
 #define FALSE           0

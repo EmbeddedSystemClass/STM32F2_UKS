@@ -87,7 +87,7 @@
       <target file="portserial.o" lastModified="14af208fd17">
          <source file="..\..\..\modbus\port\portserial.c" lastModified="14a5d56c8aa"/>
       </target>
-      <target file="uks.o" lastModified="14b2fe09cf7">
+      <target file="uks.o" lastModified="14b543b31a5">
          <source file="..\..\..\devices\uks.c" lastModified="14b2fbedfc2"/>
       </target>
       <target file="usbd_core.o" lastModified="14af208cde9">
@@ -186,7 +186,7 @@
       <target file="ADS1120.o" lastModified="14b2fdab1f3">
          <source file="..\..\..\devices\ADS1120.c" lastModified="14af2867237"/>
       </target>
-      <target file="main.o" lastModified="14b2fe09af3">
+      <target file="main.o" lastModified="14b543b2fd0">
          <source file="..\..\..\main.c" lastModified="14af2887dc6"/>
       </target>
       <target file="mbcrc.o" lastModified="14af208cf7f">
@@ -195,7 +195,7 @@
       <target file="system_stm32f4xx.o" lastModified="14af208f19d">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="14a190cfb4b"/>
       </target>
-      <target file="pid_regulator.o" lastModified="14b301a6533">
+      <target file="pid_regulator.o" lastModified="14b543b2f43">
          <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14b301a5a56"/>
       </target>
       <target file="usb_dcd_int.o" lastModified="14af208faf4">
