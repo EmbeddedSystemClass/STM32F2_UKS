@@ -50,12 +50,12 @@ void UKS_Drying_Init(void)
 	}
 	uks_channels.screen=SCREEN_INIT_HEATER;
 
-  //uks_channels.device_error=ERROR_NONE;
+
 	xTaskCreate(UKS_Heater_Init_Task,(signed char*)"UKS_HEATER_INIT_TASK",128,NULL, tskIDLE_PRIORITY + 1, NULL);
-   // task_watches[DRYING_TASK].task_status=TASK_IDLE;
+
+	//xTaskCreate(UKS_Drying_Task,(signed char*)"UKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, &UKS_Drying_Task_Handle);
 }
 
-//#define HEATER_INIT_TIMEOUT	40
 void UKS_Heater_Init_Task(void *pvParameters )
 {
 	uint16_t heater_init_timeout_counter=0;
@@ -101,7 +101,7 @@ void UKS_Heater_Init_Task(void *pvParameters )
 		}
 	}
 
-	if(/*uks_channels.screen!=SCREEN_HEATER_INIT_TIMEOUT*/uks_channels.device_error==ERROR_NONE)
+	if(uks_channels.device_error==ERROR_NONE)
 	{
 		uks_channels.screen=SCREEN_CHANNELS_FIRST;
 		xTaskCreate(UKS_Drying_Task,(signed char*)"UKS_DRYING_TASK",128,NULL, tskIDLE_PRIORITY + 1, &UKS_Drying_Task_Handle);
@@ -116,7 +116,9 @@ void UKS_Drying_Task(void *pvParameters )
 	while(1)
 	{
 		if( xSemaphoreTake( xMeasure_LM35_Semaphore, ( portTickType ) portMAX_DELAY ) == pdTRUE )
+//		vTaskDelay(1000);
 		{
+			//uks_channels.uks_params.delta_temp_start_drying+=1.0;
 			for(i=0;i<DRYING_CHANNELS_NUM;i++)
 			{
 				UKS_Channel_State_Drying(&uks_channels.drying_channel_list[i]);
@@ -264,6 +266,7 @@ uint8_t UKS_Channel_State_Drying(struct drying_channel *drying_chnl)//1 tick= 1 
 
 		}
 	}
+	return 0;
 }
 
 void UKS_Restore_Settings(void)
