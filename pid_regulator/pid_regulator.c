@@ -185,7 +185,8 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
 
   pid_st->lastProcessValue = processValue;
 
-  ret = (p_term + i_term + d_term)/* / SCALING_FACTOR*/;
+
+  ret = (p_term + i_term + d_term + uks_channels.uks_params.power_shift);
 
   uks_channels.uks_params.end_drying_temperature[0]=p_term;
   uks_channels.uks_params.end_drying_temperature[1]=i_term;
@@ -196,8 +197,8 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   {
 	  ret = MAX_POWER_VALUE;
   }
-  else if(ret < /*-MAX_INT*/0){
-    ret = /*-MAX_INT*/0;
+  else if(ret < 0){
+    ret = 0;
   }
 
   return ret;

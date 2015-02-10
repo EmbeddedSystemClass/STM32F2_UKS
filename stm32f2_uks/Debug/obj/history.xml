@@ -18,7 +18,7 @@
       <target file="usbd_usr.o" lastModified="14af208c3d7">
          <source file="..\..\..\usblib\usbd_usr.c" lastModified="13ced9e2d40"/>
       </target>
-      <target file="phaze_detector.o" lastModified="14b5de59a7f">
+      <target file="phaze_detector.o" lastModified="14b735d8fd4">
          <source file="..\..\..\devices\phaze_detector.c" lastModified="14b2ffa7ba5"/>
       </target>
       <target file="misc.o" lastModified="14af20902c4">
@@ -81,14 +81,14 @@
       <target file="mbascii.o" lastModified="14af20907c5">
          <source file="..\..\..\modbus\ascii\mbascii.c" lastModified="14a53034808"/>
       </target>
-      <target file="mbport.o" lastModified="14b2fc160fe">
-         <source file="..\..\..\modbus\port\mbport.c" lastModified="14b2a4e8291"/>
+      <target file="mbport.o" lastModified="14b737725f0">
+         <source file="..\..\..\modbus\port\mbport.c" lastModified="14b7376a3ef"/>
       </target>
       <target file="portserial.o" lastModified="14b5de5ac32">
          <source file="..\..\..\modbus\port\portserial.c" lastModified="14a5d56c8aa"/>
       </target>
-      <target file="uks.o" lastModified="14b72238358">
-         <source file="..\..\..\devices\uks.c" lastModified="14b5e1838cf"/>
+      <target file="uks.o" lastModified="14b735d8eab">
+         <source file="..\..\..\devices\uks.c" lastModified="14b735c563b"/>
       </target>
       <target file="usbd_core.o" lastModified="14af208cde9">
          <source file="..\..\..\usblib\usbd_core.c" lastModified="13349a797c0"/>
@@ -99,7 +99,7 @@
       <target file="delay.o" lastModified="14af208ba90">
          <source file="..\..\..\devices\hd44780_driver\delay.c" lastModified="14a190cc73b"/>
       </target>
-      <target file="backup_sram.o" lastModified="14b2fc16284">
+      <target file="backup_sram.o" lastModified="14b735d8b11">
          <source file="..\..\..\devices\backup_sram.c" lastModified="14ade32ee0f"/>
       </target>
       <target file="mbfuncinput.o" lastModified="14af208d701">
@@ -135,7 +135,7 @@
       <target file="port.o" lastModified="14b5de5ab38">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\ARM_CM3\port.c" lastModified="13438131d12"/>
       </target>
-      <target file="buzzer.o" lastModified="14b5de5955e">
+      <target file="buzzer.o" lastModified="14b735d8a75">
          <source file="..\..\..\devices\buzzer.c" lastModified="14b2fc539cb"/>
       </target>
       <target file="startup_stm32f4xx.o" lastModified="14af208ca01">
@@ -156,7 +156,7 @@
       <target file="power_detector.o" lastModified="14af209099a">
          <source file="..\..\..\devices\power_detector.c" lastModified="1492d8a4b76"/>
       </target>
-      <target file="keyboard.o" lastModified="14b5de5a7ae">
+      <target file="keyboard.o" lastModified="14b735d9b3e">
          <source file="..\..\..\devices\keyboard.c" lastModified="14af2572db1"/>
       </target>
       <target file="printf.o" lastModified="14af208d7fb">
@@ -174,19 +174,19 @@
       <target file="mbfuncdisc.o" lastModified="14af208c2fc">
          <source file="..\..\..\modbus\functions\mbfuncdisc.c" lastModified="138ec4f99a0"/>
       </target>
-      <target file="adc.o" lastModified="14b5de5a9d1">
+      <target file="adc.o" lastModified="14b735da001">
          <source file="..\..\..\devices\adc.c" lastModified="14af2850653"/>
       </target>
       <target file="stm32f4xx_spi.o" lastModified="14af2090091">
          <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="14a0a9197dd"/>
       </target>
+      <target file="ADS1120.o" lastModified="14b735d8c3a">
+         <source file="..\..\..\devices\ADS1120.c" lastModified="14af2867237"/>
+      </target>
       <target file="protocol.o" lastModified="14b5de59484">
          <source file="..\..\..\modbus\protocol.c" lastModified="14af252bd08"/>
       </target>
-      <target file="ADS1120.o" lastModified="14b5de59649">
-         <source file="..\..\..\devices\ADS1120.c" lastModified="14af2867237"/>
-      </target>
-      <target file="main.o" lastModified="14b72237fce">
+      <target file="main.o" lastModified="14b735d8cf6">
          <source file="..\..\..\main.c" lastModified="14b5e146801"/>
       </target>
       <target file="mbcrc.o" lastModified="14af208cf7f">
@@ -195,8 +195,8 @@
       <target file="system_stm32f4xx.o" lastModified="14af208f19d">
          <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="14a190cfb4b"/>
       </target>
-      <target file="pid_regulator.o" lastModified="14b72237e95">
-         <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14b6df947b7"/>
+      <target file="pid_regulator.o" lastModified="14b73660b18">
+         <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14b735e6bfb"/>
       </target>
       <target file="usb_dcd_int.o" lastModified="14af208faf4">
          <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff"/>
@@ -204,11 +204,11 @@
       <target file="heap_1.o" lastModified="14b5de5ad3c">
          <source file="..\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c" lastModified="13e3b1eb900"/>
       </target>
+      <target file="display.o" lastModified="14b735d99c7">
+         <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14b017aa273"/>
+      </target>
       <target file="mbfuncdiag.o" lastModified="14af208d9a1">
          <source file="..\..\..\modbus\functions\mbfuncdiag.c" lastModified="10f5ec0d910"/>
-      </target>
-      <target file="display.o" lastModified="14b5de5a54d">
-         <source file="..\..\..\devices\hd44780_driver\display.c" lastModified="14b017aa273"/>
       </target>
    </processor>
 </history>
