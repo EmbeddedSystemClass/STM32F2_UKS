@@ -68,7 +68,7 @@ void pid_Init(float p_factor, float i_factor, float d_factor, struct PID_DATA *p
 
   if(pid->P_Factor!=0.0)
   {
-	  pid->maxError = MAX_INT / pid->P_Factor;
+	  pid->maxError = MAX_P_TERM / pid->P_Factor;
   }
   else
   {
@@ -120,6 +120,16 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   error = setPoint - processValue;
 
   // Calculate Pterm and limit error overflow
+
+  if(pid_st->P_Factor!=0.0)
+  {
+	  pid_st->maxError = MAX_P_TERM / pid_st->P_Factor;
+  }
+  else
+  {
+	  pid_st->maxError=0.0;
+  }
+
   if (error > pid_st->maxError)
   {
     p_term = pid_st->P_Factor*pid_st->maxError;
@@ -133,6 +143,17 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   }
 
   // Calculate Iterm and limit integral runaway
+
+
+  if(pid_st->I_Factor!=0.0)
+  {
+	  pid_st->maxSumError = MAX_I_TERM /pid_st->I_Factor;
+  }
+  else
+  {
+	  pid_st->maxSumError =0.0;
+  }
+
   temp = pid_st->sumError + error;
   if(temp > pid_st->maxSumError)
   {
@@ -153,9 +174,24 @@ int16_t pid_Controller(float setPoint, float processValue, struct PID_DATA *pid_
   // Calculate Dterm
   d_term =pid_st->D_Factor * (pid_st->lastProcessValue - processValue);
 
+  if(d_term>MAX_D_TERM)
+  {
+	  d_term=MAX_D_TERM;
+  }
+  else if(d_term<(-MAX_D_TERM))
+  {
+	  d_term=-MAX_D_TERM;
+  }
+
   pid_st->lastProcessValue = processValue;
 
   ret = (p_term + i_term + d_term)/* / SCALING_FACTOR*/;
+
+  uks_channels.uks_params.end_drying_temperature[0]=p_term;
+  uks_channels.uks_params.end_drying_temperature[1]=i_term;
+  uks_channels.uks_params.end_drying_temperature[2]=d_term;
+
+
   if(ret > MAX_POWER_VALUE)
   {
 	  ret = MAX_POWER_VALUE;
