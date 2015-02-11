@@ -36,7 +36,7 @@ typedef struct PID_DATA{
 #define MAX_LONG        MAX_INT
 
 #define MAX_P_TERM      200
-#define MAX_I_TERM      15
+#define MAX_I_TERM      14
 #define MAX_D_TERM      100
 
 // Boolean values
