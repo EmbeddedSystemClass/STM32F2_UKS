@@ -346,15 +346,6 @@ void UKS_Restore_Settings(void)
 			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->d_factor,&uks_channels.uks_params.d_factor,sizeof(float));
 		}
 
-		if((uks_channels.backup_uks_params->power_shift>=POWER_SHIFT_MIN)&&(uks_channels.backup_uks_params->power_shift<=POWER_SHIFT_MAX))
-		{
-			uks_channels.uks_params.power_shift=uks_channels.backup_uks_params->power_shift;
-		}
-		else
-		{
-			uks_channels.uks_params.power_shift=POWER_SHIFT_DEFAULT;
-			Backup_SRAM_Write_Reg(&uks_channels.backup_uks_params->power_shift,&uks_channels.uks_params.power_shift,sizeof(float));
-		}
 
 		if((uks_channels.backup_uks_params->delta_temp_start_drying>=DELTA_TEMP_START_DRYING_MIN)&&(uks_channels.backup_uks_params->delta_temp_start_drying<=DELTA_TEMP_START_DRYING_MAX))
 		{

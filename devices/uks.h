@@ -64,9 +64,6 @@ struct drying_channel
 #define D_FACTOR_MIN		   -10000.0
 #define D_FACTOR_MAX		    10000.0
 
-#define POWER_SHIFT_MIN		  	0.0
-#define POWER_SHIFT_MAX		    100.0
-
 #define DELTA_TEMP_START_DRYING_MIN		 0.0
 #define DELTA_TEMP_START_DRYING_MAX 	10.0
 
@@ -88,7 +85,6 @@ struct drying_channel
 #define P_FACTOR_DEFAULT		 		    9.0
 #define I_FACTOR_DEFAULT		   			0.009
 #define D_FACTOR_DEFAULT		   			1500.0
-#define POWER_SHIFT_DEFAULT					0.0
 #define DELTA_TEMP_START_DRYING_DEFAULT		4.0
 #define DELTA_TEMP_CANCEL_DRYING_DEFAULT   -2.0
 #define TRESHOLD_TEMP_START_DRYING_DEFAULT	45.0
@@ -107,7 +103,6 @@ struct uks_parameters
 	float p_factor;//PID regulator
 	float i_factor;
 	float d_factor;
-	float power_shift;
 
 	float delta_temp_start_drying;
 	float treshold_temp_start_drying;
