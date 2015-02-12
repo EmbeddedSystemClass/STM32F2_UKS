@@ -223,6 +223,7 @@ static void PID_Regulator_Task(void *pvParameters)
 				if(uks_channels.heater_tempereature_tumblr!=TUMBLR_TEMP_1)
 				{
 					uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_1;
+					uks_channels.heater_temperature_current_setting=uks_channels.uks_params.heater_temperature_1;
 					pid_heater.sumError = 0;
 					pid_heater.lastProcessValue = 0;
 					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
@@ -235,6 +236,7 @@ static void PID_Regulator_Task(void *pvParameters)
 				if(uks_channels.heater_tempereature_tumblr!=TUMBLR_TEMP_2)
 				{
 					uks_channels.heater_tempereature_tumblr=TUMBLR_TEMP_2;
+					uks_channels.heater_temperature_current_setting=uks_channels.uks_params.heater_temperature_2;
 					pid_heater.sumError = 0;
 					pid_heater.lastProcessValue = 0;
 					pid_heater.maxError = MAX_INT / (pid_heater.P_Factor + 1);
