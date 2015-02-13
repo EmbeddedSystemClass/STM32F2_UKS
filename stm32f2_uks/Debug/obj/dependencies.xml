@@ -2298,6 +2298,11 @@
       </source>
       <source file="..\..\..\FreeRTOSV7.1.0\Source\include\list.h" lastModified="13e3b1eb8f0">
       </source>
+      <source file="..\..\..\modbus\port\mbport.c" lastModified="14b81e94c22">
+         <include file="..\..\..\modbus\include\mb.h"/>
+         <include file="..\..\..\devices\uks.h"/>
+         <include file="..\..\..\devices\backup_sram.h"/>
+      </source>
       <source file="..\..\..\usblib\usb_dcd_int.c" lastModified="14a158363ff">
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
          <include file="..\..\..\usblib\usbd_cdc_vcp.h"/>
@@ -2613,7 +2618,7 @@
          <include file="..\..\..\usblib\usbd_desc.h"/>
          <include file="..\..\..\usblib\usb_dcd_int.h"/>
       </source>
-      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14b7cae52ea">
+      <source file="..\..\..\pid_regulator\pid_regulator.c" lastModified="14b7cc84ec5">
          <include file="..\..\..\pid_regulator\pid_regulator.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h"/>
          <include file="..\..\..\FreeRTOSV7.1.0\Source\include\task.h"/>

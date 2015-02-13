@@ -142,8 +142,6 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 						iRegIndex+=2;
 						usNRegs-=2;
-
-
 					}
 					else
 					{
@@ -343,7 +341,7 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs, eMBRegi
 
 							default:
 							{
-
+								usNRegs--;
 							}
 							break;
 						}
